@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="barrios">
+        <item>Monserrat</item>
+        <item>Boedo</item>
+        <item>Congreso</item>
+        <item>Palermo</item>
+    </string-array>
+    <string-array name="tipos_propiedad">
+        <item>Casa</item>
+        <item>Departamento</item>
+
+    </string-array>
+    <string-array name="operaciones">
+        <item>Compra</item>
+        <item>Venta</item>
+
+    </string-array>
+</resources>
