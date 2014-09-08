@@ -3,6 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+        maven {
+            url "http://central.maven.org/maven2/com/loopj/android/android-async-http/http://central.maven.org/maven2/com/loopj/android/android-async-http/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.2'
