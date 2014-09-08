@@ -1,12 +1,13 @@
-package com.mileem.mileem;
+package com.mileem.mileem.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.mileem.mileem.R;
 
 
-public class FormSearch extends Activity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
