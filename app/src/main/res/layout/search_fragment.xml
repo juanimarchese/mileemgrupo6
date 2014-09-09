@@ -5,20 +5,13 @@ android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:scrollbars="vertical"
 android:clickable="true"
-android:background="@android:color/holo_blue_light">
+android:background="@android:color/white">
 <LinearLayout
         android:layout_width="fill_parent"
         android:orientation="vertical"
         android:layout_height="fill_parent">
 
     <!--Put form controls here-->
-    <!--<TextView
-            android:id="@+id/TextViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/busqueda"
-            android:textSize="10pt">
-    </TextView>-->
     <TextView
     android:id="@+id/barriolabel"
     android:layout_width="wrap_content"
@@ -82,7 +75,7 @@ android:background="@android:color/holo_blue_light">
             android:inputType="number" />
     <Button
             android:id="@+id/button_buscar"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

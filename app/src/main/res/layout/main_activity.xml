@@ -12,7 +12,7 @@
                  android:layout_height="match_parent"
                  tools:context="ar.com.mileem.app.MainActivity"
                  tools:ignore="MergeRootFrame"
-                 android:background="@android:color/holo_blue_light"
+                 android:background="@android:color/white"
                  android:paddingBottom="10dp"/>
 
     <!-- Listview to display slider menu -->

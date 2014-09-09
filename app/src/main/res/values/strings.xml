@@ -3,7 +3,7 @@
 
     <string name="app_name">MiLEEM</string>
     <string name="action_settings">Settings</string>
-    <string name="busqueda">Ingrese los parametros para realizar la búsqueda</string>
+    <string name="busqueda">Ingrese los parámetros para realizar la búsqueda</string>
     <string name="barrio">Barrio</string>
     <string name="tipo_propiedad_txt">Tipo Propiedades</string>
     <string name="operacion_txt">Operación</string>
@@ -12,7 +12,7 @@
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <!--<item >Busqueda</item>-->
+        <item >Búsqueda</item>
         <item >Resultados</item>
        <!-- <item >Estadisticas</item>-->
     </string-array>
@@ -20,7 +20,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <!--<item>@drawable/ic_menu_search</item>-->
+        <item>@drawable/ic_menu_search</item>
         <item>@drawable/ic_menu_list</item>
         <!--<item>@drawable/ic_menu_stadistics</item>-->
     </array>
