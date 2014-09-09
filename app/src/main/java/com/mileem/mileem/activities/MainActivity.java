@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
 import com.mileem.mileem.fragments.BaseFragment;
+import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
 import com.mileem.mileem.widgets.NavDrawerItem;
 
@@ -133,7 +134,7 @@ public class MainActivity extends BaseActivity {
     /**
      * Diplaying fragment view for selected nav drawer list item
      * */
-    private void displayViewForMenu(int position) {
+    public void displayViewForMenu(int position) {
         // update the main content by replacing fragments
         BaseFragment fragment = null;
         switch (position) {
@@ -141,7 +142,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new SearchFragment();
                 break;
             case 1:
-                fragment = new SearchFragment();
+                fragment = new ResultsFragment();
                 break;
             case 2:
                 fragment = new SearchFragment();
@@ -151,7 +152,7 @@ public class MainActivity extends BaseActivity {
         }
 
         if (fragment != null) {
-            /*FragmentManager fragmentManager = getFragmentManager();
+           /* FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
             showFragment(fragment);
@@ -167,13 +168,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void displayView(BaseFragment fragment) {
+    public void displayView(BaseFragment fragment) {
         // update the main content by replacing fragments
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
+            /*FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
-            //showFragment(fragment);
+                    .replace(R.id.frame_container, fragment).commit();*/
+            showFragment(fragment);
 
             // update selected item and title, then close the drawer
             setTitle(fragment.getTittle());

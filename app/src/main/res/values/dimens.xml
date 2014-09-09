@@ -6,4 +6,9 @@
     <dimen name="listview_item_padding">16dp</dimen>
     <dimen name="list_text_size">16sp</dimen>
     <dimen name="list_item_height">48dip</dimen>
+
+    <dimen name="precio">17dp</dimen>
+    <dimen name="direccion">15dip</dimen>
+    <dimen name="m2">13dip</dimen>
+    <dimen name="ambientes">12dip</dimen>
 </resources>
