@@ -1,4 +1,4 @@
-package com.mileem.mileem;
+package com.mileem.mileem.networking;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

@@ -1,14 +1,14 @@
-package com.mileem.mileem;
+package com.mileem.mileem.networking;
 
 /**
  * Created by ramirodiaz on 07/09/14.
  */
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.models.IdName;
 
 import org.apache.http.Header;
 import org.json.JSONException;

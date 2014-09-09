@@ -1,6 +1,7 @@
-package com.mileem.mileem;
+package com.mileem.mileem.managers;
 
 import java.util.Collection;
+import com.mileem.mileem.models.IdName;
 
 /**
  * Created by ramirodiaz on 09/09/14.

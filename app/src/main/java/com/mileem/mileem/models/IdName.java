@@ -1,6 +1,4 @@
-package com.mileem.mileem;
-
-import com.google.gson.Gson;
+package com.mileem.mileem.models;
 
 /**
  * Created by ramirodiaz on 08/09/14.
