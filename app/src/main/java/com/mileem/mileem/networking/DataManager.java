@@ -17,10 +17,9 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-class DataManager {
+public class DataManager {
 
-
-    public void getDefinitions() throws JSONException {
+    public void getDefinitions(final CallbackHandler callback) throws JSONException {
         AsyncRestHttpClient.get("540e2d54e0f467010ce6cbff", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -45,6 +44,7 @@ class DataManager {
                     Collection<IdName> operationTypesCollection = gson.fromJson(operationTypes.toString(), collectionType);
                     DefinitionsManager.getInstance().setOperationTypesCollection(operationTypesCollection);
 
+                    callback.onComplete(null);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
