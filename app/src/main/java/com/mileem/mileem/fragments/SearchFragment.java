@@ -11,7 +11,7 @@ import com.mileem.mileem.R;
 
 public class SearchFragment extends BaseFragment {
 
-    public static final String TAG = "SearchFragment";
+    public static final String TAG = SearchFragment.class.getSimpleName();
 
     private AutoCompleteTextView actv;
 
