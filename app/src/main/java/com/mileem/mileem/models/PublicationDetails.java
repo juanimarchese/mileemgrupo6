@@ -4,11 +4,22 @@ package com.mileem.mileem.models;
  * Created by Juan-Asus on 09/09/2014.
  */
 public class PublicationDetails {
+    Number id;
+    String title;
+    Number price;
+    String currency;
+    String address;
+    Number size;
+    Number coveredSize;
     String thumbnailUrl;
     String direccion;
     String m2;
     String cantAmbientes;
     String precio;
+    IdName environment;
+    Number priority;
+    String[] pictures;
+    Video video;
 
     public PublicationDetails() {
     }
@@ -19,6 +30,94 @@ public class PublicationDetails {
         this.m2 = m2;
         this.cantAmbientes = cantAmbientes;
         this.precio = precio;
+    }
+
+    public Number getId() {
+        return id;
+    }
+
+    public void setId(Number id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Number getPrice() {
+        return price;
+    }
+
+    public void setPrice(Number price) {
+        this.price = price;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Number getSize() {
+        return size;
+    }
+
+    public void setSize(Number size) {
+        this.size = size;
+    }
+
+    public Number getCoveredSize() {
+        return coveredSize;
+    }
+
+    public void setCoveredSize(Number coveredSize) {
+        this.coveredSize = coveredSize;
+    }
+
+    public IdName getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(IdName environment) {
+        this.environment = environment;
+    }
+
+    public Number getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Number priority) {
+        this.priority = priority;
+    }
+
+    public String[] getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(String[] pictures) {
+        this.pictures = pictures;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
     }
 
     public String getThumbnailUrl() {
