@@ -19,7 +19,7 @@ import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.PublicationListAdapter;
-import com.mileem.mileem.model.PublicationDetails;
+import com.mileem.mileem.models.PublicationDetails;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
