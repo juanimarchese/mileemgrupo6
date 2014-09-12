@@ -8,9 +8,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.models.IdName;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +22,7 @@ import java.util.Collection;
 public class DataManager {
 
     public void getDefinitions(final CallbackHandler callback) throws JSONException {
-        AsyncRestHttpClient.get("540e2d54e0f467010ce6cbff", null, new JsonHttpResponseHandler() {
+        AsyncRestHttpClient.get("5412822386a6451704a1c314", null, new MileenJsonResponseHandler(callback) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
@@ -50,7 +52,22 @@ public class DataManager {
                 }
             }
         });
+    }
 
-
+    public void getPublicationsList(final CallbackHandler callback) throws JSONException {
+        AsyncRestHttpClient.get("5412770f86a6451303a1c311", null, new MileenJsonResponseHandler(callback) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Object payload = response.get("payload");
+                    Type collectionType = new TypeToken<Collection<PublicationDetails>>(){}.getType();
+                    Gson gson = new Gson();
+                    Collection<PublicationDetails> publications = gson.fromJson(payload.toString(), collectionType);
+                    callback.onComplete(publications);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
