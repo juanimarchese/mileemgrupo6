@@ -5,5 +5,6 @@ package com.mileem.mileem.networking;
  */
 public abstract class CallbackHandler {
     public abstract void onComplete(Object object);
+    public abstract void onFailure(Object object);
 }
 
