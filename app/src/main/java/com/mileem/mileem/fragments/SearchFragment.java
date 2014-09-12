@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
 
 
 public class SearchFragment extends BaseFragment {
@@ -36,14 +38,14 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        /*Button button_generar_repo = (Button) view.findViewById(R.id.button_generar);
+        Button button_generar_repo = (Button) view.findViewById(R.id.button_buscar);
 
         button_generar_repo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((BaseActivity)getActivity()).showFragment(new ContactsFragment());
+                ((MainActivity)getActivity()).displayView(new NoResultsFragment());
             }
-        });*/
+        });
 
     }
 

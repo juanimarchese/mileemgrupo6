@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
 import com.mileem.mileem.fragments.BaseFragment;
+import com.mileem.mileem.fragments.NoResultsFragment;
 import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
 import com.mileem.mileem.widgets.NavDrawerItem;
@@ -145,7 +146,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new ResultsFragment();
                 break;
             case 2:
-                fragment = new SearchFragment();
+                fragment = new NoResultsFragment();
                 break;
             default:
                 break;
