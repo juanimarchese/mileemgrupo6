@@ -38,8 +38,6 @@ public class NoResultsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.no_results_fragment, container, false);
-        /*ImageView image = (ImageView) rootView.findViewById(R.id.noresult);
-        image.setImageResource(R.drawable.noresult);*/
         return rootView;
     }
 

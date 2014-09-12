@@ -145,9 +145,7 @@ public class MainActivity extends BaseActivity {
             case 1:
                 fragment = new ResultsFragment();
                 break;
-            case 2:
-                fragment = new NoResultsFragment();
-                break;
+
             default:
                 break;
         }

@@ -43,7 +43,7 @@ public class SearchFragment extends BaseFragment {
         button_generar_repo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).displayView(new NoResultsFragment());
+                ((MainActivity)getActivity()).displayViewForMenu(1);
             }
         });
 

@@ -3,15 +3,26 @@ package com.mileem.mileem.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.PublicationListAdapter;
 import com.mileem.mileem.models.PublicationDetails;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -22,7 +33,7 @@ public class ResultsFragment extends BaseFragment {
 
     public static final String TAG = ResultsFragment.class.getSimpleName();
 
-    private static final String url = "http://www.omdbapi.com/?t=True%20Grit&y=1969";    //TODO - Cambiar a la url donde vienen los datos
+    private static final String url = "http://10.0.2.2/api/property-search";    //TODO - Cambiar a la url donde vienen los datos
     private ProgressDialog pDialog;
     private ArrayList<PublicationDetails> publicationList = new ArrayList<PublicationDetails>();
     private ListView listView;
@@ -57,7 +68,7 @@ public class ResultsFragment extends BaseFragment {
         return rootView;
     }
 
-    private void requestData(View rootView) {
+    private void requestData(final View rootView) {
         final Context context = rootView.getContext();
         pDialog = new ProgressDialog(context);
         // Showing progress dialog before making http request
@@ -65,7 +76,7 @@ public class ResultsFragment extends BaseFragment {
         pDialog.show();
         publicationList.clear();
 
-        for(int i=0; i<10;i++){
+       /* for(int i=0; i<10;i++){
         PublicationDetails publicacion = new PublicationDetails();
         publicacion.setPrecio("U$D99999999");
         publicacion.setThumbnailUrl("http://avatarbox.net/avatars/img19/zhou_ming_avatar_picture_49967.jpg");
@@ -77,38 +88,44 @@ public class ResultsFragment extends BaseFragment {
         publicationList.add(publicacion);
         }
         adapter.notifyDataSetChanged();
-        hidePDialog();
+        hidePDialog();*/
 
-       /* // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
+        // Creating volley request obj
+        JsonObjectRequest request = new JsonObjectRequest(url,null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
                         hidePDialog();
 
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+                        try {
+                            JSONArray array = response.getJSONArray("payload");
+                            // Parsing json
+                            if(array.length() <= 0){
+                                ((MainActivity)rootView.getContext()).displayView(new NoResultsFragment());
+                            }   else {
+                                for (int i = 0; i < array.length(); i++) {
 
-                                JSONObject obj = response.getJSONObject(i);
-                                //TODO - Generar el objeto a partir de la response
-                                PublicationDetails publicacion = new PublicationDetails();
-                                publicacion.setPrecio(obj.getString("Title"));
-                                publicacion.setThumbnailUrl(obj.getString("Poster"));
-                                publicacion.setDireccion(String.valueOf(obj.get("Runtime")));
-                                publicacion.setM2(String.valueOf(obj.getInt("Year")));
-                                publicacion.setCantAmbientes(String.valueOf(obj.getInt("Released")));
 
-                               // adding publicacion to array
-                                publicationList.add(publicacion);
+                                    JSONObject obj = array.getJSONObject(i);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                    PublicationDetails publicacion = new PublicationDetails();
+                                    publicacion.setPrecio(obj.getString("currency")+ " " + obj.getString("price"));
+                                    publicacion.setThumbnailUrl("http://avatarbox.net/avatars/img19/zhou_ming_avatar_picture_49967.jpg");
+                                    publicacion.setDireccion(obj.getString("address"));
+                                    publicacion.setM2((obj.getInt("size") + obj.getInt("coveredSize"))+" m2");
+                                    publicacion.setCantAmbientes(obj.getJSONObject("environment").getString("name"));
+
+                                       // adding publicacion to array
+                                        publicationList.add(publicacion);
+
+
+
+                                }
                             }
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
                         // notifying list adapter about data changes
                         // so that it renders the list view with updated data
                         adapter.notifyDataSetChanged();
@@ -125,7 +142,7 @@ public class ResultsFragment extends BaseFragment {
         });
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);*/
+        AppController.getInstance().addToRequestQueue(request);
     }
 
     @Override
