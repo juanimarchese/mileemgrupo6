@@ -1,4 +1,4 @@
-package com.mileem.mileem.model;
+package com.mileem.mileem.models;
 
 /**
  * Created by Juan-Asus on 09/09/2014.
