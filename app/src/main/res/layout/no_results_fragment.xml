@@ -11,9 +11,10 @@
             android:id="@+id/noresult"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:src="@drawable/noresult"
-            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+            android:layout_alignParentTop="true" android:adjustViewBounds="false"
+            android:layout_alignParentRight="false" android:layout_alignParentLeft="false"
+            android:scaleType="fitStart"/>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,6 +22,8 @@
             android:text="No se han encontrado resultados para la búqueda realizada"
             android:id="@+id/noresulttxt"
             android:textSize="20dp"
-            android:layout_below="@+id/noresult" android:gravity="center|center_vertical"
-            android:layout_alignParentBottom="true"/>
+
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_marginBottom="50dp"/>
 </RelativeLayout>
