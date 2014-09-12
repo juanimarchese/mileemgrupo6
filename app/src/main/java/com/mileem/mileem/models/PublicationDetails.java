@@ -11,15 +11,19 @@ public class PublicationDetails {
     String address;
     Number size;
     Number coveredSize;
-    String thumbnailUrl;
-    String direccion;
-    String m2;
-    String cantAmbientes;
-    String precio;
     IdName environment;
     Number priority;
     String[] pictures;
     Video video;
+
+    //Deprecated
+    //Todo Estos atributos deben ser borrados cuando se saquen las responses moqueadas.
+    //Utilizar los de arribas (Borrar también los setters y getters)
+    String direccion;
+    String thumbnailUrl;
+    String m2;
+    String cantAmbientes;
+    String precio;
 
     public PublicationDetails() {
     }
