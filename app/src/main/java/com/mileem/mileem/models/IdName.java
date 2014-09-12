@@ -15,7 +15,7 @@ public class IdName {
         this.name = name;
     }
 
-    public IdName(String name, Number id) {
+    public IdName(Number id, String name) {
         this.name = name;
         this.id = id;
     }
