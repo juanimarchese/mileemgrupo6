@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.android.volley.Response;
@@ -39,6 +40,8 @@ public class ResultsFragment extends BaseFragment {
     private ListView listView;
     private PublicationListAdapter adapter;
 
+    private int cant = 1;
+
     public ResultsFragment() {
         super(TAG);
     }
@@ -56,7 +59,12 @@ public class ResultsFragment extends BaseFragment {
         listView = (ListView) rootView.findViewById(R.id.publicationList);
         adapter = new PublicationListAdapter(publicationList,rootView.getContext());
         listView.setAdapter(adapter);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(view.getContext(), "Vista de Detalles", Toast.LENGTH_LONG).show();
+            }
+        });
         requestData(rootView);
         return rootView;
     }
@@ -67,19 +75,22 @@ public class ResultsFragment extends BaseFragment {
         // Showing progress dialog before making http request
         pDialog.setMessage("Buscando...");
         pDialog.show();
+        publicationList.clear();
 
-          for(int i=0; i<10;i++){
+        for(int i=0; i<10;i++){
         PublicationDetails publicacion = new PublicationDetails();
-        publicacion.setPrecio("$250000");
+        publicacion.setPrecio("U$D99999999");
         publicacion.setThumbnailUrl("http://avatarbox.net/avatars/img19/zhou_ming_avatar_picture_49967.jpg");
-        publicacion.setDireccion("Direccion" + i );
-        publicacion.setM2("1000m2");
-        publicacion.setCantAmbientes("1 ambiente");
+        publicacion.setDireccion("Av Consejal Tribulato 187" + i );
+        publicacion.setM2("1000 m2");
+        publicacion.setCantAmbientes("12 amb");
 
         // adding publicacion to array
         publicationList.add(publicacion);
-          }
+        }
+        adapter.notifyDataSetChanged();
         hidePDialog();
+
        /* // Creating volley request obj
         JsonArrayRequest movieReq = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {

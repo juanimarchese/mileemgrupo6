@@ -9,16 +9,18 @@ public class PublicationDetails {
     String m2;
     String cantAmbientes;
     String precio;
+    TipoPublicacion tipo;
 
     public PublicationDetails() {
     }
 
-    public PublicationDetails(String thumbnailUrl, String direccion, String m2, String cantAmbientes, String precio) {
+    public PublicationDetails(String thumbnailUrl, String direccion, String m2, String cantAmbientes, String precio, TipoPublicacion tipo) {
         this.thumbnailUrl = thumbnailUrl;
         this.direccion = direccion;
         this.m2 = m2;
         this.cantAmbientes = cantAmbientes;
         this.precio = precio;
+        this.tipo = tipo;
     }
 
     public String getThumbnailUrl() {
@@ -59,5 +61,13 @@ public class PublicationDetails {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public TipoPublicacion getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoPublicacion tipo) {
+        this.tipo = tipo;
     }
 }
