@@ -9,8 +9,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
-import com.mileem.mileem.model.PublicationDetails;
-import com.mileem.mileem.model.TipoPublicacion;
+import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.models.TipoPublicacion;
 
 import java.util.ArrayList;
 
