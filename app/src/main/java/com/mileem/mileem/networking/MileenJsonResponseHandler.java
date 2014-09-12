@@ -13,26 +13,31 @@ import org.json.JSONObject;
  */
 public class MileenJsonResponseHandler extends JsonHttpResponseHandler {
     final CallbackHandler callback;
-
+    static String MileenJsonResponseHandlerTag = "MileenJsonResponseHandler";
     public MileenJsonResponseHandler(CallbackHandler callback) {
         this.callback = callback;
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-        Log.v("onFailure","Status Code:" + statusCode);
+        Log.v(MileenJsonResponseHandlerTag, "Status Code:" + statusCode);
         callback.onComplete(errorResponse);
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-        Log.v("onFailure","Status Code:" + statusCode);
+        Log.v(MileenJsonResponseHandlerTag, "Status Code :" + statusCode);
         callback.onFailure(responseString);
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        Log.v("onFailure","Status Code:" + statusCode);
+        Log.v(MileenJsonResponseHandlerTag,"Status Code :" + statusCode);
         callback.onFailure(errorResponse);
+    }
+
+    @Override
+    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        Log.v(MileenJsonResponseHandlerTag,"Status Code: " + statusCode + " Response: " + response);
     }
 }

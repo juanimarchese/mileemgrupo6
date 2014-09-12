@@ -25,6 +25,7 @@ public class DataManager {
         AsyncRestHttpClient.get("5412822386a6451704a1c314", null, new MileenJsonResponseHandler(callback) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
                 try {
                     JSONObject payload = response.getJSONObject("payload");
                     Type collectionType = new TypeToken<Collection<IdName>>(){}.getType();
@@ -58,6 +59,7 @@ public class DataManager {
         AsyncRestHttpClient.get("5412770f86a6451303a1c311", null, new MileenJsonResponseHandler(callback) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
                 try {
                     Object payload = response.get("payload");
                     Type collectionType = new TypeToken<Collection<PublicationDetails>>(){}.getType();
