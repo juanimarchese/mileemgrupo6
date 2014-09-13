@@ -14,6 +14,13 @@ public class PublicationFilter {
     Number minCoveredSize;
     Number minPublishDate;
 
+    public PublicationFilter(Number[] neighborhoods, Number[] propertyTypes, Number[] operationTypes, Number[] environments) {
+        this.neighborhoods = neighborhoods;
+        this.propertyTypes = propertyTypes;
+        this.operationTypes = operationTypes;
+        this.environments = environments;
+    }
+
     public Number[] getNeighborhoods() {
         return neighborhoods;
     }
