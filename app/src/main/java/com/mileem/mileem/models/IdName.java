@@ -5,7 +5,7 @@ package com.mileem.mileem.models;
  */
 public class IdName {
     String name;
-    Number id;
+    int id;
 
     public String getName() {
         return name;
@@ -15,7 +15,7 @@ public class IdName {
         this.name = name;
     }
 
-    public IdName(Number id, String name) {
+    public IdName(int id, String name) {
         this.name = name;
         this.id = id;
     }
