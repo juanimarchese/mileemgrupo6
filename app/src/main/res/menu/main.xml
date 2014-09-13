@@ -9,5 +9,26 @@
     <item android:id="@+id/action_sort"
           android:icon="@drawable/ic_action_sort_by_size"
           android:title="@string/action_sort"
-          android:showAsAction="ifRoom" />
+          android:showAsAction="ifRoom" >
+        <menu>
+            <item
+                    android:id="@+id/precio_asc"
+                    android:title="Precio ascendente" />
+            <item
+                    android:id="@+id/precio_dsc"
+                    android:title="Precio descendente" />
+            <item
+                    android:id="@+id/fecha_asc"
+                    android:title="Fecha ascendente" />
+            <item
+                    android:id="@+id/fecha_dsc"
+                    android:title="Fecha descendente" />
+            <item
+                    android:id="@+id/relevancia_asc"
+                    android:title="Relevancia ascendente" />
+            <item
+                    android:id="@+id/relevancia_dsc"
+                    android:title="Relevancia descendente" />
+        </menu>
+    </item>
 </menu>
