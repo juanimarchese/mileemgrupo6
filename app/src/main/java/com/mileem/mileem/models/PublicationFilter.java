@@ -4,52 +4,52 @@ package com.mileem.mileem.models;
  * Created by ramirodiaz on 13/09/14.
  */
 public class PublicationFilter {
-    Number[] neighborhoods;
-    Number[] propertyTypes;
-    Number[] operationTypes;
-    Number[] environments;
-    Number minPrice;
-    Number maxPrice;
-    Number minSize;
-    Number minCoveredSize;
-    Number minPublishDate;
+    int[] neighborhoods;
+    int[] propertyTypes;
+    int[] operationTypes;
+    int[] environments;
+    int minPrice;
+    int maxPrice;
+    int minSize;
+    int minCoveredSize;
+    int minPublishDate;
 
-    public PublicationFilter(Number[] neighborhoods, Number[] propertyTypes, Number[] operationTypes, Number[] environments) {
+    public PublicationFilter(int[] neighborhoods, int[] propertyTypes, int[] operationTypes, int[] environments) {
         this.neighborhoods = neighborhoods;
         this.propertyTypes = propertyTypes;
         this.operationTypes = operationTypes;
         this.environments = environments;
     }
 
-    public Number[] getNeighborhoods() {
+    public int[] getNeighborhoods() {
         return neighborhoods;
     }
 
-    public void setNeighborhoods(Number[] neighborhoods) {
+    public void setNeighborhoods(int[] neighborhoods) {
         this.neighborhoods = neighborhoods;
     }
 
-    public Number[] getPropertyTypes() {
+    public int[] getPropertyTypes() {
         return propertyTypes;
     }
 
-    public void setPropertyTypes(Number[] propertyTypes) {
+    public void setPropertyTypes(int[] propertyTypes) {
         this.propertyTypes = propertyTypes;
     }
 
-    public Number[] getOperationTypes() {
+    public int[] getOperationTypes() {
         return operationTypes;
     }
 
-    public void setOperationTypes(Number[] operationTypes) {
+    public void setOperationTypes(int[] operationTypes) {
         this.operationTypes = operationTypes;
     }
 
-    public Number[] getEnvironments() {
+    public int[] getEnvironments() {
         return environments;
     }
 
-    public void setEnvironments(Number[] environments) {
+    public void setEnvironments(int[] environments) {
         this.environments = environments;
     }
 
@@ -57,7 +57,7 @@ public class PublicationFilter {
         return minPrice;
     }
 
-    public void setPrice(Number minPrice, Number maxPrice) {
+    public void setPrice(int minPrice, int maxPrice) {
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
     }
@@ -70,7 +70,7 @@ public class PublicationFilter {
         return minSize;
     }
 
-    public void setMinSize(Number minSize) {
+    public void setMinSize(int minSize) {
         this.minSize = minSize;
     }
 
@@ -78,7 +78,7 @@ public class PublicationFilter {
         return minCoveredSize;
     }
 
-    public void setMinCoveredSize(Number minCoveredSize) {
+    public void setMinCoveredSize(int minCoveredSize) {
         this.minCoveredSize = minCoveredSize;
     }
 
@@ -86,7 +86,7 @@ public class PublicationFilter {
         return minPublishDate;
     }
 
-    public void setMinPublishDate(Number minPublishDate) {
+    public void setMinPublishDate(int minPublishDate) {
         this.minPublishDate = minPublishDate;
     }
 }
