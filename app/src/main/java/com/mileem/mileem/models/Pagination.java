@@ -4,13 +4,13 @@ package com.mileem.mileem.models;
  * Created by ramirodiaz on 13/09/14.
  */
 public class Pagination {
-    Number amount;
-    Number offset;
-    Boolean lastPageReached;
+    int amount = 0;
+    int offset = 0;
+    Boolean lastPageReached = false;
 
-    public Pagination(Number amount, Number offset) {
+    public Pagination(int amount) {
         this.amount = amount;
-        this.offset = offset;
+        this.offset = 0;
     }
 
     public Boolean getLastPageReached() {
@@ -21,19 +21,19 @@ public class Pagination {
         this.lastPageReached = lastPageReached;
     }
 
-    public Number getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(Number amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public Number getOffset() {
+    public int getOffset() {
         return offset;
     }
 
-    public void setOffset(Number offset) {
+    public void setOffset(int offset) {
         this.offset = offset;
     }
 }
