@@ -8,6 +8,6 @@ import java.util.Collection;
 public abstract class CallbackHandler {
     public abstract void onComplete(Object object);
     public abstract void onComplete(Collection collection);
-    public abstract void onFailure(Object object);
+    public abstract void onFailure(Error error);
 }
 
