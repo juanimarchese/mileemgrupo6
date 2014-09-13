@@ -8,11 +8,11 @@ public class PublicationFilter {
     int[] propertyTypes;
     int[] operationTypes;
     int[] environments;
-    int minPrice;
-    int maxPrice;
-    int minSize;
-    int minCoveredSize;
-    int minPublishDate;
+    int minPrice = 0;
+    int maxPrice = 0;
+    int minSize = 0;
+    int minCoveredSize = 0;
+    int minPublishDate = 0;
 
     public PublicationFilter(int[] neighborhoods, int[] propertyTypes, int[] operationTypes, int[] environments) {
         this.neighborhoods = neighborhoods;
@@ -53,7 +53,7 @@ public class PublicationFilter {
         this.environments = environments;
     }
 
-    public Number getMinPrice() {
+    public int getMinPrice() {
         return minPrice;
     }
 
@@ -62,11 +62,11 @@ public class PublicationFilter {
         this.maxPrice = maxPrice;
     }
 
-    public Number getMaxPrice() {
+    public int getMaxPrice() {
         return maxPrice;
     }
 
-    public Number getMinSize() {
+    public int getMinSize() {
         return minSize;
     }
 
@@ -74,7 +74,7 @@ public class PublicationFilter {
         this.minSize = minSize;
     }
 
-    public Number getMinCoveredSize() {
+    public int getMinCoveredSize() {
         return minCoveredSize;
     }
 
@@ -82,7 +82,7 @@ public class PublicationFilter {
         this.minCoveredSize = minCoveredSize;
     }
 
-    public Number getMinPublishDate() {
+    public int getMinPublishDate() {
         return minPublishDate;
     }
 
