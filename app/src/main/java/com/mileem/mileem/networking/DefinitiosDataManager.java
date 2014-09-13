@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-public class DataManager {
+public class DefinitiosDataManager {
 
     public void getDefinitions(final CallbackHandler callback) throws JSONException {
         AsyncRestHttpClient.get("5412822386a6451704a1c314", null, new MileenJsonResponseHandler(callback) {
