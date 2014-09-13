@@ -20,5 +20,21 @@ public class Pagination {
     public void setLastPageReached(Boolean lastPageReached) {
         this.lastPageReached = lastPageReached;
     }
+
+    public Number getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Number amount) {
+        this.amount = amount;
+    }
+
+    public Number getOffset() {
+        return offset;
+    }
+
+    public void setOffset(Number offset) {
+        this.offset = offset;
+    }
 }
 
