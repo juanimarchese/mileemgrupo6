@@ -4,15 +4,15 @@ package com.mileem.mileem.models;
  * Created by Juan-Asus on 09/09/2014.
  */
 public class PublicationDetails {
-    Number id;
+    int id;
     String title;
-    Number price;
+    int price;
     String currency;
     String address;
-    Number size;
-    Number coveredSize;
+    int size;
+    int coveredSize;
     IdName environment;
-    Number priority;
+    int priority;
     String[] pictures;
     Video video;
 
@@ -36,11 +36,11 @@ public class PublicationDetails {
         this.precio = precio;
     }
 
-    public Number getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Number id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,11 +52,11 @@ public class PublicationDetails {
         this.title = title;
     }
 
-    public Number getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Number price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -76,19 +76,19 @@ public class PublicationDetails {
         this.address = address;
     }
 
-    public Number getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(Number size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
-    public Number getCoveredSize() {
+    public int getCoveredSize() {
         return coveredSize;
     }
 
-    public void setCoveredSize(Number coveredSize) {
+    public void setCoveredSize(int coveredSize) {
         this.coveredSize = coveredSize;
     }
 
@@ -100,11 +100,11 @@ public class PublicationDetails {
         this.environment = environment;
     }
 
-    public Number getPriority() {
+    public int getPriority() {
         return priority;
     }
 
-    public void setPriority(Number priority) {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
