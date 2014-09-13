@@ -54,22 +54,4 @@ public class DefinitiosDataManager {
             }
         });
     }
-
-    public void getPublicationsList(final CallbackHandler callback) throws JSONException {
-        AsyncRestHttpClient.get("5412770f86a6451303a1c311", null, new MileenJsonResponseHandler(callback) {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    Object payload = response.get("payload");
-                    Type collectionType = new TypeToken<Collection<PublicationDetails>>(){}.getType();
-                    Gson gson = new Gson();
-                    Collection<PublicationDetails> publications = gson.fromJson(payload.toString(), collectionType);
-                    callback.onComplete(publications);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 }
