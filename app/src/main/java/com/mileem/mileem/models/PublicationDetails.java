@@ -4,17 +4,17 @@ package com.mileem.mileem.models;
  * Created by Juan-Asus on 09/09/2014.
  */
 public class PublicationDetails {
-    int id;
-    String title;
-    int price;
-    String currency;
-    String address;
-    int size;
-    int coveredSize;
-    IdName environment;
-    int priority;
-    String[] pictures;
-    Video video;
+    private int id;
+    private String title;
+    private int price;
+    private String currency;
+    private String address;
+    private int size;
+    private int coveredSize;
+    private IdName environment;
+    private int priority;
+    private String[] pictures;
+    private Video video;
 
     //Deprecated
     //Todo Estos atributos deben ser borrados cuando se saquen las responses moqueadas.
@@ -24,6 +24,7 @@ public class PublicationDetails {
     String m2;
     String cantAmbientes;
     String precio;
+    private TipoPublicacion tipo;
 
     public PublicationDetails() {
     }
@@ -162,5 +163,9 @@ public class PublicationDetails {
 
     public void setPrecio(String precio) {
         this.precio = precio;
+    }
+
+    public TipoPublicacion getTipo() {
+        return tipo;
     }
 }
