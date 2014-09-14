@@ -19,12 +19,16 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-public class DefinitiosDataManager {
+public class DefinitionsDataManager {
+    public static abstract class DefinitionsCallbackHandler extends CallbackHandler {
+        public abstract void onComplete();
+    }
 
-    public void getDefinitions(final CallbackHandler callback) throws JSONException {
-        AsyncRestHttpClient.get("5412822386a6451704a1c314", null, new MileenJsonResponseHandler(callback) {
+    public void getDefinitions(final DefinitionsCallbackHandler callbackHandler) throws JSONException {
+        AsyncRestHttpClient.get("", null, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JSONObject payload = response.getJSONObject("payload");
@@ -46,8 +50,7 @@ public class DefinitiosDataManager {
                     Object operationTypes = payload.get("operation_types");
                     Collection<IdName> operationTypesCollection = gson.fromJson(operationTypes.toString(), collectionType);
                     DefinitionsManager.getInstance().setOperationTypesCollection(operationTypesCollection);
-
-                    callback.onComplete(null);
+                    callbackHandler.onComplete();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

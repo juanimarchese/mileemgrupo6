@@ -13,8 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -22,23 +21,27 @@ import java.util.HashMap;
  * Created by ramirodiaz on 13/09/14.
  */
 public class PublicationsDataManager {
+    public static abstract class PublicationsCallbackHandler extends CallbackHandler {
+        public abstract void onComplete(Collection collection);
+    }
+
     private Collection <PublicationDetails> publications = null;
     private PublicationFilter filter = null;
     private Pagination pagination = null;
     private PublicationOrder order = null;
 
-    HashMap<PublicationOrder.OrderBy, String > orderByMap = new HashMap<PublicationOrder.OrderBy, String>(){{
+    private HashMap<PublicationOrder.OrderBy, String > orderByMap = new HashMap<PublicationOrder.OrderBy, String>(){{
         put(PublicationOrder.OrderBy.PUBLISH_DATE,"create_at");
         put(PublicationOrder.OrderBy.PRICE,"price");
         put(PublicationOrder.OrderBy.PRIORITY,"publication_type_id");
     }};
 
-    HashMap<PublicationOrder.Order, String > orderMap = new HashMap<PublicationOrder.Order, String>(){{
+    private HashMap<PublicationOrder.Order, String > orderMap = new HashMap<PublicationOrder.Order, String>(){{
         put(PublicationOrder.Order.ASC,"asc");
         put(PublicationOrder.Order.DESC,"desc");
     }};
 
-    public Boolean checkMinimumFilter(PublicationFilter filter) {
+    private Boolean checkMinimumFilter(PublicationFilter filter) {
         Boolean existNeighborhoods = filter != null && filter.getNeighborhoods() != null;
         Boolean existEnvironments = filter != null && filter.getEnvironments() != null;
         Boolean existPropertyTypes = filter != null && filter.getPropertyTypes() != null;
@@ -46,7 +49,7 @@ public class PublicationsDataManager {
         return existNeighborhoods && existEnvironments && existPropertyTypes && existOperationTypes;
     }
 
-    public String orderToString (PublicationOrder order) {
+    private String orderToString (PublicationOrder order) {
         String orderByString = this.orderByMap.get(order.getOrderBy());
         String orderString = this.orderMap.get(order.getOrder());
         StringBuilder value = new StringBuilder();
@@ -54,7 +57,7 @@ public class PublicationsDataManager {
         return value.toString();
     };
 
-    public String toCommaDelimitedValue (int[] array) {
+    private String toCommaDelimitedValue (int[] array) {
         if (array.length > 0) {
             StringBuilder value = new StringBuilder();
             for (int n : array) {
@@ -67,7 +70,7 @@ public class PublicationsDataManager {
         }
     }
 
-    public RequestParams prepareParams(Pagination pagination) {
+    private RequestParams prepareParams(Pagination pagination) {
         RequestParams params = new RequestParams();
         params.put("neighborhoods", toCommaDelimitedValue(this.filter.getNeighborhoods()));
         params.put("propertyTypes", toCommaDelimitedValue(this.filter.getPropertyTypes()));
@@ -108,9 +111,9 @@ public class PublicationsDataManager {
         }
     }
 
-    public void getPublicationsList(PublicationFilter filter, final Pagination pagination, PublicationOrder order, final CallbackHandler callback) throws JSONException {
+    public void getPublicationsList(PublicationFilter filter, final Pagination pagination, PublicationOrder order, final PublicationsCallbackHandler callbackHandler) throws JSONException {
         if (!this.checkMinimumFilter(filter)) {
-            callback.onFailure(new Error("'filter' must have, at least, 'Neighborhoods', 'Environments', 'PropertyTypes' and 'OperationType'"));
+            callbackHandler.onFailure(new Error("'filter' must have, at least, 'Neighborhoods', 'Environments', 'PropertyTypes' and 'OperationType'"));
             return;
         }
         this.publications = null;
@@ -120,20 +123,20 @@ public class PublicationsDataManager {
 
         RequestParams params = this.prepareParams(this.pagination);
 
-        AsyncRestHttpClient.get("property-search", params, new MileenJsonResponseHandler(callback) {
+        AsyncRestHttpClient.get("property-search", params, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 PublicationsDataManager.this.parseResponse(response);
-                callback.onComplete(PublicationsDataManager.this.publications);
+                callbackHandler.onComplete(PublicationsDataManager.this.publications);
 
             }
         });
     }
 
-    public void getNextPage(final CallbackHandler callback) throws JSONException {
+    public void getNextPage(final PublicationsCallbackHandler callbackHandler) throws JSONException {
         if (pagination.getLastPageReached()) {
-            callback.onFailure(new Error("Last page reached"));
+            callbackHandler.onFailure(new Error("Last page reached"));
             return;
         }
         final int nextOffset = pagination.getOffset() + 1;
@@ -141,14 +144,13 @@ public class PublicationsDataManager {
         tempPagination.setOffset(nextOffset);
         RequestParams params = this.prepareParams(tempPagination);
 
-        AsyncRestHttpClient.get("property-search", params, new MileenJsonResponseHandler(callback) {
+        AsyncRestHttpClient.get("property-search", params, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 PublicationsDataManager.this.parseResponse(response);
                 PublicationsDataManager.this.pagination.setOffset(nextOffset);
-                callback.onComplete(PublicationsDataManager.this.publications);
-
+                callbackHandler.onComplete(PublicationsDataManager.this.publications);
             }
         });
     }
