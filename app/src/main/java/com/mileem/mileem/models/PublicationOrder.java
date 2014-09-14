@@ -14,7 +14,7 @@ public class PublicationOrder {
     }
 
     public enum Order {
-        ASC, DES;
+        ASC, DESC;
     }
 
     OrderBy orderBy;
