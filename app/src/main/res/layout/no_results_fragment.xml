@@ -4,26 +4,31 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:weightSum="1">
+              android:weightSum="1"
+    android:background="#fff0f0f0">
 
 
     <ImageView
             android:id="@+id/noresult"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:src="@drawable/noresult"
             android:layout_alignParentTop="true" android:adjustViewBounds="false"
             android:layout_alignParentRight="false" android:layout_alignParentLeft="false"
-            android:scaleType="fitStart"/>
+            android:scaleType="fitStart"
+        android:layout_above="@+id/noresulttxt"
+        android:layout_margin="1dp" />
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="No se han encontrado resultados para la búqueda realizada"
             android:id="@+id/noresulttxt"
-            android:textSize="20dp"
+            android:textSize="14pt"
 
             android:gravity="center_horizontal"
             android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-            android:layout_marginBottom="50dp"/>
+            android:layout_marginBottom="50dp"
+        android:textColor="#808080"
+        android:typeface="sans" />
 </RelativeLayout>
