@@ -159,7 +159,8 @@ public class PublicationsDataManager {
             callbackHandler.onFailure(new Error("Last page reached"));
             return;
         }
-        final int nextOffset = pagination.getOffset() + 1;
+
+        final int nextOffset = pagination.getAmount() * (pagination.getOffset() + 1);
         Pagination tempPagination = new Pagination(pagination.getAmount());
         tempPagination.setOffset(nextOffset);
         RequestParams params = this.prepareParams(tempPagination);
