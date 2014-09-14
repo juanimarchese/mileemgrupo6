@@ -16,4 +16,19 @@
         <item>Venta</item>
 
     </string-array>
+
+    <string-array name="ambientes">
+        <item>1 amb</item>
+        <item>2 amb</item>
+        <item>3 amb</item>
+        <item>4 amb</item>
+        <item>5 amb</item>
+        <item>6 amb</item>
+        <item>7 amb</item>
+        <item>8 amb</item>
+        <item>9 amb</item>
+        <item>10 amb</item>
+        <item>11 amb</item>
+        <item>12 amb</item>
+    </string-array>
 </resources>
