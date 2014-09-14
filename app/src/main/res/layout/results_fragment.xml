@@ -5,19 +5,21 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:padding="2dp">
-    <!--<ListView
-
-            android:id="@+id/publicationList"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1" >
-    </ListView>-->
-    <ListView
+<!--    <ListView
             android:id="@+id/publicationList"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="@color/list_divider_p"
             android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_row_selector" />
+            android:listSelector="@drawable/list_row_selector" />-->
+
+    <com.mileem.mileem.widgets.EndlessListView
+            android:id="@+id/publicationList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/list_divider_p"
+            android:listSelector="@drawable/list_row_selector"
+            android:dividerHeight="1dp">
+    </com.mileem.mileem.widgets.EndlessListView>
 
 </LinearLayout>
