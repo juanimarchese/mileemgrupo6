@@ -14,18 +14,19 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by ramirodiaz on 13/09/14.
  */
 public class PublicationsDataManager {
     public static abstract class PublicationsCallbackHandler extends CallbackHandler {
-        public abstract void onComplete(Collection collection);
+        public abstract void onComplete(ArrayList collection);
     }
-
-    private Collection <PublicationDetails> publications = null;
+    private ArrayList <Integer> publicationsIds = null;
     private PublicationFilter filter = null;
     private Pagination pagination = null;
     private PublicationOrder order = null;
@@ -90,25 +91,45 @@ public class PublicationsDataManager {
         return params;
     }
 
-    private void parseResponse(JSONObject response) {
+    private void addNewIdsInPublicationsIds(ArrayList collection) {
+     Iterator<PublicationDetails> iterator = collection.iterator();
+     while (iterator.hasNext()) {
+         PublicationDetails publication = iterator.next();
+         int id = publication.getId();
+         publicationsIds.add(id);
+     }
+    }
+
+    private ArrayList<PublicationDetails> parseResponse(JSONObject response) {
+        ArrayList<PublicationDetails> newPageCollection = null;
         try{
             JSONObject payload = response.getJSONObject("payload");
             Object publications = payload.get("publications");
             Boolean lastPageReached = payload.getBoolean("lastPageReached");
-            Type collectionType = new TypeToken<Collection<PublicationDetails>>() {
+            Type collectionType = new TypeToken<ArrayList<PublicationDetails>>() {
             }.getType();
             Gson gson = new Gson();
-
-            if (this.publications == null)
-                this.publications = gson.fromJson(publications.toString(), collectionType);
-            else {
-                Collection<PublicationDetails> newPageCollection = gson.fromJson(publications.toString(), collectionType);
-                this.publications.addAll(newPageCollection);
-            }
+            newPageCollection = gson.fromJson(publications.toString(), collectionType);
+            newPageCollection =  this.removeDuplicatedIds(newPageCollection);
+            this.addNewIdsInPublicationsIds(newPageCollection);
             this.pagination.setLastPageReached(lastPageReached);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return newPageCollection;
+    }
+
+    private ArrayList<PublicationDetails> removeDuplicatedIds(ArrayList <PublicationDetails> collection) {
+        ArrayList <PublicationDetails> copyCollection = (ArrayList <PublicationDetails>) collection.clone();
+        Iterator<PublicationDetails> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            PublicationDetails publication = iterator.next();
+            int id = publication.getId();
+            if (publicationsIds.contains(id)) {
+                copyCollection.remove(publication);
+            }
+        }
+        return copyCollection;
     }
 
     public void getPublicationsList(PublicationFilter filter, final Pagination pagination, PublicationOrder order, final PublicationsCallbackHandler callbackHandler) throws JSONException {
@@ -116,7 +137,7 @@ public class PublicationsDataManager {
             callbackHandler.onFailure(new Error("'filter' must have, at least, 'Neighborhoods', 'Environments', 'PropertyTypes' and 'OperationType'"));
             return;
         }
-        this.publications = null;
+        this.publicationsIds = new ArrayList<Integer>();
         this.filter = filter;
         this.order = (order == null) ?new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC) : order;
         this.pagination = pagination;
@@ -127,9 +148,8 @@ public class PublicationsDataManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                PublicationsDataManager.this.parseResponse(response);
-                callbackHandler.onComplete(PublicationsDataManager.this.publications);
-
+                ArrayList<PublicationDetails> publications = PublicationsDataManager.this.parseResponse(response);
+                callbackHandler.onComplete(publications);
             }
         });
     }
@@ -148,9 +168,9 @@ public class PublicationsDataManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-                PublicationsDataManager.this.parseResponse(response);
+                ArrayList<PublicationDetails> publications = PublicationsDataManager.this.parseResponse(response);
                 PublicationsDataManager.this.pagination.setOffset(nextOffset);
-                callbackHandler.onComplete(PublicationsDataManager.this.publications);
+                callbackHandler.onComplete(publications);
             }
         });
     }

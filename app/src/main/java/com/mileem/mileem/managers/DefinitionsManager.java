@@ -1,5 +1,6 @@
 package com.mileem.mileem.managers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import com.mileem.mileem.models.IdName;
 
@@ -10,10 +11,10 @@ import com.mileem.mileem.models.IdName;
 public class DefinitionsManager {
     private static volatile DefinitionsManager instance = null;
 
-    private Collection<IdName> neightboardsCollection = null;
-    private Collection<IdName> environmentsTypesCollection = null;
-    private Collection<IdName> operationTypesCollection = null;
-    private Collection<IdName> propertyTypesCollection = null;
+    private ArrayList<IdName> neightboardsCollection = null;
+    private ArrayList<IdName> environmentsTypesCollection = null;
+    private ArrayList<IdName> operationTypesCollection = null;
+    private ArrayList<IdName> propertyTypesCollection = null;
     private DefinitionsManager() {};
 
     public static DefinitionsManager getInstance() {
@@ -28,35 +29,35 @@ public class DefinitionsManager {
         return instance;
     }
 
-    public Collection<IdName> getNeightboardsCollection() {
+    public ArrayList<IdName> getNeightboardsCollection() {
         return neightboardsCollection;
     }
 
-    public void setNeightboardsCollection(Collection<IdName> neightboardsCollection) {
+    public void setNeightboardsCollection(ArrayList<IdName> neightboardsCollection) {
         this.neightboardsCollection = neightboardsCollection;
     }
 
-    public Collection<IdName> getEnvironmentsTypesCollection() {
+    public ArrayList<IdName> getEnvironmentsTypesCollection() {
         return environmentsTypesCollection;
     }
 
-    public void setEnvironmentsTypesCollection(Collection<IdName> environmentsTypesCollection) {
+    public void setEnvironmentsTypesCollection(ArrayList<IdName> environmentsTypesCollection) {
         this.environmentsTypesCollection = environmentsTypesCollection;
     }
 
-    public Collection<IdName> getOperationTypesCollection() {
+    public ArrayList<IdName> getOperationTypesCollection() {
         return operationTypesCollection;
     }
 
-    public void setOperationTypesCollection(Collection<IdName> operationTypesCollection) {
+    public void setOperationTypesCollection(ArrayList<IdName> operationTypesCollection) {
         this.operationTypesCollection = operationTypesCollection;
     }
 
-    public Collection<IdName> getPropertyTypesCollection() {
+    public ArrayList<IdName> getPropertyTypesCollection() {
         return propertyTypesCollection;
     }
 
-    public void setPropertyTypesCollection(Collection<IdName> propertyTypesCollection) {
+    public void setPropertyTypesCollection(ArrayList<IdName> propertyTypesCollection) {
         this.propertyTypesCollection = propertyTypesCollection;
     }
 }
