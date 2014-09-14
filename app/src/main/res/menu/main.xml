@@ -2,8 +2,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.MainActivity" >
-    <!--<item android:id="@+id/action_settings"
-        android:title="@string/action_about"
-        android:orderInCategory="100"  />
-        &lt;!&ndash;app:showAsAction="never"&ndash;&gt;-->
+    <item android:id="@+id/action_search"
+          android:icon="@drawable/ic_action_search"
+          android:title="@string/action_search"
+          android:showAsAction="ifRoom" />
+    <item android:id="@+id/action_sort"
+          android:icon="@drawable/ic_action_sort_by_size"
+          android:title="@string/action_sort"
+          android:showAsAction="ifRoom" >
+        <menu>
+            <item
+                    android:id="@+id/precio_asc"
+                    android:title="Precio ascendente" />
+            <item
+                    android:id="@+id/precio_dsc"
+                    android:title="Precio descendente" />
+            <item
+                    android:id="@+id/fecha_asc"
+                    android:title="Fecha ascendente" />
+            <item
+                    android:id="@+id/fecha_dsc"
+                    android:title="Fecha descendente" />
+            <item
+                    android:id="@+id/relevancia_asc"
+                    android:title="Relevancia ascendente" />
+            <item
+                    android:id="@+id/relevancia_dsc"
+                    android:title="Relevancia descendente" />
+        </menu>
+    </item>
 </menu>

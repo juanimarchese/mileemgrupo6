@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:weightSum="1">
+
+
+    <ImageView
+            android:id="@+id/noresult"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/noresult"
+            android:layout_alignParentTop="true" android:adjustViewBounds="false"
+            android:layout_alignParentRight="false" android:layout_alignParentLeft="false"
+            android:scaleType="fitStart"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No se han encontrado resultados para la búqueda realizada"
+            android:id="@+id/noresulttxt"
+            android:textSize="20dp"
+
+            android:gravity="center_horizontal"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_marginBottom="50dp"/>
+</RelativeLayout>

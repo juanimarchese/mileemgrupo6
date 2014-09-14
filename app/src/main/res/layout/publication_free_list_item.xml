@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_row_selector"
+                android:padding="8dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false">
+
+    <!-- Thumbnail Image -->
+    <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/prop_imagen"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="8dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+    <TextView
+            android:id="@+id/prop_direccion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_alignTop="@+id/prop_imagen"
+            android:layout_toRightOf="@+id/prop_imagen"
+            android:textSize="@dimen/direccion"
+            android:textStyle="bold"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+    <TextView
+            android:id="@+id/prop_m2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prop_direccion"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/prop_imagen"
+            android:textColor="@color/m2"
+            android:textSize="@dimen/m2"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+    <TextView
+            android:id="@+id/separator"
+            android:text="|"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prop_direccion"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@+id/prop_m2"
+            android:textColor="@color/ambientes"
+            android:textSize="15dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+    <TextView
+            android:id="@+id/prop_ambientes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/prop_direccion"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@+id/separator"
+            android:textColor="@color/ambientes"
+            android:textSize="@dimen/ambientes"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
+
+
+    <TextView
+           android:id="@+id/prop_precio"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_toLeftOf="@+id/arrow"
+           android:layout_below="@id/prop_direccion"
+           android:layout_marginTop="3dp"
+           android:layout_marginRight="3dp"
+           android:textSize="@dimen/precio"
+           android:textColor="@color/precio"
+           android:focusable="false"
+           android:focusableInTouchMode="false"/>
+
+   <ImageView
+           android:id="@+id/arrow"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_centerVertical="true"
+           android:focusable="false"
+           android:focusableInTouchMode="false"/>
+
+</RelativeLayout>

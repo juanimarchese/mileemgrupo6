@@ -2,42 +2,46 @@ package com.mileem.mileem.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.PublicationListAdapter;
 import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.networking.MockDataManager;
+import com.mileem.mileem.widgets.EndlessListView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Juan-Asus on 09/09/2014.
  */
-public class ResultsFragment extends BaseFragment {
+public class ResultsFragment extends BaseFragment implements EndlessListView.EndLessListener{
 
     public static final String TAG = ResultsFragment.class.getSimpleName();
 
-    private static final String url = "http://www.omdbapi.com/?t=True%20Grit&y=1969";    //TODO - Cambiar a la url donde vienen los datos
     private ProgressDialog pDialog;
     private ArrayList<PublicationDetails> publicationList = new ArrayList<PublicationDetails>();
-    private ListView listView;
+    private EndlessListView listView;
     private PublicationListAdapter adapter;
+    private Context context;
+
+    private int pagina = 0;
 
     public ResultsFragment() {
         super(TAG);
@@ -53,87 +57,60 @@ public class ResultsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.results_fragment, container, false);
-        listView = (ListView) rootView.findViewById(R.id.publicationList);
+        context = rootView.getContext();
+        listView = (EndlessListView) rootView.findViewById(R.id.publicationList);
+        listView.setLoadingView(R.layout.loading_layout);
+        listView.setListener(this);
         adapter = new PublicationListAdapter(publicationList,rootView.getContext());
         listView.setAdapter(adapter);
-
-        requestData(rootView);
-        return rootView;
-    }
-
-    private void requestData(View rootView) {
-        final Context context = rootView.getContext();
-        pDialog = new ProgressDialog(context);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Buscando...");
-        pDialog.show();
-
-          for(int i=0; i<10;i++){
-        PublicationDetails publicacion = new PublicationDetails();
-        publicacion.setPrecio("$250000");
-        publicacion.setThumbnailUrl("http://avatarbox.net/avatars/img19/zhou_ming_avatar_picture_49967.jpg");
-        publicacion.setDireccion("Direccion" + i );
-        publicacion.setM2("1000m2");
-        publicacion.setCantAmbientes("1 ambiente");
-
-        // adding publicacion to array
-        publicationList.add(publicacion);
-          }
-        hidePDialog();
-       /* // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        hidePDialog();
-
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-
-                                JSONObject obj = response.getJSONObject(i);
-                                //TODO - Generar el objeto a partir de la response
-                                PublicationDetails publicacion = new PublicationDetails();
-                                publicacion.setPrecio(obj.getString("Title"));
-                                publicacion.setThumbnailUrl(obj.getString("Poster"));
-                                publicacion.setDireccion(String.valueOf(obj.get("Runtime")));
-                                publicacion.setM2(String.valueOf(obj.getInt("Year")));
-                                publicacion.setCantAmbientes(String.valueOf(obj.getInt("Released")));
-
-                               // adding publicacion to array
-                                publicationList.add(publicacion);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                    }
-                }, new Response.ErrorListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Toast.makeText(getActivity(), "Error al tratar de obtener los datos", Toast.LENGTH_LONG).show();
-                ((MainActivity) context).displayViewForMenu(0);
-                hidePDialog();
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(view.getContext(), "Vista de Detalles", Toast.LENGTH_LONG).show();
             }
         });
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);*/
+
+        requestFirstPageData();
+        return rootView;
     }
+
+    private void requestFirstPageData() {
+        showPDialog();
+        pagina = 0;
+        publicationList.clear();
+        requestData();
+    }
+
+
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden){
-            requestData(this.getView());
+            //Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
+            requestFirstPageData();
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_sort).setVisible(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.action_sort:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -143,6 +120,13 @@ public class ResultsFragment extends BaseFragment {
         hidePDialog();
     }
 
+    private void showPDialog() {
+        pDialog = new ProgressDialog(context);
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Buscando...");
+        pDialog.show();
+    }
+
     private void hidePDialog() {
         if (pDialog != null) {
             pDialog.dismiss();
@@ -150,4 +134,36 @@ public class ResultsFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void loadData() {
+        pagina += 1;
+        //	new data loader
+        requestData();
+    }
+
+
+    private void requestData() {
+        new FakeLoader().execute();
+    }
+
+    private class FakeLoader extends AsyncTask<Void,Void,List<PublicationDetails>> {
+
+        @Override
+        protected List<PublicationDetails> doInBackground(Void... params) {
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return MockDataManager.getPublicationsByPage(pagina);
+        }
+
+        @Override
+        protected void onPostExecute(List<PublicationDetails> result) {
+            super.onPostExecute(result);
+            listView.addNewData(result);
+            hidePDialog();
+        }
+    }
 }
