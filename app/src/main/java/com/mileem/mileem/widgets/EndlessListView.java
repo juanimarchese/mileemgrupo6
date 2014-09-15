@@ -8,7 +8,10 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
 import com.mileem.mileem.adapters.PublicationListAdapter;
 import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.networking.PublicationsDataManager;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class EndlessListView extends ListView implements OnScrollListener {
@@ -18,6 +21,10 @@ public class EndlessListView extends ListView implements OnScrollListener {
     private boolean isLoading;
     private EndLessListener listener;
     private PublicationListAdapter adapter;
+    private int currentFirstVisibleItem;
+    private int currentVisibleItemCount;
+    private int currentTotalItemCount;
+    private int currentScrollState;
 
     public EndlessListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -40,47 +47,60 @@ public class EndlessListView extends ListView implements OnScrollListener {
         this.context = context;
     }
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-    }
 
     //	4
-    public void addNewData(List<PublicationDetails> data) {
+    public void addNewData(ArrayList<PublicationDetails> data) {
         this.removeFooterView(footer);
-        adapter.addAll(data);
-        adapter.notifyDataSetChanged();
+        if(!data.isEmpty()){
+            adapter.addAll(data);
+            adapter.notifyDataSetChanged();
+        }
         isLoading = false;
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
+        this.currentFirstVisibleItem = firstVisibleItem;
+        this.currentVisibleItemCount = visibleItemCount;
+        this.currentTotalItemCount = totalItemCount;
+    }
 
-        if(getAdapter() == null)
-            return;
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+            this.currentScrollState = scrollState;
+            this.isScrollCompleted();
 
-        if(getAdapter().getCount() == 0)
-            return;
+    }
 
-        int l = visibleItemCount + firstVisibleItem;
+    private void isScrollCompleted() {
+        if (this.currentVisibleItemCount > 0 && this.currentScrollState == SCROLL_STATE_IDLE) {
+            if(getAdapter() == null)
+                return;
 
-        if(l >= totalItemCount && !isLoading){
+            if(getAdapter().getCount() == 0)
+                return;
 
-            //	add footer layout
-            this.addFooterView(footer);
+            int l = currentVisibleItemCount + currentFirstVisibleItem;
+            if (l >= currentTotalItemCount  && !isLoading ){
 
-            //	set progress boolean
-            isLoading = true;
+                //	add footer layout
+                this.addFooterView(footer);
+                //	set progress boolean
+                isLoading = true;
 
-            //	call interface method to load new data
-            listener.loadData();
+                //	call interface method to load new data
+                listener.loadData();
+            }
         }
     }
 
     //	Calling order from MainActivity
     //	1
     public void setLoadingView(int resId) {
-        footer = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(resId, null);		//		footer = (View)inflater.inflate(resId, null);
+        //footer = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(resId, null);		//		footer = (View)inflater.inflate(resId, null);
+        LayoutInflater inflater = (LayoutInflater) super.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        footer = (View) inflater.inflate(resId, null);
         this.addFooterView(footer);
     }
 

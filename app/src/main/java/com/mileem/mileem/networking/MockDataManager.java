@@ -15,11 +15,11 @@ public class MockDataManager {
         List publicationList = new ArrayList<PublicationDetails>();
         for(int i=0+((pageNumber)*5); i<5*(pageNumber+1);i++){
             PublicationDetails publicacion = new PublicationDetails();
-            publicacion.setPrecio("U$D99999999");
+            /*publicacion.setPrecio("U$D99999999");
             publicacion.setThumbnailUrl("http://avatarbox.net/avatars/img19/zhou_ming_avatar_picture_49967.jpg");
             publicacion.setDireccion("Av Consejal Tribulato " + i );
             publicacion.setM2("1000 m2");
-            publicacion.setCantAmbientes("12 amb");
+            publicacion.setCantAmbientes("12 amb");*/
 
             // adding publicacion to array
 

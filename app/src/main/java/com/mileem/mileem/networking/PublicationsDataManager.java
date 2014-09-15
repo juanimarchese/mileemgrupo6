@@ -156,7 +156,8 @@ public class PublicationsDataManager {
 
     public void getNextPage(final PublicationsCallbackHandler callbackHandler) throws JSONException {
         if (pagination.getLastPageReached()) {
-            callbackHandler.onFailure(new Error("Last page reached"));
+            //callbackHandler.onFailure(new Error("Last page reached"));
+            callbackHandler.onComplete(new ArrayList());
             return;
         }
 

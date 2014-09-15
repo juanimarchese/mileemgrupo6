@@ -18,8 +18,12 @@ import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.PublicationListAdapter;
+import com.mileem.mileem.models.Pagination;
 import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.models.PublicationFilter;
+import com.mileem.mileem.models.PublicationOrder;
 import com.mileem.mileem.networking.MockDataManager;
+import com.mileem.mileem.networking.PublicationsDataManager;
 import com.mileem.mileem.widgets.EndlessListView;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +44,9 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     private EndlessListView listView;
     private PublicationListAdapter adapter;
     private Context context;
+    private PublicationsDataManager dm;
+    private PublicationOrder order;
+    private PublicationFilter filter;
 
     private int pagina = 0;
 
@@ -70,8 +77,15 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             }
         });
 
-
+        //TODO Absorver estos valores de la vista, de alguna madera(Puede ser un objetod e modelo en comun en la activity?)
+        int[] neighborhoods = {};
+        int[] environments = {};
+        int[] propertyTypes = {};
+        int[] operationTypes = {};
+        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
+        order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
         requestFirstPageData();
+
         return rootView;
     }
 
@@ -79,10 +93,38 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         showPDialog();
         pagina = 0;
         publicationList.clear();
-        requestData();
+        //requestData();
+
+        Pagination pagination = new Pagination(10);
+
+        dm = new PublicationsDataManager();
+        try {
+            dm.getPublicationsList(filter, pagination, order, new PublicationsDataManager.PublicationsCallbackHandler() {
+                @Override
+                public void onComplete(ArrayList collection) {
+                    listView.addNewData(collection);
+                    hidePDialog();
+                }
+
+                @Override
+                public void onFailure(Error error) {
+                    showError();
+                    hidePDialog();
+                }
+
+            });
+
+        } catch (JSONException e) {
+            showError();
+            hidePDialog();
+        }
+
     }
 
-
+    private void showError() {
+        Toast.makeText(getActivity(), "Error al tratar de obtener los datos", Toast.LENGTH_LONG).show();
+        ((MainActivity) context).displayViewForMenu(0);
+    }
 
 
     @Override
@@ -108,6 +150,8 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             case R.id.action_search:
                 return true;
             case R.id.action_sort:
+                order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
+                requestFirstPageData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -138,32 +182,24 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public void loadData() {
         pagina += 1;
         //	new data loader
-        requestData();
-    }
+        try {
+            dm.getNextPage(new PublicationsDataManager.PublicationsCallbackHandler() {
+                @Override
+                public void onComplete(ArrayList collection) {
+                    listView.addNewData(collection);
+                }
 
+                @Override
+                public void onFailure(Error error) {
+                    showError();
+                }
 
-    private void requestData() {
-        new FakeLoader().execute();
-    }
+            });
 
-    private class FakeLoader extends AsyncTask<Void,Void,List<PublicationDetails>> {
-
-        @Override
-        protected List<PublicationDetails> doInBackground(Void... params) {
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return MockDataManager.getPublicationsByPage(pagina);
-        }
-
-        @Override
-        protected void onPostExecute(List<PublicationDetails> result) {
-            super.onPostExecute(result);
-            listView.addNewData(result);
-            hidePDialog();
+        } catch (JSONException e) {
+            showError();
         }
     }
+
+
 }
