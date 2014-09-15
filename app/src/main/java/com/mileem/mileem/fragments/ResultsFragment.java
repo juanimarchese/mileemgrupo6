@@ -65,6 +65,26 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.results_fragment, container, false);
         context = rootView.getContext();
+        buildEndlessListView(rootView);
+
+        //TODO Absorver estos valores de la vista, de alguna madera(Puede ser un objetod e modelo en comun en la activity?)
+        createDefaultRequestInfo();
+        requestFirstPageData();
+
+        return rootView;
+    }
+
+    private void createDefaultRequestInfo() {
+        int[] neighborhoods = {};
+        int[] environments = {};
+        int[] propertyTypes = {};
+        int[] operationTypes = {};
+        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
+        order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
+    }
+
+
+    private void buildEndlessListView(View rootView) {
         listView = (EndlessListView) rootView.findViewById(R.id.publicationList);
         listView.setLoadingView(R.layout.loading_layout);
         listView.setListener(this);
@@ -76,17 +96,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 Toast.makeText(view.getContext(), "Vista de Detalles", Toast.LENGTH_LONG).show();
             }
         });
-
-        //TODO Absorver estos valores de la vista, de alguna madera(Puede ser un objetod e modelo en comun en la activity?)
-        int[] neighborhoods = {};
-        int[] environments = {};
-        int[] propertyTypes = {};
-        int[] operationTypes = {};
-        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
-        order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
-        requestFirstPageData();
-
-        return rootView;
     }
 
     private void requestFirstPageData() {
@@ -127,6 +136,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
 
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener los datos", Toast.LENGTH_LONG).show();
+        createDefaultRequestInfo();
         ((MainActivity) context).displayViewForMenu(0);
     }
 
@@ -144,7 +154,26 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(true);
-        menu.findItem(R.id.action_sort).setVisible(true);
+        MenuItem sortItem = menu.findItem(R.id.action_sort);
+        sortItem.setVisible(true);
+        buildOrderSubMenuItem(sortItem, R.id.precio_asc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.ASC);
+        buildOrderSubMenuItem(sortItem, R.id.precio_dsc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.DESC);
+        buildOrderSubMenuItem(sortItem, R.id.relevancia_asc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
+        buildOrderSubMenuItem(sortItem, R.id.relevancia_dsc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.DESC);
+        buildOrderSubMenuItem(sortItem, R.id.fecha_asc, PublicationOrder.OrderBy.PUBLISH_DATE, PublicationOrder.Order.ASC);
+        buildOrderSubMenuItem(sortItem, R.id.fecha_dsc,PublicationOrder.OrderBy.PUBLISH_DATE,PublicationOrder.Order.DESC);
+    }
+
+    private void buildOrderSubMenuItem(MenuItem sortItem,int subItemId, final PublicationOrder.OrderBy orderBy, final PublicationOrder.Order pubOrder) {
+        MenuItem porderItem = sortItem.getSubMenu().findItem(subItemId);
+        porderItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                order = new PublicationOrder(orderBy, pubOrder);
+                requestFirstPageData();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -154,8 +183,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             case R.id.action_search:
                 return true;
             case R.id.action_sort:
-                order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
-                requestFirstPageData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
