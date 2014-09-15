@@ -104,11 +104,10 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 public void onComplete(ArrayList collection) {
                     if(!collection.isEmpty()){
                         listView.addNewData(collection);
-                        hidePDialog();
                     } else{
-                        hidePDialog();
                         ((MainActivity) context).displayView(new NoResultsFragment());
                     }
+                    hidePDialog();
                 }
 
                 @Override
