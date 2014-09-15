@@ -27,7 +27,11 @@
             android:textSize="@dimen/direccion"
             android:textStyle="bold"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:ellipsize="end"
+            android:focusableInTouchMode="false"
+        android:lines="1"
+        android:minLines="1"
+        android:layout_marginRight="3dp" />
 
     <TextView
             android:id="@+id/prop_m2"
@@ -49,7 +53,7 @@
             android:layout_below="@id/prop_direccion"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="3dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="3dp"
             android:layout_toRightOf="@+id/prop_m2"
             android:textColor="@color/ambientes"
             android:textSize="18dp"
