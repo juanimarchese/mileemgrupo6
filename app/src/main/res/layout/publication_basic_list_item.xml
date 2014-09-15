@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60px"
                 android:background="@drawable/list_row_selector"
                 android:padding="8dp"
                 android:focusable="false"
@@ -10,8 +10,8 @@
     <!-- Thumbnail Image -->
     <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/prop_imagen"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="8dp"
             android:focusable="false"
@@ -24,10 +24,12 @@
             android:layout_marginTop="5dp"
             android:layout_alignTop="@+id/prop_imagen"
             android:layout_toRightOf="@+id/prop_imagen"
-            android:textSize="@dimen/direccion"
-            android:textStyle="bold"
+
+            android:textStyle="bold|normal"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+        android:textSize="@dimen/direccion"
+        android:textColor="#ffffffff" />
 
     <TextView
             android:id="@+id/prop_m2"
@@ -36,10 +38,11 @@
             android:layout_below="@id/prop_direccion"
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@+id/prop_imagen"
-            android:textColor="@color/m2"
+            android:textColor="#ffffffff"
             android:textSize="@dimen/m2"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+        android:textStyle="bold|normal" />
 
     <TextView
             android:id="@+id/separator"
@@ -51,10 +54,11 @@
             android:layout_marginRight="3dp"
             android:layout_marginTop="1dp"
             android:layout_toRightOf="@+id/prop_m2"
-            android:textColor="@color/ambientes"
+            android:textColor="#ffffffff"
             android:textSize="15dp"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+        android:textStyle="bold|normal" />
 
     <TextView
             android:id="@+id/prop_ambientes"
@@ -80,7 +84,8 @@
             android:textSize="@dimen/precio"
             android:textColor="@color/precio"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+        android:textStyle="bold|normal" />
 
     <ImageView
             android:id="@+id/arrow"

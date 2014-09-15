@@ -17,18 +17,22 @@
             android:layout_alignParentRight="false" android:layout_alignParentLeft="false"
             android:scaleType="fitStart"
         android:layout_above="@+id/noresulttxt"
-        android:layout_margin="1dp" />
+        android:layout_margin="3dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp" />
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="No se han encontrado resultados para la búqueda realizada"
             android:id="@+id/noresulttxt"
-            android:textSize="14pt"
+            android:textSize="23dp"
 
             android:gravity="center_horizontal"
             android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="100dp"
         android:textColor="#808080"
         android:typeface="sans" />
 </RelativeLayout>

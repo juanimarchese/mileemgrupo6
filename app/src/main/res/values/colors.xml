@@ -21,7 +21,7 @@
          to change it. -->
     <color name="holo_blue">#FF33B5E5</color>
     <color name="list_item_title">#fff</color>
-    <color name="list_background">#303030</color>
+    <color name="list_background">#F0F0F0</color>
     <color name="list_background_pressed">#992416</color>
     <color name="list_divider">#272727</color>
     <color name="counter_text_bg">#626262</color>
@@ -29,7 +29,7 @@
 
     <color name="m2">#666666</color>
     <color name="ambientes">#666666</color>
-    <color name="precio">#ff4a4a4a</color>
+    <color name="precio">#535358</color>
     <color name="list_divider_p">#d9d9d9</color>
     <color name="list_row_start_color">#ffffff</color>
     <color name="list_row_end_color">#ffffff</color>
