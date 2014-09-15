@@ -1,5 +1,7 @@
 package com.mileem.mileem.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Juan-Asus on 09/09/2014.
  */
@@ -13,7 +15,7 @@ public class PublicationDetails {
     private int coveredSize;
     private IdName environment;
     private int priority;
-    private String[] pictures;
+    private ArrayList<String> pictures;
     private Video video;
 
     //Deprecated
@@ -109,11 +111,11 @@ public class PublicationDetails {
         this.priority = priority;
     }
 
-    public String[] getPictures() {
+    public ArrayList<String> getPictures() {
         return pictures;
     }
 
-    public void setPictures(String[] pictures) {
+    public void setPictures(ArrayList<String> pictures) {
         this.pictures = pictures;
     }
 
