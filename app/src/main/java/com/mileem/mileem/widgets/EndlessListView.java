@@ -81,8 +81,8 @@ public class EndlessListView extends ListView implements OnScrollListener {
             if(getAdapter().getCount() == 0)
                 return;
 
-            int l = currentVisibleItemCount + currentFirstVisibleItem;
-            if (l >= currentTotalItemCount  && !isLoading ){
+            boolean lastItem = currentFirstVisibleItem + currentVisibleItemCount == currentTotalItemCount && this.getChildAt(currentVisibleItemCount -1) != null && this.getChildAt(currentVisibleItemCount-1).getBottom() <= this.getHeight();
+            if (lastItem  && !isLoading ){
 
                 //	add footer layout
                 this.addFooterView(footer);

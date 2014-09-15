@@ -52,7 +52,7 @@
             android:layout_marginTop="1dp"
             android:layout_toRightOf="@+id/prop_m2"
             android:textColor="@color/ambientes"
-            android:textSize="15dp"
+            android:textSize="18dp"
             android:focusable="false"
             android:focusableInTouchMode="false"/>
 
