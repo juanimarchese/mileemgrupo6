@@ -102,8 +102,13 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             dm.getPublicationsList(filter, pagination, order, new PublicationsDataManager.PublicationsCallbackHandler() {
                 @Override
                 public void onComplete(ArrayList collection) {
-                    listView.addNewData(collection);
-                    hidePDialog();
+                    if(!collection.isEmpty()){
+                        listView.addNewData(collection);
+                        hidePDialog();
+                    } else{
+                        hidePDialog();
+                        ((MainActivity) context).displayView(new NoResultsFragment());
+                    }
                 }
 
                 @Override
