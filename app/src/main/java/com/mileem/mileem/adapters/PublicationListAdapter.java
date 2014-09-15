@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * Created by Juan-Asus on 09/09/2014.
  */
 public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
+    private static final String BASE_URL = "http://107.20.253.197";
     private ArrayList<PublicationDetails> _data;
     private LayoutInflater inflater;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
@@ -80,14 +81,14 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
     private void buildCommonWidgets(View convertView, PublicationDetails msg) {
         ArrayList<String> pictures = msg.getPictures();
-        pictures.clear();
-        pictures.add("http://2.bp.blogspot.com/-C5MH8XTbWiM/VBEDb0Qd8TI/AAAAAAAACRY/H0oy_QkjGyQ/s1600/project-contemporary-house-design-1.jpg");
+        //pictures.clear();
+        if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
         if (pictures.size() > 0) {
-            buildFullScreenImageWidget(convertView, R.id.prop_imagen, pictures.get(0));
+            buildFullScreenImageWidget(convertView, R.id.prop_imagen, createUrlForPicture(pictures.get(0)));
             if(numberOfPicturesToShow > 1 && pictures.size() > 1){
-                //buildFullScreenImageWidget(convertView, R.id.prop_imagen_1, pictures.get(1));
+                //buildFullScreenImageWidget(convertView, R.id.prop_imagen_1, createUrlForPicture(pictures.get(1)));
                 if(numberOfPicturesToShow > 2 && pictures.size() > 2){
-                   // buildFullScreenImageWidget(convertView, R.id.prop_imagen_2, pictures.get(2));
+                   // buildFullScreenImageWidget(convertView, R.id.prop_imagen_2, createUrlForPicture(pictures.get(2)));
                 }
             }
         }
@@ -99,6 +100,10 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         buildTextViewWidget(convertView,R.id.prop_ambientes, msg.getEnvironment().getName());
 
         buildLocalImageWidget(convertView,R.id.arrow,R.drawable.arrow);
+    }
+
+    private String createUrlForPicture(String pathToImg) {
+        return BASE_URL + pathToImg;
     }
 
     private void buildTextViewWidget(View convertView, int widgetId, String txt) {
