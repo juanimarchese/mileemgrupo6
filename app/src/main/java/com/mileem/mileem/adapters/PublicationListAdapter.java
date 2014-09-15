@@ -94,7 +94,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
 
         buildTextViewWidget(convertView,R.id.prop_precio, String.valueOf(msg.getPrice() + " " + msg.getCurrency()));
-        buildTextViewWidget(convertView,R.id.prop_direccion, msg.getAddress());
+        buildTextViewWidget(convertView,R.id.prop_direccion, msg.getAddress() );
         buildTextViewWidget(convertView,R.id.prop_m2, String.valueOf(msg.getCoveredSize() + msg.getSize())+ " m2" );
         buildTextViewWidget(convertView,R.id.prop_ambientes, msg.getEnvironment().getName());
 

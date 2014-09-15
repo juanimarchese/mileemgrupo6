@@ -24,14 +24,18 @@
             android:layout_marginTop="5dp"
             android:layout_alignTop="@+id/prop_imagen"
             android:layout_toRightOf="@+id/prop_imagen"
-            android:textSize="@dimen/direccion"
+            android:layout_toLeftOf="@+id/arrow"
+
+        android:textSize="@dimen/direccion"
             android:textStyle="bold"
             android:focusable="false"
             android:ellipsize="end"
+            android:layout_weight="0.5"
             android:focusableInTouchMode="false"
         android:lines="1"
         android:minLines="1"
-        android:layout_marginRight="3dp" />
+        android:layout_marginRight="3dp"
+ />
 
     <TextView
             android:id="@+id/prop_m2"
@@ -53,7 +57,7 @@
             android:layout_below="@id/prop_direccion"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="3dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="2dp"
             android:layout_toRightOf="@+id/prop_m2"
             android:textColor="@color/ambientes"
             android:textSize="18dp"
@@ -70,7 +74,8 @@
             android:textColor="@color/ambientes"
             android:textSize="@dimen/ambientes"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+        android:layout_marginRight="10dp" />
 
 
     <TextView
@@ -81,10 +86,13 @@
            android:layout_below="@id/prop_direccion"
            android:layout_marginTop="3dp"
            android:layout_marginRight="3dp"
+            android:layout_toRightOf="@+id/ambientes"
            android:textSize="@dimen/precio"
            android:textColor="@color/precio"
            android:focusable="false"
-           android:focusableInTouchMode="false"/>
+           android:focusableInTouchMode="false"
+        android:layout_marginLeft="4dp"
+         />
 
    <ImageView
            android:id="@+id/arrow"
@@ -93,6 +101,8 @@
            android:layout_alignParentRight="true"
            android:layout_centerVertical="true"
            android:focusable="false"
-           android:focusableInTouchMode="false"/>
+           android:focusableInTouchMode="false"
+       android:layout_marginLeft="2dp"
+       android:layout_marginRight="2dp" />
 
 </RelativeLayout>
