@@ -162,6 +162,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         buildOrderSubMenuItem(sortItem, R.id.relevancia_dsc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.DESC);
         buildOrderSubMenuItem(sortItem, R.id.fecha_asc, PublicationOrder.OrderBy.PUBLISH_DATE, PublicationOrder.Order.ASC);
         buildOrderSubMenuItem(sortItem, R.id.fecha_dsc,PublicationOrder.OrderBy.PUBLISH_DATE,PublicationOrder.Order.DESC);
+        menu.findItem(R.id.action_refresh).setVisible(true);
     }
 
     private void buildOrderSubMenuItem(MenuItem sortItem,int subItemId, final PublicationOrder.OrderBy orderBy, final PublicationOrder.Order pubOrder) {
@@ -183,6 +184,9 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             case R.id.action_search:
                 return true;
             case R.id.action_sort:
+                return true;
+            case R.id.action_refresh:
+                requestFirstPageData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
