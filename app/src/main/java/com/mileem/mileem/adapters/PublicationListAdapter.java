@@ -22,6 +22,9 @@ import java.util.ArrayList;
  */
 public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     private static final String BASE_URL = "http://107.20.253.197";
+    private static final int VIEW_TYPE_ROW_1 = 1;
+    private static final int VIEW_TYPE_ROW_2 = 2;
+    private static final int VIEW_TYPE_ROW_3 = 3;
     private ArrayList<PublicationDetails> _data;
     private LayoutInflater inflater;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
@@ -47,8 +50,50 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        PublicationDetails msg = getItem(position);
+
+        if (msg.getPriority() == 1) {
+            return VIEW_TYPE_ROW_1;
+        } else if (msg.getPriority() == 2) {
+            return VIEW_TYPE_ROW_2;
+        } else {
+            return VIEW_TYPE_ROW_3;
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 4;
+    }
+
+    @Override
     public long getItemId(int position) {
         return position;
+    }
+
+
+    private class Holder{
+
+        public abstract class ListViewHolder {
+            public NetworkImageView networkImageView3;
+            public NetworkImageView networkImageView2;
+            public NetworkImageView networkImageView1;
+            public TextView precioTextView;
+            public TextView direccionTextView;
+            public TextView m2TextView;
+            public TextView ambientesTextView;
+            public ImageView arrowImageView;
+        }
+        public class PremiumViewHolder extends ListViewHolder{
+
+        }
+
+        public class BasicViewHolder extends ListViewHolder{
+        }
+
+        public class FreeViewHolder extends ListViewHolder{
+        }
     }
 
     @Override
@@ -58,13 +103,103 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-            PublicationDetails msg = _data.get(position);
+        Holder.PremiumViewHolder premiumViewHolder = null;
+
+        Holder.BasicViewHolder basicViewHolder = null;
+
+        Holder.FreeViewHolder freeViewHolder = null;
+
+        int type = getItemViewType(position);
+
+        if (type == VIEW_TYPE_ROW_1) {
+
+            if (convertView == null) {
+
+                convertView = inflater.inflate(R.layout.publication_premium_list_item, null);
+
+                premiumViewHolder = new Holder().new PremiumViewHolder();
+
+                premiumViewHolder.networkImageView3 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_2);
+                premiumViewHolder.networkImageView2 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_1);
+                createBasicHolderBasic(convertView, premiumViewHolder);
+
+                convertView.setTag(premiumViewHolder);
+
+            } else {
+
+                premiumViewHolder = (Holder.PremiumViewHolder) convertView.getTag();
+
+            }
+
+
+            // Set holder elements values
+
+            buildCommonWidgets(premiumViewHolder, getItem(position));
+
+
+        } else if (type == VIEW_TYPE_ROW_2) {
+
+            if (convertView == null) {
+
+                convertView = inflater.inflate(R.layout.publication_basic_list_item, null);
+
+                basicViewHolder = new Holder().new BasicViewHolder();
+
+                basicViewHolder.networkImageView2 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_1);
+                createBasicHolderBasic(convertView, basicViewHolder);
+
+                convertView.setTag(basicViewHolder);
+
+            } else {
+
+                basicViewHolder = (Holder.BasicViewHolder) convertView.getTag();
+
+            }
+
+
+            buildCommonWidgets(basicViewHolder, getItem(position));
+
+        } else  {
+
+            if (convertView == null) {
+
+                convertView = inflater.inflate(R.layout.publication_free_list_item, null);
+
+                freeViewHolder = new Holder().new FreeViewHolder();
+
+                createBasicHolderBasic(convertView, freeViewHolder);
+
+                convertView.setTag(freeViewHolder);
+
+            } else {
+
+                freeViewHolder = (Holder.FreeViewHolder) convertView.getTag();
+
+            }
+
+            buildCommonWidgets(freeViewHolder, getItem(position));
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+          /*  PublicationDetails msg = _data.get(position);
 
             if (convertView == null){
-                if (msg.getPriority() == 2){
+                if (msg.getPriority() == 1){
                     convertView = inflater.inflate(R.layout.publication_premium_list_item, null);
                     numberOfPicturesToShow = 3;
-                } else if (msg.getPriority() == 1){
+                } else if (msg.getPriority() == 2){
                     convertView = inflater.inflate(R.layout.publication_basic_list_item, null);
                     numberOfPicturesToShow = 2;
                 } else {
@@ -75,54 +210,64 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
 
 
-            buildCommonWidgets(convertView, msg);
+            buildCommonWidgets(convertView, msg);*/
         return convertView;
     }
 
-    private void buildCommonWidgets(View convertView, PublicationDetails msg) {
+
+    private void createBasicHolderBasic(View convertView, Holder.ListViewHolder listViewHolder) {
+        listViewHolder.networkImageView1 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen);
+        listViewHolder.precioTextView = (TextView)convertView.findViewById(R.id.prop_precio);
+        listViewHolder.direccionTextView = (TextView)convertView.findViewById(R.id.prop_direccion);
+        listViewHolder.m2TextView = (TextView)convertView.findViewById(R.id.prop_m2);
+        listViewHolder.ambientesTextView = (TextView)convertView.findViewById(R.id.prop_ambientes);
+        listViewHolder.arrowImageView = (ImageView) convertView.findViewById(R.id.arrow);
+    }
+
+    private void buildCommonWidgets(Holder.ListViewHolder holder, PublicationDetails msg) {
         ArrayList<String> pictures = msg.getPictures();
         if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
         if (pictures.size() > 0) {
-            buildFullScreenImageWidget(convertView, R.id.prop_imagen, createUrlForPicture(pictures.get(0)));
+            buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)));
             if(numberOfPicturesToShow > 1 && pictures.size() > 1){
-                buildFullScreenImageWidget(convertView, R.id.prop_imagen_1, createUrlForPicture(pictures.get(1)));
+                buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)));
                 if(numberOfPicturesToShow > 2 && pictures.size() > 2){
-                   buildFullScreenImageWidget(convertView, R.id.prop_imagen_2, createUrlForPicture(pictures.get(2)));
+                   buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)));
                 }
             }
         }
 
 
-        buildTextViewWidget(convertView,R.id.prop_precio, String.valueOf(msg.getCurrency() + " " + msg.getPrice()));
-        buildTextViewWidget(convertView,R.id.prop_direccion, msg.getAddress() );
-        buildTextViewWidget(convertView,R.id.prop_m2, String.valueOf(msg.getCoveredSize() + msg.getSize())+ " m2" );
-        buildTextViewWidget(convertView,R.id.prop_ambientes, msg.getEnvironment().getName());
+        buildTextViewWidget(holder.precioTextView, String.valueOf(msg.getCurrency() + " " + msg.getPrice()));
+        buildTextViewWidget(holder.direccionTextView, msg.getAddress() );
+        buildTextViewWidget(holder.m2TextView, String.valueOf(msg.getCoveredSize() + msg.getSize())+ " m2" );
+        buildTextViewWidget(holder.ambientesTextView, msg.getEnvironment().getName());
 
-        buildLocalImageWidget(convertView,R.id.arrow,R.drawable.arrow);
+        buildLocalImageWidget(holder.arrowImageView,R.drawable.arrow);
     }
 
     private String createUrlForPicture(String pathToImg) {
         return BASE_URL + pathToImg;
     }
 
-    private void buildTextViewWidget(View convertView, int widgetId, String txt) {
-        TextView textView = (TextView)convertView.findViewById(widgetId);
+    private void buildTextViewWidget(View convertView, String txt) {
+        TextView textView = (TextView)convertView;
         if(textView != null) textView.setText(txt);
     }
 
-    private NetworkImageView buildImageWidget(View convertView, int widgetId, String url) {
-        NetworkImageView networkImageView = (NetworkImageView) convertView.findViewById(widgetId);
+    private NetworkImageView buildImageWidget(View convertView, String url) {
+        NetworkImageView networkImageView = (NetworkImageView) convertView;
         if(networkImageView != null) networkImageView.setImageUrl(url,imageLoader);
         return networkImageView;
     }
 
-    private void buildLocalImageWidget(View convertView, int widgetId, int imageId) {
-        ImageView imageView = (ImageView) convertView.findViewById(widgetId);
+    private void buildLocalImageWidget(View convertView, int imageId) {
+        ImageView imageView = (ImageView) convertView;
         if(imageView != null) imageView.setImageResource(imageId);
     }
 
-    private void buildFullScreenImageWidget(View convertView, int widgetId, String url) {
-        NetworkImageView networkImageView = buildImageWidget(convertView,widgetId,url);
+    private void buildFullScreenImageWidget(View convertView, String url) {
+        NetworkImageView networkImageView = buildImageWidget(convertView,url);
         if(networkImageView != null){
             networkImageView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
