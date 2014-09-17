@@ -87,7 +87,7 @@ public class PublicationDetails {
     }
 
     public int getPriority() {
-        return 2;
+        return priority;
     }
 
     public void setPriority(int priority) {

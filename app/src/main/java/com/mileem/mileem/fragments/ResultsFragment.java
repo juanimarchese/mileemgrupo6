@@ -102,6 +102,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         showPDialog();
         pagina = 0;
         publicationList.clear();
+        adapter.clear();
         //requestData();
 
         Pagination pagination = new Pagination(10);
