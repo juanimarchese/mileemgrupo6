@@ -109,4 +109,16 @@ public class PublicationDetails {
     public void setVideo(Video video) {
         this.video = video;
     }
+
+    public boolean isPremium() {
+        return this.getPriority() == 1;
+    }
+
+    public boolean isBasic() {
+        return this.getPriority() == 2;
+    }
+
+    public boolean isFree() {
+        return this.getPriority() != 2 && this.getPriority() != 1;
+    }
 }
