@@ -35,4 +35,6 @@
     <color name="list_row_end_color">#ffffff</color>
     <color name="list_row_hover_start_color">#ebeef0</color>
     <color name="list_row_hover_end_color">#ebeef0</color>
+    <color name="gold">#fffff1a0</color>
+    <color name="silver">#ffe1e2e8</color>
 </resources>

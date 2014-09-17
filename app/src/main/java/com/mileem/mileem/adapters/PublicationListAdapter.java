@@ -58,37 +58,36 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
 
-        PublicationDetails msg = _data.get(position);
+            PublicationDetails msg = _data.get(position);
 
-        if (convertView == null){
-            if (msg.getPriority() == 0){
-                convertView = inflater.inflate(R.layout.publication_premium_list_item, null);
-                numberOfPicturesToShow = 3;
-            } else if (msg.getPriority() == 1){
-                convertView = inflater.inflate(R.layout.publication_basic_list_item, null);
-                numberOfPicturesToShow = 2;
-            } else {
-                convertView = inflater.inflate(R.layout.publication_free_list_item, null);
-                numberOfPicturesToShow = 1;
+            if (convertView == null){
+                if (msg.getPriority() == 2){
+                    convertView = inflater.inflate(R.layout.publication_premium_list_item, null);
+                    numberOfPicturesToShow = 3;
+                } else if (msg.getPriority() == 1){
+                    convertView = inflater.inflate(R.layout.publication_basic_list_item, null);
+                    numberOfPicturesToShow = 2;
+                } else {
+                    convertView = inflater.inflate(R.layout.publication_free_list_item, null);
+                    numberOfPicturesToShow = 1;
+                }
             }
-        }
 
 
-        buildCommonWidgets(convertView, msg);
 
+            buildCommonWidgets(convertView, msg);
         return convertView;
     }
 
     private void buildCommonWidgets(View convertView, PublicationDetails msg) {
         ArrayList<String> pictures = msg.getPictures();
-        //pictures.clear();
         if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
         if (pictures.size() > 0) {
             buildFullScreenImageWidget(convertView, R.id.prop_imagen, createUrlForPicture(pictures.get(0)));
             if(numberOfPicturesToShow > 1 && pictures.size() > 1){
-                //buildFullScreenImageWidget(convertView, R.id.prop_imagen_1, createUrlForPicture(pictures.get(1)));
+                buildFullScreenImageWidget(convertView, R.id.prop_imagen_1, createUrlForPicture(pictures.get(1)));
                 if(numberOfPicturesToShow > 2 && pictures.size() > 2){
-                   // buildFullScreenImageWidget(convertView, R.id.prop_imagen_2, createUrlForPicture(pictures.get(2)));
+                   buildFullScreenImageWidget(convertView, R.id.prop_imagen_2, createUrlForPicture(pictures.get(2)));
                 }
             }
         }

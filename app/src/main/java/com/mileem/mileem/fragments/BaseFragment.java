@@ -49,6 +49,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_sort).setVisible(false);
+        menu.findItem(R.id.action_refresh).setVisible(false);
     }
 
     public abstract String getTittle();
