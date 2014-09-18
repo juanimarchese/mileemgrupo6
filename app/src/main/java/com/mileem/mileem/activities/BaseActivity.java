@@ -46,6 +46,9 @@ public abstract class BaseActivity extends Activity {
                fragmentTransaction.add(R.id.frame_container, fragment, fragment.getCustomTag());
             } else {
                 if (fragmentByTag.isHidden()) {
+                    //Se copian los argumentos de los fragments en caso de que exista, pero hayan cambiado
+                    if(fragment.getArguments() != null && !fragment.getArguments().isEmpty())
+                        fragmentByTag.getArguments().putAll(fragment.getArguments());
                     fragmentTransaction.show(fragmentByTag);
                 }
             }

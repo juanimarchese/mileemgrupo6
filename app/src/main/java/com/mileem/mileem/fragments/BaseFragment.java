@@ -12,7 +12,7 @@ import com.mileem.mileem.activities.BaseActivity;
 
 public abstract class BaseFragment extends Fragment {
 
-    private final String tag;
+    protected final String tag;
 
     public void BaseFragment() {
     }

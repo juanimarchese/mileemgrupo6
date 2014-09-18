@@ -93,7 +93,15 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), "Vista de Detalles", Toast.LENGTH_LONG).show();
+                //Toast.makeText(view.getContext(), "Vista de Detalles", Toast.LENGTH_LONG).show();
+                try{
+                    PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
+                    int publicationDetailId = publicationDetail.getId();
+                    ((MainActivity) context).displayView(PublicationDetailFragment.newInstance(publicationDetailId));
+                } catch (Throwable e){
+                    showError();
+                }
+
             }
         });
     }
@@ -146,7 +154,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden){
-            //Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
+            //TODO - Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
             requestFirstPageData();
         }
     }
