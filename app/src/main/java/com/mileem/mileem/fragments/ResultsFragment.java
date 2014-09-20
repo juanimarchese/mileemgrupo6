@@ -136,7 +136,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
 
             });
 
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             showError();
             hidePDialog();
         }
@@ -240,7 +240,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
 
             });
 
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             showError();
         }
     }

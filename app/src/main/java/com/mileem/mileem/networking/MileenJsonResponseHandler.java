@@ -21,19 +21,19 @@ public class MileenJsonResponseHandler extends JsonHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
         Log.v(MileenJsonResponseHandlerTag, "Status Code:" + statusCode);
-        callback.onFailure(new Error(errorResponse.toString()));
+        callback.onFailure(new Error("onFailure"));
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         Log.v(MileenJsonResponseHandlerTag, "Status Code :" + statusCode);
-        callback.onFailure(new Error(responseString));
+        callback.onFailure(new Error("onFailure"));
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         Log.v(MileenJsonResponseHandlerTag,"Status Code :" + statusCode);
-        callback.onFailure(new Error(errorResponse.toString()));
+        callback.onFailure(new Error("onFailure"));
     }
 
     @Override

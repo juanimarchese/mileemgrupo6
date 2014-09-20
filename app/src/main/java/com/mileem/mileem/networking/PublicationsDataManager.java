@@ -113,7 +113,7 @@ public class PublicationsDataManager {
             newPageCollection =  this.removeDuplicatedIds(newPageCollection);
             this.addNewIdsInPublicationsIds(newPageCollection);
             this.pagination.setLastPageReached(lastPageReached);
-        } catch (JSONException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
         return newPageCollection;
