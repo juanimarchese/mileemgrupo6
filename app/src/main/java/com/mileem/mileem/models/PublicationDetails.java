@@ -19,8 +19,8 @@ public class PublicationDetails {
     private Video video;
     private int age;
     private String description;
-    private int latitude;
-    private int longitude;
+    private float latitude;
+    private float longitude;
     private int expenses;
     private IdName operationType;
     private IdName propertyType;
@@ -146,7 +146,7 @@ public class PublicationDetails {
         this.description = description;
     }
 
-    public int getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
@@ -154,7 +154,7 @@ public class PublicationDetails {
         this.latitude = latitude;
     }
 
-    public int getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
