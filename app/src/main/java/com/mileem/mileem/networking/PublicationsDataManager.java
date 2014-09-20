@@ -132,7 +132,7 @@ public class PublicationsDataManager {
         return copyCollection;
     }
 
-    public void getPublicationsList(PublicationFilter filter, final Pagination pagination, PublicationOrder order, final PublicationsCallbackHandler callbackHandler) throws JSONException {
+    public void getPublicationsList(PublicationFilter filter, final Pagination pagination, final PublicationOrder order, final PublicationsCallbackHandler callbackHandler) throws JSONException {
         if (!this.checkMinimumFilter(filter)) {
             callbackHandler.onFailure(new Error("'filter' must have, at least, 'Neighborhoods', 'Environments', 'PropertyTypes' and 'OperationType'"));
             return;

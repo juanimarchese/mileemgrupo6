@@ -17,7 +17,15 @@ public class PublicationDetails {
     private int priority;
     private ArrayList<String> pictures;
     private Video video;
-
+    private int age;
+    private String description;
+    private int latitude;
+    private int longitude;
+    private int expenses;
+    private IdName operationType;
+    private IdName propertyType;
+    private IdName publicationType;
+    private IdName neighborhood;
 
     public PublicationDetails() {
     }
@@ -120,5 +128,77 @@ public class PublicationDetails {
 
     public boolean isFree() {
         return this.getPriority() != 2 && this.getPriority() != 1;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(int latitude) {
+        this.latitude = latitude;
+    }
+
+    public int getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(int longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(int expenses) {
+        this.expenses = expenses;
+    }
+
+    public IdName getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(IdName operationType) {
+        this.operationType = operationType;
+    }
+
+    public IdName getPropertyType() {
+        return propertyType;
+    }
+
+    public void setPropertyType(IdName propertyType) {
+        this.propertyType = propertyType;
+    }
+
+    public IdName getPublicationType() {
+        return publicationType;
+    }
+
+    public void setPublicationType(IdName publicationType) {
+        this.publicationType = publicationType;
+    }
+
+    public IdName getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(IdName neighborhood) {
+        this.neighborhood = neighborhood;
     }
 }
