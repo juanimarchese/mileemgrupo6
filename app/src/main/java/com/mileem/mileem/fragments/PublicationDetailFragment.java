@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -95,7 +98,31 @@ public class PublicationDetailFragment extends BaseFragment {
         ((MainActivity) context).displayViewForMenu(1);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_contact).setVisible(true);
+        menu.findItem(R.id.action_amenities).setVisible(true);
+        menu.findItem(R.id.action_location).setVisible(true);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.action_contact:
+                Toast.makeText(context, "Vista de Contacto", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_amenities:
+                Toast.makeText(context, "Vista de Amenities", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.action_location:
+                Toast.makeText(context, "Vista de Mapa", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 }

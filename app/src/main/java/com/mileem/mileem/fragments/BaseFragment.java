@@ -51,9 +51,12 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.findItem(R.id.action_search).setVisible(false);
-        menu.findItem(R.id.action_sort).setVisible(false);
+        menu.findItem(R.id.action_contact).setVisible(false);
+        menu.findItem(R.id.action_amenities).setVisible(false);
+        menu.findItem(R.id.action_location).setVisible(false);
         menu.findItem(R.id.action_refresh).setVisible(false);
+        menu.findItem(R.id.action_sort).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(false);
     }
 
     public abstract String getTittle();
