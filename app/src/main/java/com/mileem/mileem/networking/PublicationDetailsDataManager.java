@@ -5,10 +5,7 @@ package com.mileem.mileem.networking;
  */
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
-import com.mileem.mileem.managers.DefinitionsManager;
-import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.models.PublicationDetails;
 
 import org.apache.http.Header;
