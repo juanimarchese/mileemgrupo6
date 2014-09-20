@@ -2,19 +2,16 @@ package com.mileem.mileem.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.mileem.mileem.AppController;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.PublicationListAdapter;
@@ -22,15 +19,10 @@ import com.mileem.mileem.models.Pagination;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.models.PublicationFilter;
 import com.mileem.mileem.models.PublicationOrder;
-import com.mileem.mileem.networking.MockDataManager;
 import com.mileem.mileem.networking.PublicationsDataManager;
 import com.mileem.mileem.widgets.EndlessListView;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Juan-Asus on 09/09/2014.
@@ -107,7 +99,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     }
 
     private void requestFirstPageData() {
-        showPDialog();
+        showPDialog(context);
         pagina = 0;
         publicationList.clear();
         adapter.clear();
@@ -202,25 +194,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void showPDialog() {
-        pDialog = new ProgressDialog(context);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Buscando...");
-        pDialog.show();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
-    }
 
     @Override
     public void loadData() {

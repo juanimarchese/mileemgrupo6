@@ -3,6 +3,8 @@ package com.mileem.mileem.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +15,8 @@ import com.mileem.mileem.activities.BaseActivity;
 public abstract class BaseFragment extends Fragment {
 
     protected final String tag;
+    protected ProgressDialog pDialog;
+
 
     public void BaseFragment() {
     }
@@ -53,4 +57,24 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public abstract String getTittle();
+
+    protected void showPDialog(Context context) {
+        pDialog = new ProgressDialog(context);
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Buscando...");
+        pDialog.show();
+    }
+
+    protected void hidePDialog() {
+        if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        hidePDialog();
+    }
 }

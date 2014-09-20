@@ -1,12 +1,17 @@
 package com.mileem.mileem.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
+import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.networking.PublicationDetailsDataManager;
 
 /**
  * Created by JuanMarchese on 18/09/2014.
@@ -59,10 +64,38 @@ public class PublicationDetailFragment extends BaseFragment {
     }
 
     private void buildPublicationView(View rootView) {
+        //TODO - Inicializar el Layout de Vista
 
     }
 
     private void requestPublicationData() {
+        showPDialog(context);
+        try {
+            new PublicationDetailsDataManager().getDetails(getPublicationId(), new PublicationDetailsDataManager.PublicationsDetailsCallbackHandler() {
+                @Override
+                public void onComplete(PublicationDetails publication) {
+                    //TODO - Bindear datos con la vista
+                    hidePDialog();
+                }
 
+                @Override
+                public void onFailure(Error error) {
+                    showError();
+                    hidePDialog();
+                }
+            });
+        } catch (Throwable e) {
+            showError();
+            hidePDialog();
+        }
     }
+
+    private void showError() {
+        Toast.makeText(getActivity(), "Error al tratar de obtener los datos de la publicación", Toast.LENGTH_LONG).show();
+        ((MainActivity) context).displayViewForMenu(1);
+    }
+
+
+
+
 }
