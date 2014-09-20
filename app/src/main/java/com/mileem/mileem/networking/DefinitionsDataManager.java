@@ -23,7 +23,7 @@ public class DefinitionsDataManager {
     }
 
     public void getDefinitions(final DefinitionsCallbackHandler callbackHandler) throws JSONException {
-        AsyncRestHttpClient.get("", null, new MileenJsonResponseHandler(callbackHandler) {
+        AsyncRestHttpClient.get("definitions", null, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
@@ -32,22 +32,27 @@ public class DefinitionsDataManager {
                     JSONObject payload = response.getJSONObject("payload");
                     Type collectionType = new TypeToken<ArrayList<IdName>>(){}.getType();
                     Gson gson = new Gson();
+                    DefinitionsManager dm = DefinitionsManager.getInstance();
 
                     Object neighborhoods = payload.get("neighborhoods");
                     ArrayList<IdName> neightboardsCollection = gson.fromJson(neighborhoods.toString(), collectionType);
-                    DefinitionsManager.getInstance().setNeightboardsCollection(neightboardsCollection);
+                    dm.setNeightboardsCollection(neightboardsCollection);
 
-                    Object environments = payload.get("neighborhoods");
+                    Object environments = payload.get("environments");
                     ArrayList<IdName> environmentsCollection = gson.fromJson(environments.toString(), collectionType);
-                    DefinitionsManager.getInstance().setEnvironmentsTypesCollection(environmentsCollection);
+                    dm.setEnvironmentsTypesCollection(environmentsCollection);
 
-                    Object propertyTypes = payload.get("property_types");
+                    Object propertyTypes = payload.get("propertyTypes");
                     ArrayList<IdName> propertyTypesCollection = gson.fromJson(propertyTypes.toString(), collectionType);
-                    DefinitionsManager.getInstance().setPropertyTypesCollection(propertyTypesCollection);
+                    dm.setPropertyTypesCollection(propertyTypesCollection);
 
-                    Object operationTypes = payload.get("operation_types");
+                    Object operationTypes = payload.get("operationTypes");
                     ArrayList<IdName> operationTypesCollection = gson.fromJson(operationTypes.toString(), collectionType);
-                    DefinitionsManager.getInstance().setOperationTypesCollection(operationTypesCollection);
+                    dm.setOperationTypesCollection(operationTypesCollection);
+
+                    Object dateRanges = payload.get("dateRanges");
+                    ArrayList<IdName> dateRangesCollection = gson.fromJson(dateRanges.toString(), collectionType);
+                    dm.setDateRangesCollections(dateRangesCollection);
                     callbackHandler.onComplete();
                 } catch (JSONException e) {
                     e.printStackTrace();

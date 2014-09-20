@@ -15,6 +15,8 @@ public class DefinitionsManager {
     private ArrayList<IdName> environmentsTypesCollection = null;
     private ArrayList<IdName> operationTypesCollection = null;
     private ArrayList<IdName> propertyTypesCollection = null;
+    private ArrayList<IdName> dateRangesCollection = null;
+
     private DefinitionsManager() {};
 
     public static DefinitionsManager getInstance() {
@@ -59,5 +61,11 @@ public class DefinitionsManager {
 
     public void setPropertyTypesCollection(ArrayList<IdName> propertyTypesCollection) {
         this.propertyTypesCollection = propertyTypesCollection;
+    }
+
+    public ArrayList<IdName> getDateRangesCollection() { return dateRangesCollection;}
+
+    public void setDateRangesCollections(ArrayList<IdName> dateRangesCollection) {
+        this.dateRangesCollection = dateRangesCollection;
     }
 }
