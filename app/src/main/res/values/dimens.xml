@@ -11,4 +11,5 @@
     <dimen name="precio">16dip</dimen>
     <dimen name="m2">16dip</dimen>
     <dimen name="ambientes">16dip</dimen>
+    <dimen name="dp11">13dip</dimen>
 </resources>

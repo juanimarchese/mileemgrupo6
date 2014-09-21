@@ -37,4 +37,7 @@
     <color name="list_row_hover_end_color">#ebeef0</color>
     <color name="gold">#fffff1a0</color>
     <color name="silver">#ffe1e2e8</color>
+    <color name="background_pdf">#f0f0f0</color>
+    <color name="background_fp">#ffe3e3e3</color>
+    <color name="white">#FFFFFF</color>
 </resources>
