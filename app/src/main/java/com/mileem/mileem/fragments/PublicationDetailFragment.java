@@ -1,5 +1,6 @@
 package com.mileem.mileem.fragments;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -63,27 +64,31 @@ public class PublicationDetailFragment extends BaseFragment {
         }
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.publication_detail_fragment, container, false);
         this.rootView = rootView;
-
-        buildGallery();
         buildPublicationView();
         requestPublicationData();
         return rootView;
     }
 
-    private void buildGallery() {
+    private void buildGallery(PublicationDetails publication) {
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
-        ArrayList<Multimedia> data = new ArrayList<Multimedia>();
-        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg", null));
-        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg", null));
-        data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg", null));
-        mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
-        mPager.setAdapter(mPagerAdapter);
+        Boolean hasPictures = publication.getPictures().size() > 0;
+        Boolean hasVideo = publication.getVideo().getEmbedUrl() != null && publication.getVideo().getEmbedUrl().length() > 0;
+        Boolean showGallery = hasPictures || hasVideo;
+        int visibility = showGallery || hasVideo ? View.VISIBLE : View.GONE;
+        this.mPager.setVisibility(visibility);
+
+        if (showGallery) {
+            ArrayList<Multimedia> data = new ArrayList<Multimedia>();
+            data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg", null));
+            data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg", null));
+            data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg", null));
+            mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
+            mPager.setAdapter(mPagerAdapter);
+        }
     }
 
     private void buildPublicationView() {
@@ -119,6 +124,7 @@ public class PublicationDetailFragment extends BaseFragment {
                 @Override
                 public void onComplete(PublicationDetails publication) {
                     //TODO - Bindear datos con la vista
+                    buildGallery(publication);
                     fillPublicationView(publication);
                     hidePDialog();
                 }

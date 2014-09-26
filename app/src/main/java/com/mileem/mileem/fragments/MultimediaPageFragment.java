@@ -49,7 +49,7 @@ public class MultimediaPageFragment extends Fragment {
 
         int drawable = this.multimedia.getType() == Multimedia.Type.IMAGE ? R.drawable.image_icon : R.drawable.video_icon;
         icon.setImageResource(drawable);
-        
+
         networkImageView = (NetworkImageView) rootView.findViewById(R.id.multimedia);
         networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
         networkImageView.setErrorImageResId(R.drawable.image_placeholder);
