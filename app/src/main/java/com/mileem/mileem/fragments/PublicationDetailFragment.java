@@ -1,6 +1,5 @@
 package com.mileem.mileem.fragments;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,6 +17,7 @@ import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.MultimediaSlidePagerAdapter;
 import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
 
 import java.util.ArrayList;
@@ -76,16 +76,21 @@ public class PublicationDetailFragment extends BaseFragment {
     private void buildGallery(PublicationDetails publication) {
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
         Boolean hasPictures = publication.getPictures().size() > 0;
-        Boolean hasVideo = publication.getVideo().getEmbedUrl() != null && publication.getVideo().getEmbedUrl().length() > 0;
+        Boolean hasVideo = publication.getVideo().hasVideo();
         Boolean showGallery = hasPictures || hasVideo;
         int visibility = showGallery || hasVideo ? View.VISIBLE : View.GONE;
         this.mPager.setVisibility(visibility);
 
         if (showGallery) {
             ArrayList<Multimedia> data = new ArrayList<Multimedia>();
-            data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg", null));
-            data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg", null));
-            data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg", null));
+
+            for (String picture : publication.getPictures()) {
+                data.add(new Multimedia(Multimedia.Type.IMAGE, AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(picture), null));
+            }
+
+            if (hasVideo) {
+                data.add(new Multimedia(Multimedia.Type.VIDEO, publication.getVideo().getThumbnail(), publication.getVideo().getEmbedUrl()));
+            }
             mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
             mPager.setAdapter(mPagerAdapter);
         }
