@@ -26,5 +26,6 @@ dependencies {
     compile 'com.android.support:support-v13:18.0.0'
     compile 'com.android.support:support-v4:18.0.+'
     compile 'com.google.code.gson:gson:1.7.2'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile files('libs/volley.jar')
 }
