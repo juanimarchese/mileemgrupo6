@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
@@ -48,17 +49,20 @@ public class MultimediaPageFragment extends Fragment {
 
         int drawable = this.multimedia.getType() == Multimedia.Type.IMAGE ? R.drawable.image_icon : R.drawable.video_icon;
         icon.setImageResource(drawable);
-
+        
         networkImageView = (NetworkImageView) rootView.findViewById(R.id.multimedia);
-        networkImageView.setDefaultImageResId(R.drawable.splash_screen);
-        networkImageView.setErrorImageResId(R.drawable.splash_screen);
-        networkImageView.setImageUrl(multimedia.getUrl(), imageLoader);
+        networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
+        networkImageView.setErrorImageResId(R.drawable.image_placeholder);
+        networkImageView.setImageUrl(multimedia.getPreviewUrl(), imageLoader);
+
         networkImageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String type = multimedia.getType().toString();
                 Toast.makeText(v.getContext(), "Multimedia. Tipo: " + type, Toast.LENGTH_LONG).show();
             }
         });
+
+
         return rootView;
     }
 
