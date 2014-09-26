@@ -32,7 +32,7 @@ public class PublicationDetailsDataManager {
                     Gson gson = new Gson();
                     PublicationDetails publication = gson.fromJson(payload.toString(), PublicationDetails.class);
                     callbackHandler.onComplete(publication);
-                } catch (JSONException e) {
+                } catch (Throwable e) {
                     e.printStackTrace();
                 }
             }
