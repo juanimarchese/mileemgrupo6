@@ -14,7 +14,7 @@ public class Multimedia {
     public Multimedia(Type type, String previewUrl, String url) {
         this.type = type;
         this.url = url;
-        this.previewUrl = url;
+        this.previewUrl = previewUrl;
     }
 
     public Type getType() { return type; }
