@@ -79,9 +79,9 @@ public class PublicationDetailFragment extends BaseFragment {
     private void buildGallery() {
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
         ArrayList<Multimedia> data = new ArrayList<Multimedia>();
-        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg"));
-        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg"));
-        data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg"));
+        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg", null));
+        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg", null));
+        data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg", null));
         mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
         mPager.setAdapter(mPagerAdapter);
     }
