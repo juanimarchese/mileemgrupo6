@@ -11,10 +11,13 @@ import java.util.Map;
  */
 
 public class AsyncRestHttpClient {
-    private static final String BASE_URL_PROD = "http://107.20.253.197/api/";
+
     //TODO hacer andar para simulador contra localhost
-    private static final String BASE_URL_DEV = "http://107.20.253.197/api/";
+    private static final String HOST_URL = "http://107.20.253.197/";
+    private static final String BASE_URL_PROD = HOST_URL + "api/";
+    private static final String BASE_URL_DEV = HOST_URL + "api/";
     private static final String BASE_URL = BASE_URL_PROD;
+
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
@@ -32,6 +35,8 @@ public class AsyncRestHttpClient {
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
+
+    public static String getAbsoluteUrlRelativeToHost(String relativeUrl) {return HOST_URL + relativeUrl;}
 }
 
 
