@@ -14,6 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.models.PublicationDetails;
+import com.mileem.mileem.networking.AsyncRestHttpClient;
 
 import java.util.ArrayList;
 
@@ -21,7 +22,6 @@ import java.util.ArrayList;
  * Created by Juan-Asus on 09/09/2014.
  */
 public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
-    private static final String BASE_URL = "http://107.20.253.197";
     private static final int VIEW_TYPE_ROW_1 = 1;
     private static final int VIEW_TYPE_ROW_2 = 2;
     private static final int VIEW_TYPE_ROW_3 = 3;
@@ -216,7 +216,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     }
 
     private String createUrlForPicture(String pathToImg) {
-        return BASE_URL + pathToImg;
+        return AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(pathToImg);
     }
 
     private void buildTextViewWidget(View convertView, String txt) {
