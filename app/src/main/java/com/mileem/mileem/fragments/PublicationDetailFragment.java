@@ -1,6 +1,8 @@
 package com.mileem.mileem.fragments;
 
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,8 +14,12 @@ import android.widget.Toast;
 
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
+import com.mileem.mileem.adapters.MultimediaSlidePagerAdapter;
+import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by JuanMarchese on 18/09/2014.
@@ -22,6 +28,9 @@ public class PublicationDetailFragment extends BaseFragment {
 
     public static final String TAG = PublicationDetailFragment.class.getSimpleName();
     private View rootView;
+
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
 
     public PublicationDetailFragment() {
         super(TAG);
@@ -60,11 +69,22 @@ public class PublicationDetailFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.publication_detail_fragment, container, false);
         this.rootView = rootView;
+
+        buildGallery();
         buildPublicationView();
         requestPublicationData();
         return rootView;
     }
 
+    private void buildGallery() {
+        mPager = (ViewPager) rootView.findViewById(R.id.pager);
+        ArrayList<Multimedia> data = new ArrayList<Multimedia>();
+        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://creationview.com/image/Birds4F.jpg"));
+        data.add(new Multimedia(Multimedia.Type.IMAGE, "http://animacionrecursiva.files.wordpress.com/2011/11/leon.jpg"));
+        data.add(new Multimedia(Multimedia.Type.VIDEO, "http://mundo-animal.net/wp-content/uploads/images/81/tigres-0__400x300.jpg"));
+        mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
+        mPager.setAdapter(mPagerAdapter);
+    }
 
     private void buildPublicationView() {
         //TODO - Inicializar el Layout de Vista
@@ -145,6 +165,7 @@ public class PublicationDetailFragment extends BaseFragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 }
