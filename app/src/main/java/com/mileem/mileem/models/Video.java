@@ -7,4 +7,28 @@ public class Video {
     String url;
     String embedUrl;
     String thumbnail;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getEmbedUrl() {
+        return embedUrl;
+    }
+
+    public void setEmbedUrl(String embedUrl) {
+        this.embedUrl = embedUrl;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 }
