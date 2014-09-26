@@ -31,4 +31,9 @@ public class Video {
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
+
+    public Boolean hasVideo() {
+        return this.getEmbedUrl() != null &&  this.getThumbnail() != null &&
+            this.getEmbedUrl().length() > 0 && this.getThumbnail().length() > 0;
+    }
 }
