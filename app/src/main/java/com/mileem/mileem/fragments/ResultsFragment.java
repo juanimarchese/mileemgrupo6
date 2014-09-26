@@ -1,5 +1,7 @@
 package com.mileem.mileem.fragments;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -88,7 +90,9 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 try{
                     PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
                     int publicationDetailId = publicationDetail.getId();
-                    ((MainActivity) context).displayView(PublicationDetailFragment.newInstance(publicationDetailId));
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction tx = fm.beginTransaction();
+                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "tag" ).commit();
                 } catch (Throwable e){
                     showError();
                 }
