@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
+import com.mileem.mileem.widgets.SmartViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -34,7 +37,7 @@ public class PublicationDetailFragment extends BaseFragment {
     public static final String TAG = PublicationDetailFragment.class.getSimpleName();
     private View rootView;
 
-    private ViewPager mPager;
+    private SmartViewPager mPager;
     private PagerAdapter mPagerAdapter;
 
     public PublicationDetailFragment() {
@@ -78,7 +81,7 @@ public class PublicationDetailFragment extends BaseFragment {
     }
 
     private void buildGallery(PublicationDetails publication) {
-        mPager = (ViewPager) rootView.findViewById(R.id.pager);
+        mPager = (SmartViewPager) rootView.findViewById(R.id.pager);
         RelativeLayout pagerContainer = (RelativeLayout) rootView.findViewById(R.id.pager_container);
         Boolean hasPictures = publication.getPictures().size() > 0;
         Boolean hasVideo = publication.getVideo().hasVideo();
