@@ -19,13 +19,14 @@ public class PublicationDetails {
     private Video video;
     private int age;
     private String description;
-    private float latitude;
-    private float longitude;
+    private String latitude;
+    private String longitude;
     private int expenses;
     private IdName operationType;
     private IdName propertyType;
     private IdName publicationType;
     private IdName neighborhood;
+    private User user;
 
     public PublicationDetails() {
     }
@@ -146,19 +147,19 @@ public class PublicationDetails {
         this.description = description;
     }
 
-    public float getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 
