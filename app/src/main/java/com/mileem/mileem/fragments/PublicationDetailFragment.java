@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,9 @@ import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
+
 
 import java.util.ArrayList;
 
@@ -75,14 +79,15 @@ public class PublicationDetailFragment extends BaseFragment {
 
     private void buildGallery(PublicationDetails publication) {
         mPager = (ViewPager) rootView.findViewById(R.id.pager);
+        RelativeLayout pagerContainer = (RelativeLayout) rootView.findViewById(R.id.pager_container);
         Boolean hasPictures = publication.getPictures().size() > 0;
         Boolean hasVideo = publication.getVideo().hasVideo();
         Boolean showGallery = hasPictures || hasVideo;
         int visibility = showGallery || hasVideo ? View.VISIBLE : View.GONE;
-        this.mPager.setVisibility(visibility);
+        pagerContainer.setVisibility(visibility);
 
         if (showGallery) {
-            ArrayList<Multimedia> data = new ArrayList<Multimedia>();
+         ArrayList<Multimedia> data = new ArrayList<Multimedia>();
 
             for (String picture : publication.getPictures()) {
                 data.add(new Multimedia(Multimedia.Type.IMAGE, AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(picture), null));
@@ -93,6 +98,9 @@ public class PublicationDetailFragment extends BaseFragment {
             }
             mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
             mPager.setAdapter(mPagerAdapter);
+
+            CirclePageIndicator titleIndicator = (CirclePageIndicator)rootView.findViewById(R.id.pager_indicator);
+            titleIndicator.setViewPager(mPager);
         }
     }
 
