@@ -1,10 +1,13 @@
 package com.mileem.mileem.fragments;
 
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -20,6 +23,7 @@ public class MultimediaPageFragment extends Fragment {
     private final Multimedia multimedia;
     private NetworkImageView networkImageView;
     private ImageLoader imageLoader;
+    private ImageView icon;
 
     public MultimediaPageFragment(Multimedia multimedia) {
         this.multimedia = multimedia;
@@ -38,6 +42,12 @@ public class MultimediaPageFragment extends Fragment {
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
+
+        icon = (ImageView) rootView.findViewById(R.id.icon);
+        icon.setBackgroundColor(Color.rgb(255, 255, 255));
+
+        int drawable = this.multimedia.getType() == Multimedia.Type.IMAGE ? R.drawable.image_icon : R.drawable.video_icon;
+        icon.setImageResource(drawable);
 
         networkImageView = (NetworkImageView) rootView.findViewById(R.id.multimedia);
         networkImageView.setDefaultImageResId(R.drawable.splash_screen);
