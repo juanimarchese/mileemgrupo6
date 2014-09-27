@@ -13,6 +13,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
+import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
 
@@ -127,9 +129,13 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             } else {
 
                 premiumViewHolder = (Holder.PremiumViewHolder) convertView.getTag();
+
                 premiumViewHolder.networkImageView1.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView1.setOnClickListener(null);
                 premiumViewHolder.networkImageView2.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView2.setOnClickListener(null);
                 premiumViewHolder.networkImageView3.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView3.setOnClickListener(null);
 
             }
 
@@ -156,7 +162,9 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
                 basicViewHolder = (Holder.BasicViewHolder) convertView.getTag();
                 basicViewHolder.networkImageView1.setImageUrl(null, imageLoader);
+                basicViewHolder.networkImageView1.setOnClickListener(null);
                 basicViewHolder.networkImageView2.setImageUrl(null, imageLoader);
+                basicViewHolder.networkImageView2.setOnClickListener(null);
 
             }
 
@@ -179,6 +187,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
                 freeViewHolder = (Holder.FreeViewHolder) convertView.getTag();
                 freeViewHolder.networkImageView1.setImageUrl(null, imageLoader);
+                freeViewHolder.networkImageView1.setOnClickListener(null);
 
             }
 
@@ -200,18 +209,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     }
 
     private void buildCommonWidgets(Holder.ListViewHolder holder, PublicationDetails msg) {
-        ArrayList<String> pictures = msg.getPictures();
-        if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
-        if (pictures.size() > 0) {
-            buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)));
-            if((msg.isPremium() || msg.isBasic()) && pictures.size() > 1){
-                buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)));
-                if(msg.isPremium() && pictures.size() > 2){
-                   buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)));
-                }
-            }
-        }
-
+        buildImageArea(holder, msg);
 
         buildTextViewWidget(holder.precioTextView, String.valueOf(msg.getCurrency() + " " + msg.getPrice()));
         buildTextViewWidget(holder.direccionTextView, msg.getAddress() );
@@ -219,6 +217,30 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         buildTextViewWidget(holder.ambientesTextView, msg.getEnvironment().getName());
 
         buildLocalImageWidget(holder.arrowImageView,R.drawable.arrow);
+    }
+
+    private void buildImageArea(Holder.ListViewHolder holder, PublicationDetails msg) {
+        ArrayList<String> pictures = new ArrayList<String>();
+        boolean videoAdded = false;
+        if (msg.isPremium() && msg.getVideo() != null && msg.getVideo().hasVideo()){
+            pictures.add(msg.getVideo().getThumbnail());
+            videoAdded = true;
+        }
+        pictures.addAll(msg.getPictures());
+        if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
+        if (pictures.size() > 0) {
+            if(videoAdded){
+                buildVideoImageWidget(holder.networkImageView1, pictures.get(0));
+            } else {
+                buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)));
+            }
+            if((msg.isPremium() || msg.isBasic()) && pictures.size() > 1){
+                buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)));
+                if(msg.isPremium() && pictures.size() > 2){
+                   buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)));
+                }
+            }
+        }
     }
 
     private String createUrlForPicture(String pathToImg) {
@@ -249,6 +271,17 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
                     Toast.makeText(v.getContext(), "Imagen Maximixada", Toast.LENGTH_LONG).show();
                 }
             });
-            }
+        }
+    }
+
+    private void buildVideoImageWidget(View convertView, String url) {
+        NetworkImageView networkImageView = buildImageWidget(convertView,url);
+        if(networkImageView != null){
+            networkImageView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "Reproducion de Video", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }
