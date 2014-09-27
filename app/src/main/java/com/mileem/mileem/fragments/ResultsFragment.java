@@ -92,7 +92,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                     int publicationDetailId = publicationDetail.getId();
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction tx = fm.beginTransaction();
-                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "tag" ).commit();
+                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "addToBackStack" ).commit();
                 } catch (Throwable e){
                     showError();
                 }
