@@ -35,7 +35,7 @@
             android:lines="1"
         android:minLines="1"
         android:layout_marginRight="3dp"
- />
+        android:layout_alignParentLeft="true" />
 
     <TextView
             android:id="@+id/prop_m2"
