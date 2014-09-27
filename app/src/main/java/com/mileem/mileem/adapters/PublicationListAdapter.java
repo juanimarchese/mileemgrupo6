@@ -127,6 +127,9 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             } else {
 
                 premiumViewHolder = (Holder.PremiumViewHolder) convertView.getTag();
+                premiumViewHolder.networkImageView1.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView2.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView3.setImageUrl(null, imageLoader);
 
             }
 
@@ -152,6 +155,8 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             } else {
 
                 basicViewHolder = (Holder.BasicViewHolder) convertView.getTag();
+                basicViewHolder.networkImageView1.setImageUrl(null, imageLoader);
+                basicViewHolder.networkImageView2.setImageUrl(null, imageLoader);
 
             }
 
@@ -173,6 +178,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             } else {
 
                 freeViewHolder = (Holder.FreeViewHolder) convertView.getTag();
+                freeViewHolder.networkImageView1.setImageUrl(null, imageLoader);
 
             }
 
