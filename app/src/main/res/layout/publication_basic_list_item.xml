@@ -21,6 +21,7 @@
             android:layout_height="60dp"
             android:layout_marginRight="8dp"
             android:focusable="false"
+            android:scaleType="centerCrop"
             android:focusableInTouchMode="false"/>
 
         <com.android.volley.toolbox.NetworkImageView
@@ -29,6 +30,7 @@
             android:layout_height="60dp"
             android:layout_marginRight="8dp"
             android:focusable="false"
+            android:scaleType="centerCrop"
             android:focusableInTouchMode="false"/>
     </LinearLayout>
     <!-- Thumbnail Image -->
