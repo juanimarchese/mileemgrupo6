@@ -97,7 +97,7 @@ public class PublicationDetailFragment extends BaseFragment {
             }
 
             if (hasVideo) {
-                data.add(new Multimedia(Multimedia.Type.VIDEO, publication.getVideo().getThumbnail(), publication.getVideo().getEmbedUrl()));
+                data.add(new Multimedia(Multimedia.Type.VIDEO, publication.getVideo().getThumbnail(), publication.getVideo().getUrl()));
             }
             mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
             mPager.setAdapter(mPagerAdapter);
