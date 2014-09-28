@@ -47,7 +47,8 @@
             android:layout_weight="0.5"
             android:focusableInTouchMode="false"
             android:minLines="1"
-            android:background="@color/background_fp"/>
+            android:background="@color/background_fp"
+            android:paddingLeft="3dp" />
 
         <TextView
             android:id="@+id/prop_barrio"
@@ -60,7 +61,8 @@
             android:layout_weight="0.5"
             android:focusableInTouchMode="false"
             android:minLines="1"
-            android:background="@color/background_fp"/>
+            android:background="@color/background_fp"
+            android:paddingLeft="3dp" />
 
         <TextView
             android:id="@+id/prop_m2"
@@ -72,7 +74,8 @@
             android:textSize="@dimen/m2"
             android:focusable="false"
             android:background="@color/background_fp"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false"
+            android:paddingLeft="3dp" />
 
         <TextView
             android:id="@+id/separator"
