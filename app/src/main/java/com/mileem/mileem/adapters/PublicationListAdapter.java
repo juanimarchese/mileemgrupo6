@@ -132,10 +132,13 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
                 premiumViewHolder.networkImageView1.setImageUrl(null, imageLoader);
                 premiumViewHolder.networkImageView1.setOnClickListener(null);
+                premiumViewHolder.networkImageView1.setVisibility(View.INVISIBLE);
                 premiumViewHolder.networkImageView2.setImageUrl(null, imageLoader);
                 premiumViewHolder.networkImageView2.setOnClickListener(null);
+                premiumViewHolder.networkImageView2.setVisibility(View.INVISIBLE);
                 premiumViewHolder.networkImageView3.setImageUrl(null, imageLoader);
                 premiumViewHolder.networkImageView3.setOnClickListener(null);
+                premiumViewHolder.networkImageView3.setVisibility(View.INVISIBLE);
 
             }
 
@@ -163,8 +166,10 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
                 basicViewHolder = (Holder.BasicViewHolder) convertView.getTag();
                 basicViewHolder.networkImageView1.setImageUrl(null, imageLoader);
                 basicViewHolder.networkImageView1.setOnClickListener(null);
+                basicViewHolder.networkImageView1.setVisibility(View.INVISIBLE);
                 basicViewHolder.networkImageView2.setImageUrl(null, imageLoader);
                 basicViewHolder.networkImageView2.setOnClickListener(null);
+                basicViewHolder.networkImageView2.setVisibility(View.INVISIBLE);
 
             }
 
@@ -188,6 +193,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
                 freeViewHolder = (Holder.FreeViewHolder) convertView.getTag();
                 freeViewHolder.networkImageView1.setImageUrl(null, imageLoader);
                 freeViewHolder.networkImageView1.setOnClickListener(null);
+                freeViewHolder.networkImageView1.setVisibility(View.INVISIBLE);
 
             }
 
@@ -227,8 +233,9 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             videoAdded = true;
         }
         pictures.addAll(msg.getPictures());
-        if(pictures.isEmpty()) pictures.add("/assets/img/nophoto.jpg");
-        if (pictures.size() > 0) {
+        if(pictures.isEmpty()){
+            buildFullScreenImageWidget(holder.networkImageView1, R.drawable.image_placeholder);
+        } else {
             if(videoAdded){
                 buildVideoImageWidget(holder.networkImageView1, pictures.get(0));
             } else {
@@ -243,6 +250,8 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         }
     }
 
+
+
     private String createUrlForPicture(String pathToImg) {
         return AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(pathToImg);
     }
@@ -254,7 +263,23 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
     private NetworkImageView buildImageWidget(View convertView, String url) {
         NetworkImageView networkImageView = (NetworkImageView) convertView;
-        if(networkImageView != null) networkImageView.setImageUrl(url,imageLoader);
+        if(networkImageView != null){
+            networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
+            networkImageView.setErrorImageResId(R.drawable.image_placeholder);
+            networkImageView.setImageUrl(url,imageLoader);
+            networkImageView.setVisibility(View.VISIBLE);
+        }
+        return networkImageView;
+    }
+
+    private NetworkImageView buildImageWidget(View convertView, int image_placeholder) {
+        NetworkImageView networkImageView = (NetworkImageView) convertView;
+        if(networkImageView != null){
+            networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
+            networkImageView.setErrorImageResId(R.drawable.image_placeholder);
+            networkImageView.setImageResource(image_placeholder);
+            networkImageView.setVisibility(View.VISIBLE);
+        }
         return networkImageView;
     }
 
@@ -273,6 +298,12 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             });
         }
     }
+
+    private void buildFullScreenImageWidget(View convertView, int image_placeholder) {
+        NetworkImageView networkImageView = buildImageWidget(convertView,image_placeholder);
+    }
+
+
 
     private void buildVideoImageWidget(View convertView, String url) {
         NetworkImageView networkImageView = buildImageWidget(convertView,url);
