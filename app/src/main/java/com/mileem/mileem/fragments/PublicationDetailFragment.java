@@ -1,5 +1,6 @@
 package com.mileem.mileem.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -75,6 +76,7 @@ public class PublicationDetailFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.publication_detail_fragment, container, false);
         this.rootView = rootView;
+        buildFixedTextViews();
         buildPublicationView();
         requestPublicationData();
         return rootView;
@@ -111,25 +113,46 @@ public class PublicationDetailFragment extends BaseFragment {
         //TODO - Inicializar el Layout de Vista
 
     }
+
+    private void buildFixedTextViews () {
+        String arial = "arial.ttf";
+        buildTextViewWidget(R.id.prop_tipo_txt, null, arial);
+        buildTextViewWidget(R.id.prop_op_txt, null, arial);
+        buildTextViewWidget(R.id.prop_scubierta_txt, null, arial);
+        buildTextViewWidget(R.id.prop_sdescubierta_txt, null, arial);
+        buildTextViewWidget(R.id.prop_antiguedad_txt, null, arial);
+        buildTextViewWidget(R.id.prop_expensas_txt, null, arial);
+        buildTextViewWidget(R.id.prop_descripcion_txt, null, arial);
+    }
     private void fillPublicationView(PublicationDetails publication) {
-        buildTextViewWidget(R.id.prop_direccion,publication.getAddress());
-        buildTextViewWidget(R.id.prop_barrio,publication.getNeighborhood().getName());
-        buildTextViewWidget(R.id.prop_precio,publication.getCurrency() + " " + publication.getPrice());
-        buildTextViewWidget(R.id.prop_m2, String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2");
-        buildTextViewWidget(R.id.prop_ambientes,publication.getEnvironment().getName());
-        buildTextViewWidget(R.id.prop_tipo,publication.getPropertyType().getName());
-        buildTextViewWidget(R.id.prop_op,publication.getOperationType().getName());
-        buildTextViewWidget(R.id.prop_scubierta,publication.getCoveredSize() + " m2");
-        buildTextViewWidget(R.id.prop_sdescubierta,publication.getSize() + " m2");
+        String arial = "arial.ttf";
+        String arialBold = "arial_bold.ttf";
+        buildTextViewWidget(R.id.prop_direccion,publication.getAddress(), arial);
+        buildTextViewWidget(R.id.prop_barrio,publication.getNeighborhood().getName(), arial);
+        buildTextViewWidget(R.id.prop_precio,publication.getCurrency() + " " + publication.getPrice(), arialBold);
+        buildTextViewWidget(R.id.prop_m2, String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2", arial);
+        buildTextViewWidget(R.id.prop_ambientes,publication.getEnvironment().getName(), arial);
+        buildTextViewWidget(R.id.prop_tipo,publication.getPropertyType().getName(), arial);
+        buildTextViewWidget(R.id.prop_op,publication.getOperationType().getName(), arial);
+        buildTextViewWidget(R.id.prop_scubierta,publication.getCoveredSize() + " m2", arial);
+        buildTextViewWidget(R.id.prop_sdescubierta,publication.getSize() + " m2", arial);
         String antiguedad = publication.getAge() == 0 ? "A estrenar" : publication.getAge() > 1 ? publication.getAge() + " años" : "1 año";
-        buildTextViewWidget(R.id.prop_antiguedad, antiguedad);
-        buildTextViewWidget(R.id.prop_expensas, publication.getCurrency() + " " + publication.getExpenses());
-        buildTextViewWidget(R.id.prop_descripcion, publication.getDescription());
+        buildTextViewWidget(R.id.prop_antiguedad, antiguedad, arial);
+        buildTextViewWidget(R.id.prop_expensas, publication.getCurrency() + " " + publication.getExpenses(), arial);
+        buildTextViewWidget(R.id.prop_descripcion, publication.getDescription(), arial);
     }
 
-    private void buildTextViewWidget(int convertViewId, String txt) {
+    private void buildTextViewWidget(int convertViewId, String txt, String fontName) {
         TextView textView = (TextView)rootView.findViewById(convertViewId);
-        if(textView != null) textView.setText(txt);
+        if(textView != null) {
+            if (fontName != null) {
+                Typeface face = Typeface.createFromAsset(this.getActivity().getAssets(),
+                        "fonts/" + fontName);
+                textView.setTypeface(face);
+            }
+            if (txt != null)
+                textView.setText(txt);
+        }
     }
 
 
