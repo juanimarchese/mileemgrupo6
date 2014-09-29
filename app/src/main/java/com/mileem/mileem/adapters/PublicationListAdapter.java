@@ -77,6 +77,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     private class Holder{
 
         public abstract class ListViewHolder {
+            public NetworkImageView networkImageView4;
             public NetworkImageView networkImageView3;
             public NetworkImageView networkImageView2;
             public NetworkImageView networkImageView1;
@@ -120,6 +121,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
                 premiumViewHolder = new Holder().new PremiumViewHolder();
 
+                premiumViewHolder.networkImageView4 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_3);
                 premiumViewHolder.networkImageView3 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_2);
                 premiumViewHolder.networkImageView2 = (NetworkImageView) convertView.findViewById(R.id.prop_imagen_1);
                 createBasicHolderBasic(convertView, premiumViewHolder);
@@ -139,6 +141,9 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
                 premiumViewHolder.networkImageView3.setImageUrl(null, imageLoader);
                 premiumViewHolder.networkImageView3.setOnClickListener(null);
                 premiumViewHolder.networkImageView3.setVisibility(View.INVISIBLE);
+                premiumViewHolder.networkImageView4.setImageUrl(null, imageLoader);
+                premiumViewHolder.networkImageView4.setOnClickListener(null);
+                premiumViewHolder.networkImageView4.setVisibility(View.INVISIBLE);
 
             }
 
@@ -245,6 +250,9 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
                 buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)));
                 if(msg.isPremium() && pictures.size() > 2){
                    buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)));
+                    if(pictures.size() > 3){
+                        buildFullScreenImageWidget(holder.networkImageView4, createUrlForPicture(pictures.get(3)));
+                    }
                 }
             }
         }
