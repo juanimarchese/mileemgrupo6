@@ -130,8 +130,10 @@ public class PublicationDetailFragment extends BaseFragment {
         buildTextViewWidget(R.id.prop_direccion,publication.getAddress(), arial);
         buildTextViewWidget(R.id.prop_barrio,publication.getNeighborhood().getName(), arial);
         buildTextViewWidget(R.id.prop_precio,publication.getCurrency() + " " + publication.getPrice(), arialBold);
-        buildTextViewWidget(R.id.prop_m2, String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2", arial);
-        buildTextViewWidget(R.id.prop_ambientes,publication.getEnvironment().getName(), arial);
+        String sizeWithEnv = String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2" + " | " +  publication.getEnvironment().getName();
+
+        buildTextViewWidget(R.id.prop_m2_amb, sizeWithEnv , arial);
+
         buildTextViewWidget(R.id.prop_tipo,publication.getPropertyType().getName(), arial);
         buildTextViewWidget(R.id.prop_op,publication.getOperationType().getName(), arial);
         buildTextViewWidget(R.id.prop_scubierta,publication.getCoveredSize() + " m2", arial);
