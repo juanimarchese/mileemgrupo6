@@ -40,6 +40,7 @@ android:background="@android:color/white">
     <Spinner
             android:id="@+id/tipo_propiedad"
             android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
             android:prompt="@string/tipo_propiedad_txt"
             android:layout_width="fill_parent"
             >
@@ -55,6 +56,7 @@ android:background="@android:color/white">
     <Spinner
             android:id="@+id/operacion"
             android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
             android:prompt="@string/operacion_txt"
             android:layout_width="fill_parent"
            >
@@ -70,6 +72,7 @@ android:background="@android:color/white">
             android:id="@+id/ambientes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true"
             android:prompt="@string/ambientes_txt"
             >
     </Spinner>

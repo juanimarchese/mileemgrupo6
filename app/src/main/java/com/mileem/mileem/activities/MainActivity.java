@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayViewForMenu(1);
+            displayViewForMenu(0);
         }
 
     }
