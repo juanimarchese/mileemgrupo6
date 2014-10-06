@@ -19,4 +19,8 @@ public class IdName {
         this.name = name;
         this.id = id;
     }
+
+    public int getId() {
+        return id;
+    }
 }
