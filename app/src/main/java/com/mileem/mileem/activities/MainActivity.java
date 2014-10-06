@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity {
         // Buscar
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // Ultimos Resultados
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        /*navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));*/
         // Estadisticas
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 
@@ -132,19 +132,20 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    /**
-     * Diplaying fragment view for selected nav drawer list item
-     * */
-    public void displayViewForMenu(int position) {
+        public void displayViewForMenu(int position) {
+            displayViewForMenu(position,new Bundle());
+        }
+
+     public void displayViewForMenu(int position,Bundle arguments) {
         // update the main content by replacing fragments
         BaseFragment fragment = null;
         switch (position) {
             case 0:
                 fragment = new SearchFragment();
                 break;
-            case 1:
+            /*case 1:
                 fragment = new ResultsFragment();
-                break;
+                break;*/
 
             default:
                 break;
@@ -154,6 +155,7 @@ public class MainActivity extends BaseActivity {
            /* FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
+            fragment.setArguments(arguments);
             showFragment(fragment);
 
             // update selected item and title, then close the drawer
@@ -166,13 +168,17 @@ public class MainActivity extends BaseActivity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
-
     public void displayView(BaseFragment fragment) {
+        displayView(fragment,new Bundle());
+    }
+
+    public void displayView(BaseFragment fragment,Bundle arguments) {
         // update the main content by replacing fragments
         if (fragment != null) {
             /*FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
+            fragment.setArguments(arguments);
             showFragment(fragment);
 
             // update selected item and title, then close the drawer

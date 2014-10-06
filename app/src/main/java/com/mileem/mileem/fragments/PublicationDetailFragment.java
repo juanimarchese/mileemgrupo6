@@ -184,7 +184,7 @@ public class PublicationDetailFragment extends BaseFragment {
 
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener los datos de la publicación", Toast.LENGTH_LONG).show();
-        ((MainActivity) rootView.getContext()).displayViewForMenu(1);
+        ((MainActivity) rootView.getContext()).displayView(new SearchFragment());
     }
 
     @Override

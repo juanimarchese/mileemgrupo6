@@ -68,13 +68,25 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         return rootView;
     }
 
+    private int[] getArrayFromParams(String key){
+        if(getArguments() != null && !getArguments().isEmpty()){
+            return getArguments().getIntArray(key);
+        }
+        return new int[]{};
+    }
+
     private void createDefaultRequestInfo() {
-        int[] neighborhoods = {};
-        int[] environments = {};
-        int[] propertyTypes = {};
-        int[] operationTypes = {};
-        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
+        buildFilter();
         order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
+    }
+
+    private void buildFilter() {
+        int[] neighborhoods = getArrayFromParams("neighborhoods");
+        int[] environments = getArrayFromParams("environments");
+        int[] propertyTypes = getArrayFromParams("propertyTypes");
+        int[] operationTypes = getArrayFromParams("operationTypes");
+
+        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
     }
 
 
@@ -150,6 +162,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         super.onHiddenChanged(hidden);
         if(!hidden){
             //TODO - Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
+            buildFilter();
             requestFirstPageData();
         }
     }

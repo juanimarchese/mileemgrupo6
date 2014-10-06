@@ -11,10 +11,10 @@ import android.widget.Spinner;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.utils.DefinitionsUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -42,38 +42,31 @@ public class SearchFragment extends BaseFragment {
         return rootView;
     }
 
-    private void addItemsToAmbientesSpinner(View rootView) {
+    private void addItemsToTipoPropiedadSpinner(View rootView) {
         tipoPropiedadSpinner = (Spinner) rootView.findViewById(R.id.tipo_propiedad);
-        /*List list = new ArrayList();
-        Collections.addAll(list, getResources().getStringArray(R.array.tipos_propiedad));*/
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironmentsTypesCollection());
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypesCollection(),"Todos");
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipoPropiedadSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToOperacionSpinner(View rootView) {
-        ambientesSpinner = (Spinner) rootView.findViewById(R.id.operacion);
-        /*List list = new ArrayList();
-        Collections.addAll(list, getResources().getStringArray(R.array.operaciones));*/
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypesCollection());
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ambientesSpinner.setAdapter(dataAdapter);
-    }
-
-    private void addItemsToTipoPropiedadSpinner(View rootView) {
-        operacionSpinner = (Spinner) rootView.findViewById(R.id.ambientes);
-        /*List list = new ArrayList();
-        Collections.addAll(list, getResources().getStringArray(R.array.ambientes));*/
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypesCollection());
+        operacionSpinner = (Spinner) rootView.findViewById(R.id.operacion);
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypesCollection(),"Todas");
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         operacionSpinner.setAdapter(dataAdapter);
     }
 
+    private void addItemsToAmbientesSpinner(View rootView) {
+        ambientesSpinner = (Spinner) rootView.findViewById(R.id.ambientes);
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(),"Todos");
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ambientesSpinner.setAdapter(dataAdapter);
+    }
+
     private void addItemsToAutoCompleteTextView(View rootView) {
-       /* String[] countries = getResources().getStringArray(R.array.barrios);*/
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeightboardsCollection());
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),android.R.layout.select_dialog_item,list);
         barrioACTV = (AutoCompleteTextView) rootView.findViewById(R.id.barrio);
@@ -85,14 +78,55 @@ public class SearchFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Button button_generar_repo = (Button) view.findViewById(R.id.button_buscar);
-
         button_generar_repo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).displayViewForMenu(1);
+                Bundle arguments = new Bundle();
+
+                String ambiente = (String) ((Spinner)getView().findViewById(R.id.ambientes)).getSelectedItem();
+                int[] environments = getIntsFromSpinner(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(), ambiente);
+                arguments.putIntArray("environments",environments);
+
+                String propType = (String) ((Spinner)getView().findViewById(R.id.tipo_propiedad)).getSelectedItem();
+                int[] propertyTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getPropertyTypesCollection(), propType);
+                arguments.putIntArray("propertyTypes",propertyTypes);
+
+                String opType = (String) ((Spinner)getView().findViewById(R.id.operacion)).getSelectedItem();
+                int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypesCollection(), opType);
+                arguments.putIntArray("operationTypes",operationTypes);
+
+                String barrio = ((AutoCompleteTextView) getView().findViewById(R.id.barrio)).getText().toString();
+                int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeightboardsCollection(), barrio);
+                arguments.putIntArray("neighborhoods",neighborhoods);
+
+                ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments);
             }
         });
 
+    }
+
+    private int[] getIntsFromAutoComplete(ArrayList<IdName> collection, String key) {
+        int[] array;
+        if(key == null || key.isEmpty()) {
+            array = new int[0];
+        } else {
+            int id = DefinitionsUtils.findIdByName(collection,key);
+            array = new int[1];
+            array[0] = id;
+        }
+        return array;
+    }
+
+    private int[] getIntsFromSpinner(ArrayList<IdName> collection, String key) {
+        int[] array;
+        int id = DefinitionsUtils.findIdByName(collection,key);
+        if(id != -1){
+            array = new int[1];
+            array[0] = id;
+        } else {
+            array = new int[0];
+        }
+        return array;
     }
 
 
