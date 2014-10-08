@@ -4,6 +4,8 @@ package com.mileem.mileem.models;
  * Created by ramirodiaz on 25/09/14.
  */
 public class User extends  IdName {
+    int id;
+    String name;
     String telephone;
     String email;
 

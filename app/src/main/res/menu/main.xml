@@ -37,7 +37,17 @@
     <item android:id="@+id/action_contact"
         android:icon="@drawable/ic_action_contact"
         android:title="@string/action_contact"
-        android:showAsAction="always" />
+        android:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/telefono"
+                android:title="Llamar" />
+            <item
+                android:id="@+id/email"
+                android:title="Enviar E-Mail" />
+
+        </menu>
+        </item>
     <item android:id="@+id/action_amenities"
         android:icon="@drawable/ic_action_amenities"
         android:title="@string/action_amenities"

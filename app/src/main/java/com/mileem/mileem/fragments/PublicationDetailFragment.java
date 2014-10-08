@@ -1,6 +1,8 @@
 package com.mileem.mileem.fragments;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -40,6 +42,7 @@ public class PublicationDetailFragment extends BaseFragment {
 
     private SmartViewPager mPager;
     private PagerAdapter mPagerAdapter;
+    private PublicationDetails currentPublication;
 
     public PublicationDetailFragment() {
         super(TAG);
@@ -167,6 +170,7 @@ public class PublicationDetailFragment extends BaseFragment {
                     //TODO - Bindear datos con la vista
                     buildGallery(publication);
                     fillPublicationView(publication);
+                    currentPublication = publication;
                     hidePDialog();
                 }
 
@@ -187,20 +191,51 @@ public class PublicationDetailFragment extends BaseFragment {
         ((MainActivity) rootView.getContext()).displayView(new SearchFragment());
     }
 
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.findItem(R.id.action_contact).setVisible(true);
+        MenuItem contactItem = menu.findItem(R.id.action_contact);
+        contactItem.setVisible(true);
+        MenuItem telItem = contactItem.getSubMenu().findItem(R.id.telefono);
+        telItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(currentPublication == null || currentPublication.getUser() == null || currentPublication.getUser().getTelephone() == null || currentPublication.getUser().getTelephone().isEmpty()){
+                    Toast.makeText(getActivity(), "No existe un numero de teléfono asociado válido", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + currentPublication.getUser().getTelephone()));
+                try {
+                    getActivity().startActivity(callIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getActivity(),
+                            "Error en la llamada.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+        MenuItem mailItem = contactItem.getSubMenu().findItem(R.id.email);
+        mailItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(getActivity(), "Abrir formulario de contacto", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
         menu.findItem(R.id.action_amenities).setVisible(true);
         menu.findItem(R.id.action_location).setVisible(true);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.action_contact:
-                Toast.makeText(rootView.getContext(), "Vista de Contacto", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_amenities:
                 Toast.makeText(rootView.getContext(), "Vista de Amenities", Toast.LENGTH_LONG).show();
