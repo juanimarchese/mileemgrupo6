@@ -68,6 +68,7 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToAutoCompleteTextView(View rootView) {
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeightboardsCollection());
+        list.add("Todos");
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),android.R.layout.select_dialog_item,list);
         barrioACTV = (AutoCompleteTextView) rootView.findViewById(R.id.barrio);
         barrioACTV.setThreshold(1);//will start working from first character
@@ -82,7 +83,7 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Bundle arguments = new Bundle();
-
+                boolean isValid = true;
                 String ambiente = (String) ((Spinner)getView().findViewById(R.id.ambientes)).getSelectedItem();
                 int[] environments = getIntsFromSpinner(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(), ambiente);
                 arguments.putIntArray("environments",environments);
@@ -95,11 +96,21 @@ public class SearchFragment extends BaseFragment {
                 int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypesCollection(), opType);
                 arguments.putIntArray("operationTypes",operationTypes);
 
-                String barrio = ((AutoCompleteTextView) getView().findViewById(R.id.barrio)).getText().toString();
+                AutoCompleteTextView barrioView = (AutoCompleteTextView) getView().findViewById(R.id.barrio);
+                String barrio = barrioView.getText().toString();
+                if(barrio == null || barrio.isEmpty()){
+                    isValid = false;
+                    barrioView.setError("Debe indicar un barrio");
+                }
                 int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeightboardsCollection(), barrio);
+                if(neighborhoods.length > 0 && neighborhoods[0] == -1){
+                    isValid = false;
+                    barrioView.setError("Debe indicar un barrio válido");
+                }
                 arguments.putIntArray("neighborhoods",neighborhoods);
 
-                ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments);
+                if(isValid)
+                    ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments);
             }
         });
 
@@ -107,7 +118,7 @@ public class SearchFragment extends BaseFragment {
 
     private int[] getIntsFromAutoComplete(ArrayList<IdName> collection, String key) {
         int[] array;
-        if(key == null || key.isEmpty()) {
+        if(key == null || key.isEmpty() || key.equals("Todos")) {
             array = new int[0];
         } else {
             int id = DefinitionsUtils.findIdByName(collection,key);
