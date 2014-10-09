@@ -2,7 +2,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/splash_screen"
+        android:scaleType="centerCrop"
+        android:background="#000000" />
 
     <!-- Framelayout to display Fragments -->
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,8 +20,7 @@
                  android:layout_height="match_parent"
                  tools:context="ar.com.mileem.app.MainActivity"
                  tools:ignore="MergeRootFrame"
-                 android:background="@android:color/white"
-                 android:paddingBottom="10dp"/>
+                 />
 
     <!-- Listview to display slider menu -->
     <ListView

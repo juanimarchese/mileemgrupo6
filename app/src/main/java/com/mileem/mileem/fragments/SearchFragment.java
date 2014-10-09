@@ -35,6 +35,7 @@ public class SearchFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.search_fragment, container, false);
+        getActivity().getActionBar().hide();
         addItemsToAutoCompleteTextView(rootView);
         addItemsToTipoPropiedadSpinner(rootView);
         addItemsToOperacionSpinner(rootView);
@@ -45,34 +46,37 @@ public class SearchFragment extends BaseFragment {
     private void addItemsToTipoPropiedadSpinner(View rootView) {
         tipoPropiedadSpinner = (Spinner) rootView.findViewById(R.id.tipo_propiedad);
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypesCollection(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         tipoPropiedadSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToOperacionSpinner(View rootView) {
         operacionSpinner = (Spinner) rootView.findViewById(R.id.operacion);
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypesCollection(),"Todas");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         operacionSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToAmbientesSpinner(View rootView) {
         ambientesSpinner = (Spinner) rootView.findViewById(R.id.ambientes);
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         ambientesSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToAutoCompleteTextView(View rootView) {
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeightboardsCollection());
         list.add("Todos");
-        ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),android.R.layout.select_dialog_item,list);
+        ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),R.layout.autocomplete_item,list);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         barrioACTV = (AutoCompleteTextView) rootView.findViewById(R.id.barrio);
         barrioACTV.setThreshold(1);//will start working from first character
         barrioACTV.setAdapter(adapter);
+
+
     }
 
 
@@ -148,5 +152,13 @@ public class SearchFragment extends BaseFragment {
 
     public boolean hasMenuOption(){
         return true;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            getActivity().getActionBar().hide();
+        }
     }
 }

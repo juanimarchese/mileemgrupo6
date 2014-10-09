@@ -58,6 +58,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.results_fragment, container, false);
+        getActivity().getActionBar().show();
         context = rootView.getContext();
         buildEndlessListView(rootView);
 
@@ -162,6 +163,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
             //TODO - Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
             buildFilter();
             requestFirstPageData();
+            getActivity().getActionBar().show();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mileem.mileem.activities;
 
+import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -21,6 +22,7 @@ import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
 import com.mileem.mileem.widgets.NavDrawerItem;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 
@@ -132,6 +134,8 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+
         public void displayViewForMenu(int position,boolean isBack) {
             displayViewForMenu(position,new Bundle(),false);
         }
@@ -199,6 +203,9 @@ public class MainActivity extends BaseActivity {
         if(this.getCurrentFragment().hasMenuOption()) super.onBackPressed();
         BaseFragment previousFragment = this.getPreviousFragment();
         while (previousFragment.getCustomTag().equals(getCurrentFragment().getCustomTag())){
+            previousFragment = this.getPreviousFragment();
+        }
+        if(this.getCurrentFragment().getCustomTag().equals(NoResultsFragment.TAG)){
             previousFragment = this.getPreviousFragment();
         }
         if(previousFragment != null){

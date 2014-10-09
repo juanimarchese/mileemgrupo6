@@ -9,6 +9,7 @@ import com.mileem.mileem.models.PublicationFilter;
 import com.mileem.mileem.models.PublicationOrder;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -150,6 +151,21 @@ public class PublicationsDataManager {
                 super.onSuccess(statusCode, headers, response);
                 ArrayList<PublicationDetails> publications = PublicationsDataManager.this.parseResponse(response);
                 callbackHandler.onComplete(publications);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }
