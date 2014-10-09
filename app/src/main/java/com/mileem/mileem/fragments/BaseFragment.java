@@ -7,10 +7,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.BaseActivity;
+import com.mileem.mileem.activities.MainActivity;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -45,7 +49,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showFragment(BaseFragment fragment){
-        ((BaseActivity) getActivity()).showFragment(fragment);
+        ((BaseActivity) getActivity()).showFragment(fragment,false);
     }
 
     @Override
@@ -80,4 +84,6 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
         hidePDialog();
     }
+
+
 }

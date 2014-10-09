@@ -110,7 +110,7 @@ public class SearchFragment extends BaseFragment {
                 arguments.putIntArray("neighborhoods",neighborhoods);
 
                 if(isValid)
-                    ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments);
+                    ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments,false);
             }
         });
 

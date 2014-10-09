@@ -41,4 +41,5 @@
     <color name="background_pdf">#f0f0f0</color>
     <color name="background_fp">#ffe3e3e3</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent_white">#80ffffff</color>
 </resources>

@@ -127,16 +127,16 @@ public class MainActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayViewForMenu(0);
+            displayViewForMenu(0,false);
         }
 
     }
 
-        public void displayViewForMenu(int position) {
-            displayViewForMenu(position,new Bundle());
+        public void displayViewForMenu(int position,boolean isBack) {
+            displayViewForMenu(position,new Bundle(),false);
         }
 
-     public void displayViewForMenu(int position,Bundle arguments) {
+     public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
         // update the main content by replacing fragments
         BaseFragment fragment = null;
         switch (position) {
@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity {
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
             fragment.setArguments(arguments);
-            showFragment(fragment);
+            showFragment(fragment,isBack);
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -168,18 +168,18 @@ public class MainActivity extends BaseActivity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
-    public void displayView(BaseFragment fragment) {
-        displayView(fragment,new Bundle());
+    public void displayView(BaseFragment fragment,boolean isBack) {
+        displayView(fragment,new Bundle(),isBack);
     }
 
-    public void displayView(BaseFragment fragment,Bundle arguments) {
+    public void displayView(BaseFragment fragment,Bundle arguments,boolean isBack) {
         // update the main content by replacing fragments
         if (fragment != null) {
             /*FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
             fragment.setArguments(arguments);
-            showFragment(fragment);
+            showFragment(fragment,isBack);
 
             // update selected item and title, then close the drawer
             setTitle(fragment.getTittle());
@@ -189,8 +189,25 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        BaseFragment previousFragment = this.getPreviousFragment();
+        while (previousFragment.getCustomTag().equals(getCurrentFragment().getCustomTag())){
+            previousFragment = this.getPreviousFragment();
+        }
+        if(previousFragment != null){
+            try {
+                displayView(previousFragment.getClass().newInstance(),true);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onSearchRequested() {
@@ -211,7 +228,7 @@ public class MainActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             // display view for selected nav drawer item
-            displayViewForMenu(position);
+            displayViewForMenu(position,false);
         }
     }
 

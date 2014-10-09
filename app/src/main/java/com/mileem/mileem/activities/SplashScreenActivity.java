@@ -32,6 +32,7 @@ public class SplashScreenActivity extends BaseActivity {
                 @Override
                 public void onFailure(Error error) {
                     Toast.makeText(context,"Error en la carga inicial de datos.",Toast.LENGTH_LONG).show();
+                    finish();
                 }
             });
         } catch (JSONException e) {

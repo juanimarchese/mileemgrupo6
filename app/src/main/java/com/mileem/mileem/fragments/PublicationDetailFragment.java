@@ -1,5 +1,7 @@
 package com.mileem.mileem.fragments;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -188,7 +190,7 @@ public class PublicationDetailFragment extends BaseFragment {
 
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener los datos de la publicación", Toast.LENGTH_LONG).show();
-        ((MainActivity) rootView.getContext()).displayView(new SearchFragment());
+        ((MainActivity) rootView.getContext()).displayView(new ResultsFragment(),true);
     }
 
 
@@ -221,7 +223,9 @@ public class PublicationDetailFragment extends BaseFragment {
         mailItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(getActivity(), "Abrir formulario de contacto", Toast.LENGTH_LONG).show();
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction tx = fm.beginTransaction();
+                tx.add(R.id.frame_container, ContactFragment.newInstance(currentPublication) ).addToBackStack( "tag" ).commit();
                 return true;
             }
         });

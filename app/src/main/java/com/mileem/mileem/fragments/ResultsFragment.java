@@ -102,9 +102,10 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 try{
                     PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
                     int publicationDetailId = publicationDetail.getId();
-                    FragmentManager fm = getFragmentManager();
+                    ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(publicationDetailId),false);
+                    /*FragmentManager fm = getFragmentManager();
                     FragmentTransaction tx = fm.beginTransaction();
-                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "tag" ).commit();
+                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "tag" ).commit();*/
                 } catch (Throwable e){
                     showError();
                 }
@@ -130,7 +131,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                     if(!collection.isEmpty()){
                         listView.addNewData(collection);
                     } else{
-                        ((MainActivity) context).displayView(new NoResultsFragment());
+                        ((MainActivity) context).displayView(new NoResultsFragment(),false);
                     }
                     hidePDialog();
                 }
@@ -153,7 +154,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener los datos", Toast.LENGTH_LONG).show();
         createDefaultRequestInfo();
-        ((MainActivity) context).displayViewForMenu(0);
+        ((MainActivity) context).displayViewForMenu(0,true);
     }
 
 

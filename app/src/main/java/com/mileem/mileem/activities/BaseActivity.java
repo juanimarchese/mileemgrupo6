@@ -13,10 +13,12 @@ import android.view.inputmethod.InputMethodManager;
 import com.mileem.mileem.R;
 import com.mileem.mileem.fragments.BaseFragment;
 
+import java.util.Stack;
+
 public abstract class BaseActivity extends Activity {
 
     private BaseFragment currentFragment;
-    private BaseFragment previousFragment;
+    private Stack<BaseFragment> previousFragment = new Stack<BaseFragment>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,7 @@ public abstract class BaseActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public void showFragment(BaseFragment fragment) {
+    public void showFragment(BaseFragment fragment,boolean isBackAction) {
 
         if (fragment != null) {
             FragmentManager fm = getFragmentManager();
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends Activity {
             }
             if (fragmentByTag == null) {
                fragmentTransaction.add(R.id.frame_container, fragment, fragment.getCustomTag());
+
             } else {
                 if (fragmentByTag.isHidden()) {
                     //Se copian los argumentos de los fragments en caso de que exista, pero hayan cambiado
@@ -54,7 +57,9 @@ public abstract class BaseActivity extends Activity {
             }
 
             fragmentTransaction.commit();
-            previousFragment = currentFragment;
+            if(!isBackAction)
+                previousFragment.push(currentFragment);
+
             currentFragment = fragment;
         } else {
             // error in creating fragment
@@ -67,6 +72,8 @@ public abstract class BaseActivity extends Activity {
     }
 
     public BaseFragment getPreviousFragment() {
-        return previousFragment;
+        if(!previousFragment.isEmpty())
+            return previousFragment.pop();
+        return null;
     }
 }
