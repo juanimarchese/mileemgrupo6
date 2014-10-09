@@ -103,9 +103,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                     PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
                     int publicationDetailId = publicationDetail.getId();
                     ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(publicationDetailId),false);
-                    /*FragmentManager fm = getFragmentManager();
-                    FragmentTransaction tx = fm.beginTransaction();
-                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "tag" ).commit();*/
                 } catch (Throwable e){
                     showError();
                 }

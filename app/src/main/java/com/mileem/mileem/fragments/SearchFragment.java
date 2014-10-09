@@ -145,4 +145,8 @@ public class SearchFragment extends BaseFragment {
     public String getTittle() {
         return "Busqueda";
     }
+
+    public boolean hasMenuOption(){
+        return true;
+    }
 }

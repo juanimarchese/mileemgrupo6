@@ -223,9 +223,7 @@ public class PublicationDetailFragment extends BaseFragment {
         mailItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction tx = fm.beginTransaction();
-                tx.add(R.id.frame_container, ContactFragment.newInstance(currentPublication) ).addToBackStack( "tag" ).commit();
+                ((MainActivity)getActivity()).displayView(ContactFragment.newInstance(currentPublication),false);
                 return true;
             }
         });

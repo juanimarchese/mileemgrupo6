@@ -169,7 +169,12 @@ public class MainActivity extends BaseActivity {
         }
     }
     public void displayView(BaseFragment fragment,boolean isBack) {
-        displayView(fragment,new Bundle(),isBack);
+        Bundle bundle = null;
+        if (fragment.getArguments() != null)
+            bundle = fragment.getArguments();
+        else
+            bundle = new Bundle();
+        displayView(fragment, bundle, isBack);
     }
 
     public void displayView(BaseFragment fragment,Bundle arguments,boolean isBack) {
@@ -191,7 +196,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        if(this.getCurrentFragment().hasMenuOption()) super.onBackPressed();
         BaseFragment previousFragment = this.getPreviousFragment();
         while (previousFragment.getCustomTag().equals(getCurrentFragment().getCustomTag())){
             previousFragment = this.getPreviousFragment();
