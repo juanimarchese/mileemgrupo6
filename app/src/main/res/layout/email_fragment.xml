@@ -1,23 +1,23 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:clickable="true"
     android:scrollbars="vertical"
-    android:background="@drawable/splash_screen"
+    android:background="@color/transparent_white"
     >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/transparent_white"
         >
 
 
         <LinearLayout
             android:id="@+id/header"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -25,31 +25,40 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_txt"
+                android:layout_marginTop="2dp"
                 android:textSize="7pt"
+                android:background="@color/background_fp"
                 android:textStyle="bold"></TextView>
 
             <TextView
                 android:id="@+id/numeroPublicacion"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/background_fp"
                 android:textSize="7pt"></TextView>
 
             <TextView
                 android:id="@+id/direccion"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/background_fp"
                 android:textSize="7pt"></TextView>
 
             <TextView
                 android:id="@+id/barrio"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/background_fp"
+                android:layout_marginTop="2dp"
                 android:textSize="7pt"></TextView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_marginTop="20dp"
             android:layout_below="@+id/header"
             android:orientation="vertical">
 
@@ -91,12 +100,13 @@
             <Button
                 android:id="@+id/button_enviar"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/holo_blue"
                 android:text="@string/button_enviar"
                 android:textColor="@color/white"
+                android:textStyle="bold"
                 android:textSize="12sp" />
 
         </LinearLayout>

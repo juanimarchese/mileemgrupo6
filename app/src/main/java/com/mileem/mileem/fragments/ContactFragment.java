@@ -1,6 +1,7 @@
 package com.mileem.mileem.fragments;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,30 @@ public class ContactFragment extends BaseFragment {
                Bundle arguments = new Bundle();
                boolean isValid = true;
 
+                EditText mailView = (EditText) getView().findViewById(R.id.email);
+                String email = mailView.getText().toString();
+                if(email == null || email.isEmpty()){
+                    isValid = false;
+                    mailView.setError("Debe indicar un email");
+                }
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    isValid = false;
+                    mailView.setError("Debe indicar un email válido");
+                }
+
+                EditText telView = (EditText) getView().findViewById(R.id.telefono);
+                String tel = mailView.getText().toString();
+                if(tel != null && !tel.isEmpty() && !Patterns.PHONE.matcher(tel).matches()){
+                    isValid = false;
+                    telView.setError("Debe indicar un telefono válido");
+                }
+
+                EditText msgView = (EditText) getView().findViewById(R.id.mensaje);
+                String msg = mailView.getText().toString();
+                if(msg == null || msg.isEmpty()){
+                    isValid = false;
+                    msgView.setError("Debe indicar un mensaje");
+                }
                if (isValid)
                    Toast.makeText(getActivity(),"Envio de mail!",Toast.LENGTH_LONG).show();
             }
