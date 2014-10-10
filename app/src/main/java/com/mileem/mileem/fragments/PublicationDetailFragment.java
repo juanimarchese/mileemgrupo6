@@ -227,11 +227,19 @@ public class PublicationDetailFragment extends BaseFragment {
                 return true;
             }
         });
+
         menu.findItem(R.id.action_amenities).setVisible(true);
-        menu.findItem(R.id.action_location).setVisible(true);
+        
+        MenuItem mapItem = menu.findItem(R.id.action_location);
+        mapItem.setVisible(true);
+        mapItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity)getActivity()).displayView(MapFragment.newInstance(),false);
+                return true;
+            }
+        });
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -243,7 +251,6 @@ public class PublicationDetailFragment extends BaseFragment {
                 Toast.makeText(rootView.getContext(), "Vista de Amenities", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_location:
-                Toast.makeText(rootView.getContext(), "Vista de Mapa", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
