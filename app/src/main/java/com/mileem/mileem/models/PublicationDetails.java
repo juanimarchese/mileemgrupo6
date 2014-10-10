@@ -26,6 +26,7 @@ public class PublicationDetails {
     private IdName propertyType;
     private IdName publicationType;
     private IdName neighborhood;
+    private ArrayList<IdName> amenitieType;
     private User user;
 
     public PublicationDetails() {
@@ -210,4 +211,8 @@ public class PublicationDetails {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public ArrayList<IdName> getAmenitieType() { return amenitieType; }
+
+    public void setAmenitieType(ArrayList<IdName> amenitieType) { this.amenitieType = amenitieType; }
 }

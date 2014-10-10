@@ -53,6 +53,10 @@ public class DefinitionsDataManager {
                     Object dateRanges = payload.get("dateRanges");
                     ArrayList<IdName> dateRangesCollection = gson.fromJson(dateRanges.toString(), collectionType);
                     dm.setDateRangesCollections(dateRangesCollection);
+
+                    Object amenities = payload.get("amenitieTypes");
+                    ArrayList<IdName> amenitiesCollection = gson.fromJson(amenities.toString(), collectionType);
+                    dm.setAmenitiesCollections(amenitiesCollection);
                     callbackHandler.onComplete();
                 } catch (JSONException e) {
                     e.printStackTrace();
