@@ -55,7 +55,6 @@ public class ContactFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.email_fragment, container, false);
-       // addItemsToHorarioSpinner(rootView);
         setTextViewText(rootView,R.id.numeroPublicacion,"Publicación n° " + getArguments().getInt("publicationId"));
         setTextViewText(rootView,R.id.direccion,getArguments().getString("publicationAddress"));
         setTextViewText(rootView,R.id.barrio,getArguments().getString("publicationNeigthboorhood"));
@@ -66,15 +65,6 @@ public class ContactFragment extends BaseFragment {
         TextView view = (TextView) rootView.findViewById(widgetId);
         view.setText(text);
     }
-
-  /*  private void addItemsToHorarioSpinner(View rootView) {
-        horarioDeContacto = (Spinner) rootView.findViewById(R.id.tipo_propiedad);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypesCollection(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        horarioDeContacto.setAdapter(dataAdapter);
-    }
-*/
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -135,6 +125,15 @@ public class ContactFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            setTextViewText(getView(),R.id.numeroPublicacion,"Publicación n° " + getArguments().getInt("publicationId"));
+            setTextViewText(getView(),R.id.direccion,getArguments().getString("publicationAddress"));
+            setTextViewText(getView(),R.id.barrio,getArguments().getString("publicationNeigthboorhood"));
+        }
+    }
 
     @Override
     public String getTittle() {
