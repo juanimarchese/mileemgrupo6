@@ -20,7 +20,7 @@ public class SendMessageDataManager {
         params.put("name", email );
         params.put("email", email);
         params.put("telephone", telephone != null && telephone.length() > 0 ? telephone : "Teléfono no especificado");
-        params.put("callAt", contactTimeInfo != null && contactTimeInfo.length() > 0 ? contactTimeInfo : "Horario de contacto no especificado");
+        params.put("callAt", contactTimeInfo != null && contactTimeInfo.length() > 0 ? contactTimeInfo : "Horario de respuesta no especificado");
         params.put("message", message);
         AsyncRestHttpClient.get("send-message", params, new MileenJsonResponseHandler(callbackHandler) {
             @Override

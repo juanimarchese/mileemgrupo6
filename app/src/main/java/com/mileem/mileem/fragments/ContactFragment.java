@@ -19,7 +19,10 @@ import com.mileem.mileem.managers.DefinitionsManager;
 import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.models.User;
+import com.mileem.mileem.networking.SendMessageDataManager;
 import com.mileem.mileem.utils.DefinitionsUtils;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,20 +98,38 @@ public class ContactFragment extends BaseFragment {
                 }
 
                 EditText telView = (EditText) getView().findViewById(R.id.telefono);
-                String tel = mailView.getText().toString();
+                String tel = telView.getText().toString();
                 if(tel != null && !tel.isEmpty() && !Patterns.PHONE.matcher(tel).matches()){
                     isValid = false;
-                    telView.setError("Debe indicar un telefono válido");
+                    telView.setError("Debe indicar un teléfono válido");
                 }
 
                 EditText msgView = (EditText) getView().findViewById(R.id.mensaje);
-                String msg = mailView.getText().toString();
+                String msg = msgView.getText().toString();
                 if(msg == null || msg.isEmpty()){
                     isValid = false;
                     msgView.setError("Debe indicar un mensaje");
                 }
-               if (isValid)
-                   Toast.makeText(getActivity(),"Envio de mail!",Toast.LENGTH_LONG).show();
+               if (isValid) {
+                   Toast.makeText(getActivity(), "El formulario está siendo enviado...", Toast.LENGTH_LONG).show();
+                   EditText contactTimeInfo = (EditText) getView().findViewById(R.id.hsRespuesta);
+
+                   int publicationId = getArguments().getInt("publicationId");
+                   try {
+                       new SendMessageDataManager().sendMessage(publicationId, email, tel, contactTimeInfo.getText().toString(), msg, new SendMessageDataManager.SendMessageDataManagerCallbackHandler() {
+                           @Override
+                           public void onComplete() {
+                               Toast.makeText(getActivity(), "El formulario fue enviado correctamente", Toast.LENGTH_LONG).show();
+                           }
+                           @Override
+                           public void onFailure(Error error) {
+                               Toast.makeText(getActivity(), "El formulario no fue enviado correctamente", Toast.LENGTH_LONG).show();
+                           }
+                       });
+                   } catch (JSONException e) {
+                       e.printStackTrace();
+                   }
+               }
             }
         });
 
