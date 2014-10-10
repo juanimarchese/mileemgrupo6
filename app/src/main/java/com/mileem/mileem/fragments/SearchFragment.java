@@ -45,7 +45,7 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToTipoPropiedadSpinner(View rootView) {
         tipoPropiedadSpinner = (Spinner) rootView.findViewById(R.id.tipo_propiedad);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypesCollection(),"Todos");
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypes(),"Todos");
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         tipoPropiedadSpinner.setAdapter(dataAdapter);
@@ -53,7 +53,7 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToOperacionSpinner(View rootView) {
         operacionSpinner = (Spinner) rootView.findViewById(R.id.operacion);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypesCollection(),"Todas");
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypes(),"Todas");
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         operacionSpinner.setAdapter(dataAdapter);
@@ -61,14 +61,14 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToAmbientesSpinner(View rootView) {
         ambientesSpinner = (Spinner) rootView.findViewById(R.id.ambientes);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(),"Todos");
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironments(),"Todos");
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         ambientesSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToAutoCompleteTextView(View rootView) {
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeightboardsCollection());
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
         list.add("Todos");
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),R.layout.autocomplete_item,list);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -89,15 +89,15 @@ public class SearchFragment extends BaseFragment {
                 Bundle arguments = new Bundle();
                 boolean isValid = true;
                 String ambiente = (String) ((Spinner)getView().findViewById(R.id.ambientes)).getSelectedItem();
-                int[] environments = getIntsFromSpinner(DefinitionsManager.getInstance().getEnvironmentsTypesCollection(), ambiente);
+                int[] environments = getIntsFromSpinner(DefinitionsManager.getInstance().getEnvironments(), ambiente);
                 arguments.putIntArray("environments",environments);
 
                 String propType = (String) ((Spinner)getView().findViewById(R.id.tipo_propiedad)).getSelectedItem();
-                int[] propertyTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getPropertyTypesCollection(), propType);
+                int[] propertyTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getPropertyTypes(), propType);
                 arguments.putIntArray("propertyTypes",propertyTypes);
 
                 String opType = (String) ((Spinner)getView().findViewById(R.id.operacion)).getSelectedItem();
-                int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypesCollection(), opType);
+                int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypes(), opType);
                 arguments.putIntArray("operationTypes",operationTypes);
 
                 AutoCompleteTextView barrioView = (AutoCompleteTextView) getView().findViewById(R.id.barrio);
@@ -106,7 +106,7 @@ public class SearchFragment extends BaseFragment {
                     isValid = false;
                     barrioView.setError("Debe indicar un barrio");
                 }
-                int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeightboardsCollection(), barrio);
+                int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeighborhoods(), barrio);
                 if(neighborhoods.length > 0 && neighborhoods[0] == -1){
                     isValid = false;
                     barrioView.setError("Debe indicar un barrio válido");

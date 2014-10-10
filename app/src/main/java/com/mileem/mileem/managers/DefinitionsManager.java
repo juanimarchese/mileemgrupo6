@@ -11,15 +11,20 @@ import com.mileem.mileem.models.IdName;
 public class DefinitionsManager {
     private static volatile DefinitionsManager instance = null;
 
-    private ArrayList<IdName> neightboardsCollection = null;
-    private ArrayList<IdName> environmentsTypesCollection = null;
-    private ArrayList<IdName> operationTypesCollection = null;
-    private ArrayList<IdName> propertyTypesCollection = null;
-    private ArrayList<IdName> dateRangesCollection = null;
-    private ArrayList<IdName> amenitiesCollections = null;
+    private ArrayList<IdName> neighborhoods = null;
+    private ArrayList<IdName> environments = null;
+    private ArrayList<IdName> operationTypes = null;
+    private ArrayList<IdName> propertyTypes = null;
+    private ArrayList<IdName> dateRanges = null;
+    private ArrayList<IdName> amenitieTypes = null;
 
     private DefinitionsManager() {};
 
+    public static void setInstance (DefinitionsManager dm) {
+        if (instance == null) {
+            instance = dm;
+        }
+    }
     public static DefinitionsManager getInstance() {
         if (instance == null) {
             synchronized (DefinitionsManager.class) {
@@ -27,54 +32,55 @@ public class DefinitionsManager {
                     instance = new DefinitionsManager();
                 }
             }
-
         }
         return instance;
     }
 
-    public ArrayList<IdName> getNeightboardsCollection() {
-        return neightboardsCollection;
+    public ArrayList<IdName> getNeighborhoods() {
+        return neighborhoods;
     }
 
-    public void setNeightboardsCollection(ArrayList<IdName> neightboardsCollection) {
-        this.neightboardsCollection = neightboardsCollection;
+    public void setNeighborhoods(ArrayList<IdName> neighborhoods) {
+        this.neighborhoods = neighborhoods;
     }
 
-    public ArrayList<IdName> getEnvironmentsTypesCollection() {
-        return environmentsTypesCollection;
+    public ArrayList<IdName> getEnvironments() {
+        return environments;
     }
 
-    public void setEnvironmentsTypesCollection(ArrayList<IdName> environmentsTypesCollection) {
-        this.environmentsTypesCollection = environmentsTypesCollection;
+    public void setEnvironments(ArrayList<IdName> environments) {
+        this.environments = environments;
     }
 
-    public ArrayList<IdName> getOperationTypesCollection() {
-        return operationTypesCollection;
+    public ArrayList<IdName> getOperationTypes() {
+        return operationTypes;
     }
 
-    public void setOperationTypesCollection(ArrayList<IdName> operationTypesCollection) {
-        this.operationTypesCollection = operationTypesCollection;
+    public void setOperationTypes(ArrayList<IdName> operationTypes) {
+        this.operationTypes = operationTypes;
     }
 
-    public ArrayList<IdName> getPropertyTypesCollection() {
-        return propertyTypesCollection;
+    public ArrayList<IdName> getPropertyTypes() {
+        return propertyTypes;
     }
 
-    public void setPropertyTypesCollection(ArrayList<IdName> propertyTypesCollection) {
-        this.propertyTypesCollection = propertyTypesCollection;
+    public void setPropertyTypes(ArrayList<IdName> propertyTypes) {
+        this.propertyTypes = propertyTypes;
     }
 
-    public ArrayList<IdName> getDateRangesCollection() { return dateRangesCollection;}
-
-    public void setDateRangesCollections(ArrayList<IdName> dateRangesCollection) {
-        this.dateRangesCollection = dateRangesCollection;
+    public ArrayList<IdName> getDateRanges() {
+        return dateRanges;
     }
 
-    public void setAmenitiesCollections(ArrayList<IdName> amenitiesCollections) {
-        this.amenitiesCollections = amenitiesCollections;
+    public void setDateRanges(ArrayList<IdName> dateRanges) {
+        this.dateRanges = dateRanges;
     }
 
-    public ArrayList<IdName> getAmenitiesCollections() {
-        return amenitiesCollections;
+    public ArrayList<IdName> getAmenitieTypes() {
+        return amenitieTypes;
+    }
+
+    public void setAmenitieTypes(ArrayList<IdName> amenitieTypes) {
+        this.amenitieTypes = amenitieTypes;
     }
 }
