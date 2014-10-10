@@ -4,12 +4,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name="AppController"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.FixedSize" >
+        <uses-library android:name="com.google.android.maps"/>
         <activity
                 android:name=".activities.SplashScreenActivity"
                 android:label="@string/app_name"
@@ -23,7 +25,12 @@
         <activity
                 android:name=".activities.MainActivity"
                 android:label="@string/app_name" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAEnsUw636d3nS2FFbs_ieJkXEpn9u9JOU" />
 
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
