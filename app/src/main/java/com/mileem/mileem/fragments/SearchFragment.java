@@ -2,6 +2,7 @@ package com.mileem.mileem.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.managers.DefinitionsManager;
 import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.utils.DefinitionsUtils;
+import com.mileem.mileem.widgets.CustomAutoCompleteTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class SearchFragment extends BaseFragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-    private AutoCompleteTextView barrioACTV;
+    private CustomAutoCompleteTextView barrioACTV;
     private Spinner tipoPropiedadSpinner;
     private Spinner operacionSpinner;
     private Spinner ambientesSpinner;
@@ -69,14 +71,24 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToAutoCompleteTextView(View rootView) {
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
-        list.add("Todos");
+        String defaultElement = "Todos";
+        list.add(defaultElement);
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),R.layout.autocomplete_item,list);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        barrioACTV = (AutoCompleteTextView) rootView.findViewById(R.id.barrio);
-        barrioACTV.setThreshold(1);//will start working from first character
+        barrioACTV = (CustomAutoCompleteTextView) rootView.findViewById(R.id.barrio);
+        barrioACTV.setThreshold(0);
         barrioACTV.setAdapter(adapter);
-
-
+        barrioACTV.setText(defaultElement);
+        barrioACTV.setFocusable(true);
+        barrioACTV.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    barrioACTV.setText("");
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -100,7 +112,7 @@ public class SearchFragment extends BaseFragment {
                 int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypes(), opType);
                 arguments.putIntArray("operationTypes",operationTypes);
 
-                AutoCompleteTextView barrioView = (AutoCompleteTextView) getView().findViewById(R.id.barrio);
+                CustomAutoCompleteTextView barrioView = (CustomAutoCompleteTextView) getView().findViewById(R.id.barrio);
                 String barrio = barrioView.getText().toString();
                 if(barrio == null || barrio.isEmpty()){
                     isValid = false;

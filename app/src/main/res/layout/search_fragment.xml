@@ -22,47 +22,6 @@
             android:layout_marginLeft="30dp"
             >
 
-            <!--Put form controls here-->
-            <TextView
-                android:id="@+id/barriolabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/barrio"
-                android:textSize="6pt"
-                android:textColor="@color/white"
-                ></TextView>
-
-            <AutoCompleteTextView
-                android:id="@+id/barrio"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:completionHintView="@layout/spinner_dropdown_item"
-                android:textColor="@color/white"
-                android:textSize="5pt"
-                android:ems="200">
-
-                <requestFocus />
-            </AutoCompleteTextView>
-
-            <TextView
-                android:id="@+id/tipo_propiedad_txt"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:text="@string/tipo_propiedad_txt"
-                android:textColor="@color/white"
-                android:textSize="6pt"></TextView>
-
-            <Spinner
-                android:id="@+id/tipo_propiedad"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:textColor="@color/white"
-                android:prompt="@string/tipo_propiedad_txt"></Spinner>
-
             <TextView
                 android:id="@+id/operacion_txt"
                 android:layout_width="fill_parent"
@@ -81,11 +40,51 @@
                 android:prompt="@string/operacion_txt"></Spinner>
 
             <TextView
+                android:id="@+id/tipo_propiedad_txt"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/tipo_propiedad_txt"
+                android:textColor="@color/white"
+                android:textSize="6pt"></TextView>
+
+            <Spinner
+                android:id="@+id/tipo_propiedad"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:textColor="@color/white"
+                android:prompt="@string/tipo_propiedad_txt"></Spinner>
+
+            <!--Put form controls here-->
+            <TextView
+                android:id="@+id/barriolabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/barrio"
+                android:textSize="6pt"
+                android:textColor="@color/white"
+                ></TextView>
+
+            <com.mileem.mileem.widgets.CustomAutoCompleteTextView
+                android:id="@+id/barrio"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:completionHintView="@layout/spinner_dropdown_item"
+                android:textColor="@color/white"
+                android:textSize="5pt"
+                android:ems="200">
+                <requestFocus />
+            </com.mileem.mileem.widgets.CustomAutoCompleteTextView>
+
+            <TextView
                 android:id="@+id/ambientes_txt"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ambientes_txt"
-                android:paddingTop="10dp"
+                android:paddingTop="22dp"
                 android:textColor="@color/white"
                 android:textSize="6pt"></TextView>
 
@@ -109,7 +108,7 @@
                 android:text="@string/button_buscar"
                 android:textColor="@color/white"
                 android:background="@color/holo_blue"
-                android:textSize="6pt" />
+                android:textSize="18dp" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

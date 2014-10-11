@@ -23,5 +23,5 @@
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="6pt"
+    android:textSize="18dp"
     android:ellipsize="marquee" />
