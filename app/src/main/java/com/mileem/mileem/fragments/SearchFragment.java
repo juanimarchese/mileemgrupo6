@@ -79,7 +79,6 @@ public class SearchFragment extends BaseFragment {
         barrioACTV.setThreshold(0);
         barrioACTV.setAdapter(adapter);
         barrioACTV.setText(defaultElement);
-        barrioACTV.setFocusable(true);
         barrioACTV.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
