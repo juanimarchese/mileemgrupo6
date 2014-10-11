@@ -3,10 +3,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:background="@color/transparent_white">
+
+    <TextView
+        android:id="@+id/direccion"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/background_fp"
+        android:textSize="16dp"></TextView>
+
+
+    <TextView
+        android:id="@+id/barrio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_fp"
+        android:layout_marginTop="2dp"
+        android:layout_below="@+id/direccion"
+        android:textSize="16dp"></TextView>
+
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="1dp"
+        android:layout_below="@+id/barrio"
         class="com.google.android.gms.maps.MapFragment"/>
 </RelativeLayout>

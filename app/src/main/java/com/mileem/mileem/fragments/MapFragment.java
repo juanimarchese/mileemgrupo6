@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mileem.mileem.R;
+import com.mileem.mileem.models.PublicationDetails;
 
 /**
  * Created by ramirodiaz on 10/10/14.
@@ -27,9 +29,20 @@ public class MapFragment extends BaseFragment {
         super(TAG);
     }
 
-    public static MapFragment newInstance() {
+    public static MapFragment newInstance(PublicationDetails publicationDetails) {
         MapFragment myFragment = new MapFragment();
+        Bundle args = new Bundle();
+        args.putString("publicationAddress", publicationDetails.getAddress());
+        args.putString("publicationNeigthboorhood", publicationDetails.getNeighborhood().getName());
+        args.putString("publicationLatitude", publicationDetails.getLatitude());
+        args.putString("publicationLongitude", publicationDetails.getLongitude());
+        myFragment.setArguments(args);
         return myFragment;
+    }
+
+    private void setTextViewText(View rootView, int widgetId, String text) {
+        TextView view = (TextView) rootView.findViewById(widgetId);
+        view.setText(text);
     }
 
     @Override
@@ -38,6 +51,10 @@ public class MapFragment extends BaseFragment {
 
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
         com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getFragmentManager().findFragmentById(R.id.map);
+
+        setTextViewText(rootView,R.id.direccion,getArguments().getString("publicationAddress"));
+        setTextViewText(rootView,R.id.barrio,getArguments().getString("publicationNeigthboorhood"));
+
         map = mapFragment.getMap();
 
         //Ejemplo

@@ -235,7 +235,7 @@ public class PublicationDetailFragment extends BaseFragment {
         mapItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ((MainActivity)getActivity()).displayView(MapFragment.newInstance(),false);
+                ((MainActivity)getActivity()).displayView(MapFragment.newInstance(currentPublication),false);
                 return true;
             }
         });
