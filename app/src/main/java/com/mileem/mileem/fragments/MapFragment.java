@@ -1,5 +1,6 @@
 package com.mileem.mileem.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mileem.mileem.R;
@@ -21,8 +23,6 @@ import com.mileem.mileem.models.PublicationDetails;
 public class MapFragment extends BaseFragment {
 
     public static final String TAG = MapFragment.class.getSimpleName();
-    static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-    static final LatLng KIEL = new LatLng(53.551, 9.993);
     private GoogleMap map;
 
     protected MapFragment() {
@@ -36,6 +36,7 @@ public class MapFragment extends BaseFragment {
         args.putString("publicationNeigthboorhood", publicationDetails.getNeighborhood().getName());
         args.putString("publicationLatitude", publicationDetails.getLatitude());
         args.putString("publicationLongitude", publicationDetails.getLongitude());
+        args.putString("publicationPrice", "Precio: " + String.valueOf(publicationDetails.getPrice() + ' ' + publicationDetails.getCurrency()));
         myFragment.setArguments(args);
         return myFragment;
     }
@@ -57,19 +58,29 @@ public class MapFragment extends BaseFragment {
 
         map = mapFragment.getMap();
 
-        //Ejemplo
-        Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG)
-                .title("Hamburg"));
-        Marker kiel = map.addMarker(new MarkerOptions()
-                .position(KIEL)
-                .title("Kiel")
-                .snippet("Kiel is cool")
+        double latitude = Double.valueOf(getArguments().getString("publicationLatitude"));
+        double longitude = Double.valueOf(getArguments().getString("publicationLongitude"));
+
+        final LatLng pointLatLng = new LatLng(latitude, longitude);
+
+        map.addMarker(new MarkerOptions()
+                .position(pointLatLng)
+                .title("Mileen")
+                .snippet(getArguments().getString("publicationPrice"))
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.ic_launcher)));
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
-        map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 
+
+        map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                LatLngBounds bounds = new LatLngBounds.Builder()
+                        .include(pointLatLng).build();
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        });
         return rootView;
     }
 
