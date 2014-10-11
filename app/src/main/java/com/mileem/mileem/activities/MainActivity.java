@@ -200,7 +200,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(this.getCurrentFragment().hasMenuOption()) super.onBackPressed();
+        if(this.getCurrentFragment().hasMenuOption()){
+            super.onBackPressed();
+            return;
+        }
         BaseFragment previousFragment = this.getPreviousFragment();
         while (previousFragment.getCustomTag().equals(getCurrentFragment().getCustomTag())){
             previousFragment = this.getPreviousFragment();
