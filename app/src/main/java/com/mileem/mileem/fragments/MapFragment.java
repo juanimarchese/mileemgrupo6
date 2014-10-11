@@ -62,7 +62,8 @@ public class MapFragment extends BaseFragment {
         double longitude = Double.valueOf(getArguments().getString("publicationLongitude"));
 
         final LatLng pointLatLng = new LatLng(latitude, longitude);
-
+        final LatLng pointLatLngTop = new LatLng(latitude+.01, longitude-.01);
+        final LatLng pointLatLngBottom = new LatLng(latitude-.01, longitude+.01);
         map.addMarker(new MarkerOptions()
                 .position(pointLatLng)
                 .title("Mileen")
@@ -76,9 +77,12 @@ public class MapFragment extends BaseFragment {
             @Override
             public void onMapLoaded() {
                 LatLngBounds bounds = new LatLngBounds.Builder()
-                        .include(pointLatLng).build();
-                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-                map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                        .include(pointLatLngTop)
+                        .include(pointLatLng)
+                        .include(pointLatLngBottom)
+                        .build();
+                map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 15));
+                map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
         });
         return rootView;
