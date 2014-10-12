@@ -1,6 +1,5 @@
 package com.mileem.mileem.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mileem.mileem.R;
 import com.mileem.mileem.models.PublicationDetails;
@@ -52,11 +50,14 @@ public class MapFragment extends BaseFragment {
 
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
         com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getFragmentManager().findFragmentById(R.id.map);
-
-        setTextViewText(rootView,R.id.direccion,getArguments().getString("publicationAddress"));
-        setTextViewText(rootView,R.id.barrio,getArguments().getString("publicationNeigthboorhood"));
-
         map = mapFragment.getMap();
+        this.fillLayout(rootView);
+        return rootView;
+    }
+
+    private void fillLayout(View rootView) {
+        setTextViewText(rootView, R.id.direccion, getArguments().getString("publicationAddress"));
+        setTextViewText(rootView,R.id.barrio,getArguments().getString("publicationNeigthboorhood"));
 
         double latitude = Double.valueOf(getArguments().getString("publicationLatitude"));
         double longitude = Double.valueOf(getArguments().getString("publicationLongitude"));
@@ -85,7 +86,14 @@ public class MapFragment extends BaseFragment {
                 map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             }
         });
-        return rootView;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            this.fillLayout(getView());
+        }
     }
 
     @Override
