@@ -106,6 +106,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:text="@string/button_buscar"
+                android:focusable="true"
                 android:textColor="@color/white"
                 android:background="@color/holo_blue"
                 android:textSize="18dp" />

@@ -1,22 +1,17 @@
 package com.mileem.mileem.fragments;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +24,6 @@ import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
 import com.mileem.mileem.widgets.SmartViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
 
 
 import java.util.ArrayList;
@@ -235,7 +229,7 @@ public class PublicationDetailFragment extends BaseFragment {
         mapItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                ((MainActivity)getActivity()).displayView(MapFragment.newInstance(currentPublication),false);
+                ((MainActivity)getActivity()).displayView(LocationFragment.newInstance(currentPublication),false);
                 return true;
             }
         });
