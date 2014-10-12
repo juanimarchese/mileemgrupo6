@@ -228,7 +228,15 @@ public class PublicationDetailFragment extends BaseFragment {
             }
         });
 
-        menu.findItem(R.id.action_amenities).setVisible(true);
+        MenuItem amenitiesItem = menu.findItem(R.id.action_amenities);
+        amenitiesItem.setVisible(true);
+        amenitiesItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity)getActivity()).displayView(AmenitiesFragment.newInstance(currentPublication),false);
+                return true;
+            }
+        });
         
         MenuItem mapItem = menu.findItem(R.id.action_location);
         mapItem.setVisible(true);
@@ -248,7 +256,6 @@ public class PublicationDetailFragment extends BaseFragment {
             case R.id.action_contact:
                 return true;
             case R.id.action_amenities:
-                Toast.makeText(rootView.getContext(), "Vista de Amenities", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_location:
                 return true;

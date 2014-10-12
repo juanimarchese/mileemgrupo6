@@ -32,9 +32,6 @@ public class ContactFragment extends BaseFragment {
 
     public static final String TAG = ContactFragment.class.getSimpleName();
 
-    //private Spinner horarioDeContacto;
-
-
     public ContactFragment() {
         super(TAG);
     }
