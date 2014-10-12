@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -20,6 +23,10 @@ import com.mileem.mileem.models.PublicationDetails;
 public class MapFragment extends BaseFragment {
     public static final String TAG = MapFragment.class.getSimpleName();
     private GoogleMap map;
+    private PublicationDetails publicationDetails;
+    private Bundle mBundle;
+    MapView mMapView;
+
 
     protected MapFragment() {
         super(TAG);
@@ -27,32 +34,50 @@ public class MapFragment extends BaseFragment {
 
     public static MapFragment newInstance(PublicationDetails publicationDetails) {
         com.mileem.mileem.fragments.MapFragment myFragment = new com.mileem.mileem.fragments.MapFragment();
-        Bundle args = new Bundle();
-        args.putString("publicationLatitude", publicationDetails.getLatitude());
-        args.putString("publicationLongitude", publicationDetails.getLongitude());
-        args.putString("publicationPrice", "Precio: " + String.valueOf(publicationDetails.getPrice() + ' ' + publicationDetails.getCurrency()));
-        myFragment.setArguments(args);
+        myFragment.setPublicationDetails(publicationDetails);
         return myFragment;
+    }
+
+    private void setUpMapIfNeeded() {
+        if (map == null) {
+            map = mMapView.getMap();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+            if (map == null) {
+                MapsInitializer.initialize(getActivity());
+                mMapView = (MapView) rootView.findViewById(R.id.map);
+                mMapView.onCreate(mBundle);
+                setUpMapIfNeeded();
+            }
+            if (map != null) {
+                this.fillLayout();
+            }
+            return rootView;
+    }
 
-        View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mBundle = savedInstanceState;
+    }
 
-        if (map == null) {
-            com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getFragmentManager().findFragmentById(R.id.map);
-            map = mapFragment.getMap();
-        }
+    public PublicationDetails getPublicationDetails() {
+        return publicationDetails;
+    }
 
-        this.fillLayout();
-        return rootView;
+    public void setPublicationDetails(PublicationDetails publicationDetails) {
+        this.publicationDetails = publicationDetails;
     }
 
     private void fillLayout() {
-        double latitude = Double.valueOf(getArguments().getString("publicationLatitude"));
-        double longitude = Double.valueOf(getArguments().getString("publicationLongitude"));
+        String price = "Precio: " + String.valueOf(publicationDetails.getPrice() + ' ' + publicationDetails.getCurrency());
+        double latitude = Double.valueOf(publicationDetails.getLatitude());
+        double longitude = Double.valueOf(publicationDetails.getLongitude());
 
         final LatLng pointLatLng = new LatLng(latitude, longitude);
         final LatLng pointLatLngTop = new LatLng(latitude+.01, longitude-.01);
@@ -60,7 +85,7 @@ public class MapFragment extends BaseFragment {
         map.addMarker(new MarkerOptions()
                 .position(pointLatLng)
                 .title("Mileen")
-                .snippet(getArguments().getString("publicationPrice"))
+                .snippet(price)
                 .icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.house_pin)));
 
@@ -89,5 +114,28 @@ public class MapFragment extends BaseFragment {
     @Override
     public String getTittle() {
         return null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
     }
 }
