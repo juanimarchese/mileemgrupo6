@@ -65,9 +65,11 @@ public class LocationFragment extends BaseFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 Fragment newFragment = null;
                 if (showingMap) {
-                    newFragment = StreetViewFragment.newInstance(publication);
+                    mapFragment = MapFragment.newInstance(publication);
+                    newFragment = streetViewFragment;
                 } else {
-                    newFragment = MapFragment.newInstance(publication);
+                    streetViewFragment = StreetViewFragment.newInstance(publication);
+                    newFragment = mapFragment;
                 }
                 showingMap = !showingMap;
                 getFragmentManager()
@@ -98,6 +100,7 @@ public class LocationFragment extends BaseFragment {
 
         mapFragment = MapFragment.newInstance(publication);
         streetViewFragment = StreetViewFragment.newInstance(publication);
+
         showingMap = true;
 
         FragmentManager fm = getFragmentManager();
