@@ -229,4 +229,7 @@ public class PublicationDetails implements Parcelable {
 
     }
 
+    public String getAgeString() {
+        return this.getAge() == 0 ? "A estrenar" : this.getAge() > 1 ? this.getAge() + " años" : "1 año";
+    }
 }

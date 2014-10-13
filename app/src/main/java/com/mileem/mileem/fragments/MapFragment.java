@@ -68,7 +68,14 @@ public class MapFragment extends BaseFragment {
 
     private void fillLayout() {
         PublicationDetails publication = getArguments().getParcelable("publication");
-        String price = "Precio: " + String.valueOf(publication.getPrice()) + ' ' + publication.getCurrency();
+        String age = publication.getAgeString();
+        String operation = String.valueOf(publication.getOperationType().getName());
+        String size = String.valueOf(publication.getSize()) + " m2";
+        String env = publication.getEnvironment().getName();
+        String price = String.valueOf(publication.getPrice()) + ' ' + publication.getCurrency();
+        String separator = " | ";
+        String snippet = operation + separator + age + separator + size + separator + env + separator + price;
+
         if (publication.getLatitude().length() > 0 && publication.getLongitude().length() > 0) {
             double latitude = Double.valueOf(publication.getLatitude());
             double longitude = Double.valueOf(publication.getLongitude());
@@ -79,7 +86,7 @@ public class MapFragment extends BaseFragment {
             map.addMarker(new MarkerOptions()
                     .position(pointLatLng)
                     .title("Mileen")
-                    .snippet(price)
+                    .snippet(snippet)
                     .icon(BitmapDescriptorFactory
                             .fromResource(R.drawable.house_pin)));
 

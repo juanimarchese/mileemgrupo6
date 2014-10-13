@@ -137,7 +137,7 @@ public class PublicationDetailFragment extends BaseFragment {
         buildTextViewWidget(R.id.prop_op,publication.getOperationType().getName(), arial);
         buildTextViewWidget(R.id.prop_scubierta,publication.getCoveredSize() + " m2", arial);
         buildTextViewWidget(R.id.prop_sdescubierta,publication.getSize() + " m2", arial);
-        String antiguedad = publication.getAge() == 0 ? "A estrenar" : publication.getAge() > 1 ? publication.getAge() + " años" : "1 año";
+        String antiguedad = publication.getAgeString();
         buildTextViewWidget(R.id.prop_antiguedad, antiguedad, arial);
         buildTextViewWidget(R.id.prop_expensas, publication.getCurrency() + " " + publication.getExpenses(), arial);
         buildTextViewWidget(R.id.prop_descripcion, publication.getDescription(), arial);
