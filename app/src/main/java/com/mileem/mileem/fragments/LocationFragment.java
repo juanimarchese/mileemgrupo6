@@ -29,7 +29,6 @@ import com.mileem.mileem.models.PublicationDetails;
 public class LocationFragment extends BaseFragment {
 
     public static final String TAG = LocationFragment.class.getSimpleName();
-    private PublicationDetails publicationDetails;
     private MapFragment mapFragment = null;
     private StreetViewFragment streetViewFragment = null;
     Boolean showingMap = true;
@@ -39,16 +38,10 @@ public class LocationFragment extends BaseFragment {
 
     public static LocationFragment newInstance(PublicationDetails publicationDetails) {
         LocationFragment myFragment = new LocationFragment();
-        myFragment.setPublicationDetails(publicationDetails);
+        Bundle args = new Bundle();
+        args.putParcelable("publication", publicationDetails);
+        myFragment.setArguments(args);
         return myFragment;
-    }
-
-    public PublicationDetails getPublicationDetails() {
-        return publicationDetails;
-    }
-
-    public void setPublicationDetails(PublicationDetails publicationDetails) {
-        this.publicationDetails = publicationDetails;
     }
 
     private void setTextViewText(View rootView, int widgetId, String text) {
@@ -66,14 +59,15 @@ public class LocationFragment extends BaseFragment {
         item.setIcon(getResources().getDrawable(locationButtonDrawable));
 
         MenuItem actionSwitchItem = menu.findItem(R.id.action_switch_mode).setVisible(true);
+        final PublicationDetails publication = getArguments().getParcelable("publication");
         actionSwitchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Fragment newFragment = null;
                 if (showingMap) {
-                    newFragment = StreetViewFragment.newInstance(publicationDetails);
+                    newFragment = StreetViewFragment.newInstance(publication);
                 } else {
-                    newFragment = MapFragment.newInstance(publicationDetails);
+                    newFragment = MapFragment.newInstance(publication);
                 }
                 showingMap = !showingMap;
                 getFragmentManager()
@@ -92,17 +86,19 @@ public class LocationFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
-        mapFragment = MapFragment.newInstance(publicationDetails);
-        streetViewFragment = StreetViewFragment.newInstance(publicationDetails);
         this.fillLayout(rootView);
         return rootView;
     }
 
     private void fillLayout(View rootView) {
-        setTextViewText(rootView, R.id.direccion, getPublicationDetails().getAddress());
-        setTextViewText(rootView,R.id.barrio, getPublicationDetails().getNeighborhood().getName());
+        PublicationDetails publication = getArguments().getParcelable("publication");
+        setTextViewText(rootView,R.id.direccion, publication.getAddress());
+        setTextViewText(rootView,R.id.barrio, publication.getNeighborhood().getName());
+
+        mapFragment = MapFragment.newInstance(publication);
+        streetViewFragment = StreetViewFragment.newInstance(publication);
+        showingMap = true;
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
@@ -116,6 +112,12 @@ public class LocationFragment extends BaseFragment {
         if(!hidden){
             this.fillLayout(getView());
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.fillLayout(getView());
     }
 
     @Override

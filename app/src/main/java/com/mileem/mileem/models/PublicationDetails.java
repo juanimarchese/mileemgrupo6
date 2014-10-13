@@ -1,11 +1,14 @@
 package com.mileem.mileem.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Juan-Asus on 09/09/2014.
  */
-public class PublicationDetails {
+public class PublicationDetails implements Parcelable {
     private int id;
     private String title;
     private int price;
@@ -215,4 +218,15 @@ public class PublicationDetails {
     public ArrayList<IdName> getAmenitieType() { return amenitieType; }
 
     public void setAmenitieType(ArrayList<IdName> amenitieType) { this.amenitieType = amenitieType; }
+
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
 }

@@ -5,10 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.StreetViewPanorama;
-import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.google.android.gms.maps.StreetViewPanoramaView;
 import com.google.android.gms.maps.model.LatLng;
 import com.mileem.mileem.R;
@@ -21,7 +19,6 @@ public class StreetViewFragment extends BaseFragment {
     public static final String TAG = StreetViewFragment.class.getSimpleName();
     private StreetViewPanorama streetViewPanorama;
     private StreetViewPanoramaView mStreetViewPanoramaView;
-    private PublicationDetails publicationDetails;
     private Bundle mBundle;
 
     protected StreetViewFragment() {
@@ -30,7 +27,9 @@ public class StreetViewFragment extends BaseFragment {
 
     public static StreetViewFragment newInstance(PublicationDetails publicationDetails) {
         StreetViewFragment myFragment = new StreetViewFragment();
-        myFragment.setPublicationDetails(publicationDetails);
+        Bundle args = new Bundle();
+        args.putParcelable("publication", publicationDetails);
+        myFragment.setArguments(args);
         return myFragment;
     }
 
@@ -61,19 +60,14 @@ public class StreetViewFragment extends BaseFragment {
         return rootView;
     }
 
-    public PublicationDetails getPublicationDetails() {
-        return publicationDetails;
-    }
-
-    public void setPublicationDetails(PublicationDetails publicationDetails) {
-        this.publicationDetails = publicationDetails;
-    }
-
     private void fillLayout() {
-        double latitude = Double.valueOf(publicationDetails.getLatitude());
-        double longitude = Double.valueOf(publicationDetails.getLongitude());
-        final LatLng pointLatLng = new LatLng(latitude, longitude);
-        streetViewPanorama.setPosition(pointLatLng);
+        PublicationDetails publication = getArguments().getParcelable("publication");
+        if (publication.getLatitude().length() > 0 && publication.getLongitude().length() > 0) {
+            double latitude = Double.valueOf(publication.getLatitude());
+            double longitude = Double.valueOf(publication.getLongitude());
+            final LatLng pointLatLng = new LatLng(latitude, longitude);
+            streetViewPanorama.setPosition(pointLatLng);
+        }
     }
 
     @Override
