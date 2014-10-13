@@ -258,6 +258,11 @@ public class PublicationDetailFragment extends BaseFragment {
         }
     }
 
-
-
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_contact).setVisible(true);
+        menu.findItem(R.id.action_amenities).setVisible(true);
+        menu.findItem(R.id.action_location).setVisible(true);
+    }
 }

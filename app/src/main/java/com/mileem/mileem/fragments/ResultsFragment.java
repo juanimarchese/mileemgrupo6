@@ -234,5 +234,11 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         }
     }
 
-
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_refresh).setVisible(true);
+        menu.findItem(R.id.action_sort).setVisible(true);
+    }
 }
