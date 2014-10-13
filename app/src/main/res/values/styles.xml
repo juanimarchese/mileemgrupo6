@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/dropdown</item>
+    </style>
+    <style name="AutoCompleteEditTextTheme" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:background">@drawable/dropdown</item>
+    </style>
+</resources>

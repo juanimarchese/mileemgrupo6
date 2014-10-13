@@ -1,59 +1,66 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:clickable="true"
-    android:scrollbars="none">
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-
+    android:clickable="true">
         <LinearLayout
+            android:windowSoftInputMode="adjustResize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
             android:orientation="vertical"
             android:background="@color/transparent_black"
-            android:layout_marginTop="200dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            >
+            android:layout_centerHorizontal="true"
+
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="80dp">
 
             <TextView
                 android:id="@+id/operacion_txt"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/operacion_txt"
                 android:textColor="@color/white"
-                android:textSize="6pt"></TextView>
+                android:textSize="18sp"
+                android:layout_marginLeft="8dp"></TextView>
 
             <Spinner
                 android:id="@+id/operacion"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
                 android:drawSelectorOnTop="true"
                 android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="textNoSuggestions"
                 android:prompt="@string/operacion_txt"></Spinner>
 
             <TextView
                 android:id="@+id/tipo_propiedad_txt"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/tipo_propiedad_txt"
                 android:textColor="@color/white"
-                android:textSize="6pt"></TextView>
+                android:textSize="18sp"
+                android:layout_marginLeft="8dp"></TextView>
 
             <Spinner
                 android:id="@+id/tipo_propiedad"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
                 android:drawSelectorOnTop="true"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:textColor="@color/white"
+                android:inputType="textNoSuggestions"
                 android:prompt="@string/tipo_propiedad_txt"></Spinner>
 
             <!--Put form controls here-->
@@ -62,9 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/barrio"
-                android:textSize="6pt"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/white"
-                ></TextView>
+                android:layout_marginLeft="8dp"></TextView>
 
             <com.mileem.mileem.widgets.CustomAutoCompleteTextView
                 android:id="@+id/barrio"
@@ -74,9 +82,14 @@
                 android:layout_centerHorizontal="true"
                 android:completionHintView="@layout/spinner_dropdown_item"
                 android:textColor="@color/white"
-                android:textSize="5pt"
-                android:ems="200">
-                <requestFocus />
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:lines="1"
+                android:ems="200"
+                android:inputType="textNoSuggestions"
+                android:spinnerMode="dropdown">
             </com.mileem.mileem.widgets.CustomAutoCompleteTextView>
 
             <TextView
@@ -84,9 +97,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ambientes_txt"
-                android:paddingTop="22dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/white"
-                android:textSize="6pt"></TextView>
+                android:textSize="18sp"
+                android:layout_marginLeft="8dp"></TextView>
 
             <Spinner
                 android:id="@+id/ambientes"
@@ -94,12 +108,18 @@
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
                 android:textColor="@color/white"
+                android:spinnerMode="dropdown"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:inputType="textNoSuggestions"
                 android:prompt="@string/ambientes_txt"></Spinner>
 
             <Button
                 android:id="@+id/button_buscar"
                 android:layout_width="250dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
@@ -109,7 +129,6 @@
                 android:focusable="true"
                 android:textColor="@color/white"
                 android:background="@color/holo_blue"
-                android:textSize="18dp" />
+                android:textSize="20sp" />
         </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>
