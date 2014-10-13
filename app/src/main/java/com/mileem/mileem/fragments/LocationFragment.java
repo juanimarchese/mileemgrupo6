@@ -3,6 +3,9 @@ package com.mileem.mileem.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.StreetViewPanoramaFragment;
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.models.PublicationDetails;
 
 /**
@@ -51,20 +56,19 @@ public class LocationFragment extends BaseFragment {
         view.setText(text);
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.location, menu);
-        MenuItem item = menu.findItem(R.id.switch_mode);
+
+        MenuItem item = menu.findItem(R.id.action_switch_mode);
         int locationButtonDrawable = showingMap? R.drawable.street_view_icon : R.drawable.map_icon;
         item.setIcon(getResources().getDrawable(locationButtonDrawable));
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // handle item selection
-        switch (item.getItemId()) {
-            case R.id.switch_mode:
+        MenuItem actionSwitchItem = menu.findItem(R.id.action_switch_mode).setVisible(true);
+        actionSwitchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 Fragment newFragment = null;
                 if (showingMap) {
                     newFragment = StreetViewFragment.newInstance(publicationDetails);
@@ -81,9 +85,8 @@ public class LocationFragment extends BaseFragment {
                         .addToBackStack(null)
                         .commit();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+            }
+        });
     }
 
     @Override
@@ -94,7 +97,6 @@ public class LocationFragment extends BaseFragment {
         mapFragment = MapFragment.newInstance(publicationDetails);
         streetViewFragment = StreetViewFragment.newInstance(publicationDetails);
         this.fillLayout(rootView);
-        this.setHasOptionsMenu(true);
         return rootView;
     }
 
@@ -114,6 +116,12 @@ public class LocationFragment extends BaseFragment {
         if(!hidden){
             this.fillLayout(getView());
         }
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_switch_mode);
+        item.setVisible(true);
     }
 
     @Override
