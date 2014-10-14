@@ -66,9 +66,13 @@ public abstract class BaseFragment extends Fragment {
     public abstract String getTittle();
 
     protected void showPDialog(Context context) {
+        showPDialog(context,"Buscando...");
+    }
+
+    protected void showPDialog(Context context,String msg) {
         pDialog = new ProgressDialog(context);
         // Showing progress dialog before making http request
-        pDialog.setMessage("Buscando...");
+        pDialog.setMessage(msg);
         pDialog.show();
     }
 

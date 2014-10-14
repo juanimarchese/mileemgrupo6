@@ -227,6 +227,10 @@ public class PublicationDetailFragment extends BaseFragment {
         amenitiesItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                if(currentPublication.getAmenitieType().isEmpty()){
+                    Toast.makeText(getActivity(),"La publicación no posee amenities",Toast.LENGTH_LONG).show();
+                    return false;
+                }
                 ((MainActivity)getActivity()).displayView(AmenitiesFragment.newInstance(currentPublication),false);
                 return true;
             }

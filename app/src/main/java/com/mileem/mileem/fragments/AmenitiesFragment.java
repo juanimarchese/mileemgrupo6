@@ -72,12 +72,8 @@ public class AmenitiesFragment extends BaseFragment {
             }
             final CheckBox checkBox = new CheckBox(getActivity());
             checkBox.setChecked(isChecked);
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkBox.setChecked(isChecked);
-                }
-            });
+            checkBox.setClickable(false);
+            checkBox.setFocusable(false);
             tbrow.addView(checkBox);
             TextView t1v = new TextView(getActivity());
             t1v.setText(ammenities.get(i));

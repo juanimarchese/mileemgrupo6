@@ -34,10 +34,10 @@
     <string name="action_contact">Contactar</string>
     <string name="action_amenities">Amenities</string>
     <string name="title_txt">Datos de la publicación:</string>
-    <string name="email_hint">Email de respuesta</string>
+    <string name="email_hint">Email de respuesta(*)</string>
     <string name="telefono_hint">Teléfono</string>
     <string name="hr_hint">Horario de Respuesta</string>
-    <string name="mensaje_hint">Mensaje</string>
+    <string name="mensaje_hint">Mensaje(*)</string>
     <string name="button_enviar">Enviar</string>
 
 </resources>

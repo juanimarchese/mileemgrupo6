@@ -103,18 +103,23 @@ public class ContactFragment extends BaseFragment {
 
                    int publicationId = getArguments().getInt("publicationId");
                    try {
+                       showPDialog(getActivity(),"Enviando...");
                        new SendMessageDataManager().sendMessage(publicationId, email, tel, contactTimeInfo.getText().toString(), msg, new SendMessageDataManager.SendMessageDataManagerCallbackHandler() {
                            @Override
                            public void onComplete() {
                                Toast.makeText(getActivity(), "El formulario fue enviado correctamente", Toast.LENGTH_LONG).show();
+                               ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(getArguments().getInt("publicationId")),false);
+                               hidePDialog();
                            }
                            @Override
                            public void onFailure(Error error) {
                                Toast.makeText(getActivity(), "El formulario no fue enviado correctamente", Toast.LENGTH_LONG).show();
+                               hidePDialog();
                            }
                        });
                    } catch (JSONException e) {
-                       e.printStackTrace();
+                       Toast.makeText(getActivity(), "El formulario no fue enviado correctamente", Toast.LENGTH_LONG).show();
+                       hidePDialog();
                    }
                }
             }
