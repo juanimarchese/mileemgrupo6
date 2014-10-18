@@ -26,8 +26,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_txt"
                 android:layout_marginTop="2dp"
-                android:textSize="7pt"
-                android:background="@color/background_fp"
+                android:textSize="17sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
                 android:textStyle="bold"></TextView>
 
             <TextView
@@ -35,24 +36,28 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@color/background_fp"
-                android:textSize="7pt"></TextView>
-
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"></TextView>
             <TextView
                 android:id="@+id/direccion"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:background="@color/background_fp"
-                android:textSize="7pt"></TextView>
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                ></TextView>
 
             <TextView
                 android:id="@+id/barrio"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background_fp"
                 android:layout_marginTop="2dp"
-                android:textSize="7pt"></TextView>
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                ></TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -68,8 +73,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email_hint"
                 android:textColorHint="#000000"
-                android:textSize="7pt"
-                android:inputType="textEmailAddress" />
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="textEmailAddress"
+                style="@style/EditTextTheme" />
 
             <EditText
                 android:id="@+id/telefono"
@@ -77,8 +86,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/telefono_hint"
                 android:textColorHint="#000000"
-                android:textSize="7pt"
-                android:inputType="phone" />
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="phone"
+                style="@style/EditTextTheme"/>
 
             <EditText
                 android:id="@+id/hsRespuesta"
@@ -86,7 +99,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hr_hint"
                 android:textColorHint="#000000"
-                android:textSize="7pt"/>
+                android:textSize="16sp"
+                android:maxLines="2"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                style="@style/EditTextTheme"/>
 
             <EditText
                 android:id="@+id/mensaje"
@@ -95,7 +113,12 @@
                 android:hint="@string/mensaje_hint"
                 android:textColorHint="#000000"
                 android:inputType="textMultiLine"
-                android:textSize="7pt"/>
+                android:textSize="16sp"
+                android:maxLines="2"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                style="@style/EditTextTheme"/>
 
             <Button
                 android:id="@+id/button_enviar"
@@ -103,12 +126,14 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@color/holo_blue"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:text="@string/button_enviar"
+                android:focusable="true"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
-
+                android:background="@color/holo_blue"
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

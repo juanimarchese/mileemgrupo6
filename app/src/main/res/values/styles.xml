@@ -6,4 +6,7 @@
     <style name="AutoCompleteEditTextTheme" parent="android:Widget.AutoCompleteTextView">
         <item name="android:background">@drawable/dropdown</item>
     </style>
+    <style name="EditTextTheme" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/dropdown</item>
+    </style>
 </resources>
