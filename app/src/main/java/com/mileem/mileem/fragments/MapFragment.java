@@ -70,13 +70,13 @@ public class MapFragment extends BaseFragment {
         PublicationDetails publication = getArguments().getParcelable("publication");
         String age = publication.getAgeString();
         String operation = String.valueOf(publication.getOperationType().getName());
-        String size = String.valueOf(publication.getSize()) + " m2";
+        String size = String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2";
         String env = publication.getEnvironment().getName();
         String price = String.valueOf(publication.getPrice()) + ' ' + publication.getCurrency();
         String separator = " | ";
         String snippet = operation + separator + age + separator + size + separator + env + separator + price;
 
-        if (publication.getLatitude().length() > 0 && publication.getLongitude().length() > 0) {
+        if (!publication.getLatitude().isEmpty() && !publication.getLongitude().isEmpty()) {
             double latitude = Double.valueOf(publication.getLatitude());
             double longitude = Double.valueOf(publication.getLongitude());
 
