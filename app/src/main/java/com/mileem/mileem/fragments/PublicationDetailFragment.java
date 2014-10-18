@@ -241,6 +241,10 @@ public class PublicationDetailFragment extends BaseFragment {
         mapItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                if(currentPublication.getLatitude().isEmpty() && currentPublication.getLongitude().isEmpty()){
+                    Toast.makeText(getActivity(),"No se han especificado datos sobre la ubicación para la publicación",Toast.LENGTH_LONG).show();
+                    return false;
+                }
                 ((MainActivity)getActivity()).displayView(LocationFragment.newInstance(currentPublication),false);
                 return true;
             }
