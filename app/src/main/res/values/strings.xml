@@ -33,6 +33,7 @@
     <string name="action_refresh">Refrescar</string>
     <string name="action_sort">Ordenar</string>
     <string name="action_location">Ubicación</string>
+    <string name="action_share">Compartir</string>
     <string name="action_contact">Contactar</string>
     <string name="action_amenities">Amenities</string>
     <string name="title_txt">Datos de la publicación:</string>
