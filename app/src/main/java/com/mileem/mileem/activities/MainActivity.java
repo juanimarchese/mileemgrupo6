@@ -142,8 +142,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
-
     public void displayViewForMenu(int position,boolean isBack) {
         displayViewForMenu(position,new Bundle(),false);
     }
@@ -195,7 +193,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-    
+
     public void displayView(BaseFragment fragment,boolean isBack) {
         Bundle bundle = null;
         if (fragment.getArguments() != null)
@@ -254,8 +252,6 @@ public class MainActivity extends BaseActivity {
         // search results. Only used pre-HC.
         return !isSearchResultView && super.onSearchRequested();
     }
-
-
 
 
     /**
