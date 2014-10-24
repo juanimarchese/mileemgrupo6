@@ -191,13 +191,11 @@ public class MainActivity extends BaseActivity {
             case 1:
                 this.showNeighborhoodsAndDisplayReport(ReportType.AROUND_PRICE_M2);
                 break;
-
             default:
                 break;
         }
-
-
     }
+    
     public void displayView(BaseFragment fragment,boolean isBack) {
         Bundle bundle = null;
         if (fragment.getArguments() != null)
