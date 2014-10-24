@@ -1,9 +1,8 @@
 package com.mileem.mileem.activities;
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -14,17 +13,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
 import com.mileem.mileem.fragments.BaseFragment;
 import com.mileem.mileem.fragments.NoResultsFragment;
-import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
+import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.utils.DefinitionsUtils;
 import com.mileem.mileem.widgets.NavDrawerItem;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity {
@@ -142,9 +144,9 @@ public class MainActivity extends BaseActivity {
 
 
 
-        public void displayViewForMenu(int position,boolean isBack) {
-            displayViewForMenu(position,new Bundle(),false);
-        }
+    public void displayViewForMenu(int position,boolean isBack) {
+        displayViewForMenu(position,new Bundle(),false);
+    }
 
     public void displayFragment(BaseFragment fragment, int position, Bundle arguments, boolean isBack) {
         if (fragment != null) {
@@ -164,6 +166,22 @@ public class MainActivity extends BaseActivity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
+
+    public void showNeighborhoodsAndDisplayReport(ReportType type) {
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
+        ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item_dark, list);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Elige un barrio");
+        builder.setAdapter(dataAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cambiar por el fragment para mostrar el grafico pasando como argumento el barrio elegido
+                MainActivity.this.displayFragment(new SearchFragment(), 1, null, false);
+            }
+        });
+        builder.show();
+    }
+
     public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
         // update the main content by replacing fragments
         switch (position) {
@@ -171,6 +189,7 @@ public class MainActivity extends BaseActivity {
                 this.displayFragment(new SearchFragment(), position, arguments, isBack);
                 break;
             case 1:
+                this.showNeighborhoodsAndDisplayReport(ReportType.AROUND_PRICE_M2);
                 break;
 
             default:
