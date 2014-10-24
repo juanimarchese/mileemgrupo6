@@ -56,4 +56,8 @@
         android:icon="@drawable/ic_action_location"
         android:title="@string/action_location"
         android:showAsAction="always" />
+    <item android:id="@+id/action_share"
+        android:icon="@drawable/share_icon"
+        android:title="@string/action_share"
+        android:showAsAction="always" />
 </menu>
