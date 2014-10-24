@@ -1,6 +1,7 @@
 package com.mileem.mileem.activities;
 
 import android.app.ActionBar;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -51,6 +52,9 @@ public class MainActivity extends BaseActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    public enum ReportType {
+        AROUND_PRICE_M2;
+    }
 
     private static MainActivity instance;
 
@@ -88,6 +92,8 @@ public class MainActivity extends BaseActivity {
         // adding nav drawer items to array
         // Buscar
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        //Report
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // Ultimos Resultados
         /*navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));*/
         // Estadisticas
@@ -140,21 +146,7 @@ public class MainActivity extends BaseActivity {
             displayViewForMenu(position,new Bundle(),false);
         }
 
-     public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
-        // update the main content by replacing fragments
-        BaseFragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new SearchFragment();
-                break;
-            /*case 1:
-                fragment = new ResultsFragment();
-                break;*/
-
-            default:
-                break;
-        }
-
+    public void displayFragment(BaseFragment fragment, int position, Bundle arguments, boolean isBack) {
         if (fragment != null) {
            /* FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
@@ -171,6 +163,21 @@ public class MainActivity extends BaseActivity {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
+    }
+    public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
+        // update the main content by replacing fragments
+        switch (position) {
+            case 0:
+                this.displayFragment(new SearchFragment(), position, arguments, isBack);
+                break;
+            case 1:
+                break;
+
+            default:
+                break;
+        }
+
+
     }
     public void displayView(BaseFragment fragment,boolean isBack) {
         Bundle bundle = null;
