@@ -13,6 +13,7 @@
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Búsqueda</item>
+        <item >Zonas aledañas [precio/m2] </item>
         <!--<item >Resultados</item>-->
        <!-- <item >Estadisticas</item>-->
     </string-array>
@@ -21,6 +22,7 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_menu_search</item>
+        <item>@drawable/ic_menu_report</item>
         <!--<item>@drawable/ic_menu_list</item>-->
         <!--<item>@drawable/ic_menu_stadistics</item>-->
     </array>
