@@ -272,5 +272,6 @@ public class PublicationDetailFragment extends BaseFragment {
         menu.findItem(R.id.action_contact).setVisible(true);
         menu.findItem(R.id.action_amenities).setVisible(true);
         menu.findItem(R.id.action_location).setVisible(true);
+        menu.findItem(R.id.action_share).setVisible(true);
     }
 }
