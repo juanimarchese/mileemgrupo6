@@ -7,6 +7,7 @@
         <item name="android:dropDownListViewStyle">@style/MyListViewStyle</item>
         <item name="android:spinnerStyle">@style/SpinnerTheme</item>
         <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteEditTextTheme</item>
+        <item name="android:editTextStyle">@style/EditTextTheme</item>
     </style>
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">

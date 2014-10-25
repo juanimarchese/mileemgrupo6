@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.managers.DefinitionsManager;
@@ -28,6 +31,10 @@ public class SearchFragment extends BaseFragment {
     private Spinner tipoPropiedadSpinner;
     private Spinner operacionSpinner;
     private Spinner ambientesSpinner;
+    private Spinner m2Spinner;
+    private Spinner monedaSpinner;
+    private Spinner fechaSpinner;
+    private boolean isAdvanceSearch = false;
 
     public SearchFragment() {
         super(TAG);
@@ -42,7 +49,34 @@ public class SearchFragment extends BaseFragment {
         addItemsToTipoPropiedadSpinner(rootView);
         addItemsToOperacionSpinner(rootView);
         addItemsToAmbientesSpinner(rootView);
+        addItemsToM2Spinner(rootView);
+        addItemsToFechaSpinner(rootView);
+        addItemsToMonedaSpinner(rootView);
         return rootView;
+    }
+
+    private void addItemsToM2Spinner(View rootView) {
+        m2Spinner = (Spinner) rootView.findViewById(R.id.m2);
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todos");
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        m2Spinner.setAdapter(dataAdapter);
+    }
+
+    private void addItemsToMonedaSpinner(View rootView) {
+        monedaSpinner = (Spinner) rootView.findViewById(R.id.moneda);
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todas");
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        monedaSpinner.setAdapter(dataAdapter);
+    }
+
+    private void addItemsToFechaSpinner(View rootView) {
+        fechaSpinner = (Spinner) rootView.findViewById(R.id.fecha);
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todas");
+        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        fechaSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToTipoPropiedadSpinner(View rootView) {
@@ -93,42 +127,155 @@ public class SearchFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        buildAdvancedSearchButton(view);
+        buildSearchButton(view);
+    }
+
+    private void buildAdvancedSearchButton(View view) {
+        Button button = (Button) view.findViewById(R.id.button_advance);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button buttonAvanzada = (Button) getView().findViewById(R.id.button_advance);
+                CharSequence buttonLabel = buttonAvanzada.getText();
+                if (getResources().getString(R.string.button_avanzada).equals(buttonLabel)){
+                    showAdvanceSeccion(buttonAvanzada);
+                } else {
+                    hideAdvanceSeccion(buttonAvanzada);
+                }
+            }
+
+        });
+    }
+
+    private void setViewVisibility(int id,int visibility){
+        View view = getView().findViewById(id);
+        if(view != null)
+            view.setVisibility(visibility);
+    }
+
+    private void hideAdvanceSeccion(Button buttonAvanzada) {
+        buttonAvanzada.setText(getResources().getString(R.string.button_avanzada));
+        setViewVisibility(R.id.m2, View.GONE);
+        setViewVisibility(R.id.m2_txt, View.GONE);
+        setViewVisibility(R.id.fecha_txt, View.GONE);
+        setViewVisibility(R.id.fecha, View.GONE);
+        setViewVisibility(R.id.precio_txt, View.GONE);
+        setViewVisibility(R.id.moneda, View.GONE);
+        setViewVisibility(R.id.moneda_txt, View.GONE);
+        setViewVisibility(R.id.precio_txt, View.GONE);
+        setViewVisibility(R.id.precio_max, View.GONE);
+        setViewVisibility(R.id.precio_min, View.GONE);
+        isAdvanceSearch = false;
+    }
+
+    private void showAdvanceSeccion(Button buttonAvanzada) {
+        buttonAvanzada.setText(getResources().getString(R.string.button_simple));
+        setViewVisibility(R.id.m2, View.VISIBLE);
+        setViewVisibility(R.id.m2_txt, View.VISIBLE);
+        setViewVisibility(R.id.fecha_txt,View.VISIBLE);
+        setViewVisibility(R.id.fecha,View.VISIBLE);
+        setViewVisibility(R.id.precio_txt, View.VISIBLE);
+        setViewVisibility(R.id.moneda, View.VISIBLE);
+        setViewVisibility(R.id.moneda_txt, View.VISIBLE);
+        setViewVisibility(R.id.precio_txt, View.VISIBLE);
+        setViewVisibility(R.id.precio_max,View.VISIBLE);
+        setViewVisibility(R.id.precio_min,View.VISIBLE);
+        isAdvanceSearch = true;
+    }
+
+    private void buildSearchButton(View view) {
         Button button_generar_repo = (Button) view.findViewById(R.id.button_buscar);
         button_generar_repo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle arguments = new Bundle();
                 boolean isValid = true;
-                String ambiente = (String) ((Spinner)getView().findViewById(R.id.ambientes)).getSelectedItem();
-                int[] environments = getIntsFromSpinner(DefinitionsManager.getInstance().getEnvironments(), ambiente);
-                arguments.putIntArray("environments",environments);
 
-                String propType = (String) ((Spinner)getView().findViewById(R.id.tipo_propiedad)).getSelectedItem();
-                int[] propertyTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getPropertyTypes(), propType);
-                arguments.putIntArray("propertyTypes",propertyTypes);
+                putParamsFromSpinner(arguments, R.id.ambientes, DefinitionsManager.getInstance().getEnvironments(), "environments");
+                putParamsFromSpinner(arguments, R.id.tipo_propiedad, DefinitionsManager.getInstance().getPropertyTypes(), "propertyTypes");
+                putParamsFromSpinner(arguments, R.id.operacion, DefinitionsManager.getInstance().getOperationTypes(), "operationTypes");
 
-                String opType = (String) ((Spinner)getView().findViewById(R.id.operacion)).getSelectedItem();
-                int[] operationTypes = getIntsFromSpinner(DefinitionsManager.getInstance().getOperationTypes(), opType);
-                arguments.putIntArray("operationTypes",operationTypes);
+                isValid = putParamsFromAutoComplete(arguments, isValid);
 
-                CustomAutoCompleteTextView barrioView = (CustomAutoCompleteTextView) getView().findViewById(R.id.barrio);
-                String barrio = barrioView.getText().toString();
-                if(barrio == null || barrio.isEmpty()){
-                    isValid = false;
-                    barrioView.setError("Debe indicar un barrio");
+                if (isAdvanceSearch) {
+                    putParamsFromSpinner(arguments, R.id.m2, DefinitionsManager.getInstance().getDateRanges(), "m2Sizes");
+                    putParamsFromSpinner(arguments, R.id.fecha, DefinitionsManager.getInstance().getDateRanges(), "dates");
+                    putParamsFromSpinner(arguments, R.id.moneda, DefinitionsManager.getInstance().getDateRanges(), "currencys");
+                    isValid = putParamsFromEditTexts(arguments,isValid);
                 }
-                int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeighborhoods(), barrio);
-                if(neighborhoods.length > 0 && neighborhoods[0] == -1){
-                    isValid = false;
-                    barrioView.setError("Debe indicar un barrio válido");
-                }
-                arguments.putIntArray("neighborhoods",neighborhoods);
 
-                if(isValid)
-                    ((MainActivity)getActivity()).displayView(new ResultsFragment(), arguments,false);
+                if (isValid)
+                    ((MainActivity) getActivity()).displayView(new ResultsFragment(), arguments, false);
             }
         });
+    }
 
+    private boolean putParamsFromEditTexts(Bundle arguments, boolean isValid) {
+        EditText pMaxView = (EditText) getView().findViewById(R.id.precio_max);
+        EditText pMinView = (EditText) getView().findViewById(R.id.precio_min);
+        String precioMax = pMaxView.getText().toString();
+        String precioMin = pMinView.getText().toString();
+        Long precioMinInt = (long) -1;
+        Long precioMaxInt = (long) -1;
+
+        if(precioMax == null || precioMax.isEmpty()){
+            isValid = false;
+            pMaxView.setError("Debe indicar un precio máximo");
+        } else {
+            precioMaxInt = Long.valueOf(precioMax);
+        }
+
+        if(precioMin == null || precioMin.isEmpty()){
+            isValid = false;
+            pMinView.setError("Debe indicar un precio mínimo");
+        } else {
+            precioMinInt = Long.valueOf(precioMin);
+        }
+
+        if(!isValid) return isValid;
+
+        if(precioMaxInt < precioMinInt){
+            isValid = false;
+            pMaxView.setError("Precio máximo debe ser mayor al mínimo");
+        }
+
+
+        if(precioMaxInt > 999999999){
+            isValid = false;
+            pMaxView.setError("Valor máximo 999999999");
+        }
+
+        if(precioMinInt > 999999999){
+            isValid = false;
+            pMinView.setError("Valor máximo 999999999");
+        }
+
+        arguments.putLong("precioMin", precioMinInt);
+        arguments.putLong("precioMax", precioMaxInt);
+        return isValid;
+    }
+
+    private boolean putParamsFromAutoComplete(Bundle arguments, boolean isValid) {
+        CustomAutoCompleteTextView barrioView = (CustomAutoCompleteTextView) getView().findViewById(R.id.barrio);
+        String barrio = barrioView.getText().toString();
+        if(barrio == null || barrio.isEmpty()){
+            isValid = false;
+            barrioView.setError("Debe indicar un barrio");
+        }
+        int[] neighborhoods = getIntsFromAutoComplete(DefinitionsManager.getInstance().getNeighborhoods(), barrio);
+        if(neighborhoods.length > 0 && neighborhoods[0] == -1){
+            isValid = false;
+            barrioView.setError("Debe indicar un barrio válido");
+        }
+        arguments.putIntArray("neighborhoods",neighborhoods);
+        return isValid;
+    }
+
+    private void putParamsFromSpinner(Bundle arguments,int spinnerId,ArrayList<IdName> spinnerList,String paramId){
+        String selectedItem = (String) ((Spinner)getView().findViewById(spinnerId)).getSelectedItem();
+        int[] selectedValues = getIntsFromSpinner(spinnerList, selectedItem);
+        arguments.putIntArray(paramId,selectedValues);
     }
 
     private int[] getIntsFromAutoComplete(ArrayList<IdName> collection, String key) {
@@ -170,6 +317,11 @@ public class SearchFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if(!hidden){
             getActivity().getActionBar().hide();
+            if(getArguments().getBoolean("viewAdvanceSearch")){
+                Button button = (Button) getView().findViewById(R.id.button_advance);
+                showAdvanceSeccion(button);
+                getArguments().remove("viewAdvanceSearch");
+            }
         }
     }
 }

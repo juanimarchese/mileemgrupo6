@@ -8,7 +8,15 @@
     <string name="tipo_propiedad_txt">Tipo</string>
     <string name="operacion_txt">Operación</string>
     <string name="ambientes_txt">Cantidad de ambientes</string>
+    <string name="m2_txt">Tamaño m2</string>
+    <string name="fecha_txt">Fecha de publicación</string>
+    <string name="precio_txt">Precio</string>
+    <string name="precio_min_txt">Mínimo</string>
+    <string name="precio_max_txt">Máximo</string>
+    <string name="moneda_txt">Moneda</string>
     <string name="button_buscar">Buscar</string>
+    <string name="button_avanzada">Búsqueda Avanzada</string>
+    <string name="button_simple">Búsqueda Simple</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">

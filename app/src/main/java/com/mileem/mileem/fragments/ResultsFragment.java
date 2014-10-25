@@ -170,7 +170,17 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.findItem(R.id.action_search).setVisible(true);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(true);
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Bundle params = new Bundle();
+                params.putBoolean("viewAdvanceSearch",true);
+                ((MainActivity) context).displayView(new SearchFragment(), params,false);
+                return true;
+            }
+        });
         MenuItem sortItem = menu.findItem(R.id.action_sort);
         sortItem.setVisible(true);
         buildOrderSubMenuItem(sortItem, R.id.precio_asc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.ASC);
