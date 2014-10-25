@@ -87,7 +87,6 @@
             android:textStyle="bold"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:background="@color/background_fp"
             />
 
         <TextView
