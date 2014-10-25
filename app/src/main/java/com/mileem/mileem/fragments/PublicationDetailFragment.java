@@ -22,9 +22,9 @@ import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
+import com.mileem.mileem.utils.ShareUtils;
 import com.mileem.mileem.widgets.SmartViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
-
 
 import java.util.ArrayList;
 
@@ -246,6 +246,17 @@ public class PublicationDetailFragment extends BaseFragment {
                     return false;
                 }
                 ((MainActivity)getActivity()).displayView(LocationFragment.newInstance(currentPublication),false);
+                return true;
+            }
+        });
+
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareItem.setVisible(true);
+        shareItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                PublicationDetailFragment fr = PublicationDetailFragment.this;
+                ShareUtils.share(fr.getActivity(), fr.getView(), fr.currentPublication);
                 return true;
             }
         });
