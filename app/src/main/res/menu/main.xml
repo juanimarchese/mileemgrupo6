@@ -12,21 +12,27 @@
         <menu>
             <item
                     android:id="@+id/precio_asc"
+                    android:icon="@drawable/price_up_icon"
                     android:title="Precio ascendente" />
             <item
                     android:id="@+id/precio_dsc"
+                    android:icon="@drawable/price_down_icon"
                     android:title="Precio descendente" />
             <item
                     android:id="@+id/fecha_asc"
+                    android:icon="@drawable/date_up_icon"
                     android:title="Fecha ascendente" />
             <item
                     android:id="@+id/fecha_dsc"
+                    android:icon="@drawable/date_down_icon"
                     android:title="Fecha descendente" />
             <item
                     android:id="@+id/relevancia_asc"
+                    android:icon="@drawable/prior_up_icon"
                     android:title="Relevancia ascendente" />
             <item
                     android:id="@+id/relevancia_dsc"
+                    android:icon="@drawable/prior_down_icon"
                     android:title="Relevancia descendente" />
         </menu>
     </item>
@@ -41,9 +47,11 @@
         <menu>
             <item
                 android:id="@+id/telefono"
+                android:icon="@drawable/phone_icon"
                 android:title="Llamar" />
             <item
                 android:id="@+id/email"
+                android:icon="@drawable/email_icon"
                 android:title="Enviar E-Mail" />
 
         </menu>
