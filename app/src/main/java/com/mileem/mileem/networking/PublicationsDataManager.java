@@ -33,7 +33,7 @@ public class PublicationsDataManager {
     private PublicationOrder order = null;
 
     private HashMap<PublicationOrder.OrderBy, String > orderByMap = new HashMap<PublicationOrder.OrderBy, String>(){{
-        put(PublicationOrder.OrderBy.PUBLISH_DATE,"create_at");
+        put(PublicationOrder.OrderBy.PUBLISH_DATE,"created_at");
         put(PublicationOrder.OrderBy.PRICE,"price");
         put(PublicationOrder.OrderBy.PRIORITY,"publication_type_id");
     }};
