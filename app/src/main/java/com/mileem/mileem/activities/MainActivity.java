@@ -18,10 +18,12 @@ import android.widget.ListView;
 
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
+import com.mileem.mileem.fragments.BarReportFragment;
 import com.mileem.mileem.fragments.BaseFragment;
 import com.mileem.mileem.fragments.NoResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
 import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.utils.DefinitionsUtils;
 import com.mileem.mileem.widgets.NavDrawerItem;
 
@@ -167,14 +169,17 @@ public class MainActivity extends BaseActivity {
 
     public void showNeighborhoodsAndDisplayReport(ReportType type) {
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
-        ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item_dark, list);
+        final ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item_dark, list);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Elige un barrio");
         builder.setAdapter(dataAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Cambiar por el fragment para mostrar el grafico pasando como argumento el barrio elegido
-                MainActivity.this.displayFragment(new SearchFragment(), 1, null, false);
+                String neighboorName = (String) dataAdapter.getItem(which);
+                IdName neighboor = DefinitionsUtils.findIdNameByName(DefinitionsManager.getInstance().getNeighborhoods(), neighboorName);
+                BarReportFragment fragment = BarReportFragment.newInstance(neighboor);
+                MainActivity.this.displayFragment(fragment, 1, fragment.getArguments(), false);
             }
         });
         builder.show();

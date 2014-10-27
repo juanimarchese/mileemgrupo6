@@ -31,4 +31,13 @@ public  class DefinitionsUtils {
         }
         return -1;
     }
+
+    public static IdName findIdNameByName(List<IdName> list,String name){
+        if(name != null) {
+            for (IdName idName : list){
+                if(idName.getName().equals(name)) return idName;
+            }
+        }
+        return null;
+    }
 }
