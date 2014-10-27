@@ -216,24 +216,21 @@ public class SearchFragment extends BaseFragment {
         EditText pMinView = (EditText) getView().findViewById(R.id.precio_min);
         String precioMax = pMaxView.getText().toString();
         String precioMin = pMinView.getText().toString();
-        Long precioMinInt = (long) -1;
-        Long precioMaxInt = (long) -1;
+        Long precioMinInt;
+        Long precioMaxInt;
 
-        if(precioMax == null || precioMax.isEmpty()){
-            isValid = false;
-            pMaxView.setError("Debe indicar un precio máximo");
-        } else {
+        if(precioMax != null && !precioMax.isEmpty()){
             precioMaxInt = Long.valueOf(precioMax);
-        }
-
-        if(precioMin == null || precioMin.isEmpty()){
-            isValid = false;
-            pMinView.setError("Debe indicar un precio mínimo");
         } else {
-            precioMinInt = Long.valueOf(precioMin);
+            precioMaxInt = (long) 999999999;
         }
 
-        if(!isValid) return isValid;
+        if(precioMin != null && !precioMin.isEmpty()){
+            precioMinInt = Long.valueOf(precioMin);
+        } else {
+            precioMinInt = (long) 0;
+        }
+
 
         if(precioMaxInt < precioMinInt){
             isValid = false;
