@@ -214,50 +214,39 @@
             android:layout_marginBottom="15dp"
 
             >
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="126dp"
-                android:layout_gravity="end"
-                android:layout_marginRight="3dp"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/precio_min"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:layout_weight="1"
-                    android:inputType="number"
-                    android:ems="200"
-                    android:lines="1"
-                    android:visibility="gone"
-                    android:maxLength="9"
-                    android:hint="@string/precio_min_txt"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="126dp"
-                android:layout_marginLeft="3dp"
-                android:layout_gravity="start"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/precio_max"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:layout_weight="1"
-                    android:ems="200"
-                    android:lines="1"
-                    android:visibility="gone"
-                    android:inputType="number"
-                    android:maxLength="9"
-                    android:hint="@string/precio_max_txt"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/precio_min"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:layout_weight="0.5"
+                android:inputType="number"
+                android:ems="200"
+                android:lines="1"
+                android:visibility="gone"
+                android:maxLength="9"
+                android:hint="@string/precio_min_txt"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                />
+
+            <EditText
+                android:id="@+id/precio_max"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10dp"
+                android:ems="200"
+                android:lines="1"
+                android:visibility="gone"
+                android:inputType="number"
+                android:maxLength="9"
+                android:hint="@string/precio_max_txt"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                />
+
         </LinearLayout>
 
         <LinearLayout
@@ -268,49 +257,35 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="15dp">
 
-            >
-            <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="126dp"
-            android:layout_gravity="end"
-            android:layout_marginRight="3dp"
-            android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/button_advance"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end"
-                    android:background="@color/holo_blue"
-                    android:focusable="true"
-                    android:text="@string/button_avanzada"
-                    android:textColor="@color/white"
-                    android:layout_weight="1"
-                    android:textStyle="bold"
-                    android:textSize="13sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="126dp"
-                android:layout_marginLeft="3dp"
+            <Button
+                android:id="@+id/button_advance"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:background="@color/holo_blue"
+                android:focusable="true"
+                android:text="@string/button_avanzada"
+                android:textColor="@color/white"
+                android:layout_weight="0.5"
+                android:textStyle="bold"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/button_buscar"
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
                 android:layout_gravity="start"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/button_buscar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="30dp"
-                    android:layout_gravity="start"
-                    android:background="@color/holo_blue"
-                    android:focusable="true"
-                    android:text="@string/button_buscar"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-            </LinearLayout>
+                android:background="@color/holo_blue"
+                android:focusable="true"
+                android:text="@string/button_buscar"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.5"
+                android:textSize="13sp" />
+        </LinearLayout>
 
 
 
