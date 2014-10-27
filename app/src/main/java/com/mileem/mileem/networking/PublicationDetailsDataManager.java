@@ -33,7 +33,7 @@ public class PublicationDetailsDataManager {
                     PublicationDetails publication = gson.fromJson(payload.toString(), PublicationDetails.class);
                     callbackHandler.onComplete(publication);
                 } catch (Throwable e) {
-                    e.printStackTrace();
+                    callbackHandler.onFailure(new Error(e));
                 }
             }
         });

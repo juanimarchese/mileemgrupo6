@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_pdf"
+    android:background="@color/transparent_white"
     android:scrollbars="none"
     >
     <RelativeLayout
@@ -47,7 +47,7 @@
             android:layout_weight="0.5"
             android:focusableInTouchMode="false"
             android:minLines="1"
-            android:background="@color/background_fp"/>
+            android:paddingLeft="3dp" />
 
         <TextView
             android:id="@+id/prop_barrio"
@@ -60,10 +60,10 @@
             android:layout_weight="0.5"
             android:focusableInTouchMode="false"
             android:minLines="1"
-            android:background="@color/background_fp"/>
+            android:paddingLeft="3dp" />
 
         <TextView
-            android:id="@+id/prop_m2"
+            android:id="@+id/prop_m2_amb"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/prop_barrio"
@@ -71,40 +71,8 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/m2"
             android:focusable="false"
-            android:background="@color/background_fp"
-            android:focusableInTouchMode="false"/>
-
-        <TextView
-            android:id="@+id/separator"
-            android:text="|"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/prop_barrio"
-            android:paddingLeft="4dp"
-            android:paddingRight="3dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@+id/prop_m2"
-            android:textColor="@color/ambientes"
-            android:background="@color/background_fp"
-            android:textSize="18dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
-
-        <TextView
-            android:id="@+id/prop_ambientes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/prop_barrio"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@+id/separator"
-            android:textColor="@color/ambientes"
-            android:textSize="@dimen/ambientes"
-            android:focusable="false"
-            android:ellipsize="end"
-            android:lines="1"
-            android:minLines="1"
             android:focusableInTouchMode="false"
-            android:background="@color/background_fp"/>
+            android:paddingLeft="3dp" />
 
 
         <TextView
@@ -119,35 +87,32 @@
             android:textStyle="bold"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:background="@color/background_fp"
             />
 
         <TextView
             android:id="@+id/prop_tipo_txt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/prop_m2"
+            android:layout_below="@id/prop_m2_amb"
             android:layout_marginTop="2dp"
             android:paddingLeft="5dp"
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:text="Tipo"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
             android:id="@+id/prop_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/prop_m2"
+            android:layout_below="@id/prop_m2_amb"
             android:layout_marginTop="2dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -161,7 +126,6 @@
             android:textSize="@dimen/dp11"
             android:text="Operación"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -175,7 +139,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -189,7 +152,6 @@
             android:textSize="@dimen/dp11"
             android:text="Sup. Cubierta"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -203,7 +165,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -217,7 +178,6 @@
             android:textSize="@dimen/dp11"
             android:text="Sup. Descubierta"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -231,7 +191,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -245,7 +204,6 @@
             android:textSize="@dimen/dp11"
             android:text="Antiguedad"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -259,7 +217,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -273,7 +230,6 @@
             android:textSize="@dimen/dp11"
             android:text="Expensas"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -287,7 +243,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -301,7 +256,6 @@
             android:textSize="@dimen/dp11"
             android:text="Información Adicional"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
         <TextView
@@ -316,7 +270,6 @@
             android:textColor="@color/m2"
             android:textSize="@dimen/dp11"
             android:focusable="false"
-            android:background="@color/white"
             android:focusableInTouchMode="false"/>
 
     </RelativeLayout>

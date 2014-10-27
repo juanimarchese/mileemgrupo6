@@ -1,11 +1,14 @@
 package com.mileem.mileem.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Juan-Asus on 09/09/2014.
  */
-public class PublicationDetails {
+public class PublicationDetails implements Parcelable {
     private int id;
     private String title;
     private int price;
@@ -26,6 +29,7 @@ public class PublicationDetails {
     private IdName propertyType;
     private IdName publicationType;
     private IdName neighborhood;
+    private ArrayList<IdName> amenitieType;
     private User user;
 
     public PublicationDetails() {
@@ -201,5 +205,31 @@ public class PublicationDetails {
 
     public void setNeighborhood(IdName neighborhood) {
         this.neighborhood = neighborhood;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public ArrayList<IdName> getAmenitieType() { return amenitieType; }
+
+    public void setAmenitieType(ArrayList<IdName> amenitieType) { this.amenitieType = amenitieType; }
+
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    public String getAgeString() {
+        return this.getAge() == 0 ? "A estrenar" : this.getAge() > 1 ? this.getAge() + " años" : "1 año";
     }
 }

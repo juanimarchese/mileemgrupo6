@@ -33,6 +33,6 @@ public class Video {
     }
 
     public Boolean hasVideo() {
-        return this.getEmbedUrl() != null && this.getEmbedUrl().length() > 0;
+        return this.getUrl() != null && this.getUrl().length() > 0;
     }
 }

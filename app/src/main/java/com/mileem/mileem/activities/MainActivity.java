@@ -1,7 +1,8 @@
 package com.mileem.mileem.activities;
 
-import android.app.FragmentManager;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -12,16 +13,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
 import com.mileem.mileem.fragments.BaseFragment;
 import com.mileem.mileem.fragments.NoResultsFragment;
-import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.fragments.SearchFragment;
+import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.utils.DefinitionsUtils;
 import com.mileem.mileem.widgets.NavDrawerItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity {
@@ -49,6 +54,9 @@ public class MainActivity extends BaseActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
+    public enum ReportType {
+        AROUND_PRICE_M2;
+    }
 
     private static MainActivity instance;
 
@@ -86,8 +94,10 @@ public class MainActivity extends BaseActivity {
         // adding nav drawer items to array
         // Buscar
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Ultimos Resultados
+        //Report
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        // Ultimos Resultados
+        /*navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));*/
         // Estadisticas
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 
@@ -127,34 +137,22 @@ public class MainActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayViewForMenu(1);
+            displayViewForMenu(0,false);
         }
 
     }
 
-    /**
-     * Diplaying fragment view for selected nav drawer list item
-     * */
-    public void displayViewForMenu(int position) {
-        // update the main content by replacing fragments
-        BaseFragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new SearchFragment();
-                break;
-            case 1:
-                fragment = new ResultsFragment();
-                break;
+    public void displayViewForMenu(int position,boolean isBack) {
+        displayViewForMenu(position,new Bundle(),false);
+    }
 
-            default:
-                break;
-        }
-
+    public void displayFragment(BaseFragment fragment, int position, Bundle arguments, boolean isBack) {
         if (fragment != null) {
            /* FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
-            showFragment(fragment);
+            fragment.setArguments(arguments);
+            showFragment(fragment,isBack);
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -167,13 +165,52 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void displayView(BaseFragment fragment) {
+    public void showNeighborhoodsAndDisplayReport(ReportType type) {
+        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
+        ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item_dark, list);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Elige un barrio");
+        builder.setAdapter(dataAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cambiar por el fragment para mostrar el grafico pasando como argumento el barrio elegido
+                MainActivity.this.displayFragment(new SearchFragment(), 1, null, false);
+            }
+        });
+        builder.show();
+    }
+
+    public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
+        // update the main content by replacing fragments
+        switch (position) {
+            case 0:
+                this.displayFragment(new SearchFragment(), position, arguments, isBack);
+                break;
+            case 1:
+                this.showNeighborhoodsAndDisplayReport(ReportType.AROUND_PRICE_M2);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void displayView(BaseFragment fragment,boolean isBack) {
+        Bundle bundle = null;
+        if (fragment.getArguments() != null)
+            bundle = fragment.getArguments();
+        else
+            bundle = new Bundle();
+        displayView(fragment, bundle, isBack);
+    }
+
+    public void displayView(BaseFragment fragment,Bundle arguments,boolean isBack) {
         // update the main content by replacing fragments
         if (fragment != null) {
             /*FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();*/
-            showFragment(fragment);
+            fragment.setArguments(arguments);
+            showFragment(fragment,isBack);
 
             // update selected item and title, then close the drawer
             setTitle(fragment.getTittle());
@@ -183,8 +220,31 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        if(this.getCurrentFragment().hasMenuOption()){
+            super.onBackPressed();
+            return;
+        }
+        BaseFragment previousFragment = this.getPreviousFragment();
+        while (previousFragment.getCustomTag().equals(getCurrentFragment().getCustomTag())){
+            previousFragment = this.getPreviousFragment();
+        }
+        if(this.getCurrentFragment().getCustomTag().equals(NoResultsFragment.TAG)){
+            previousFragment = this.getPreviousFragment();
+        }
+        if(previousFragment != null){
+            try {
+                displayView(previousFragment.getClass().newInstance(),true);
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onSearchRequested() {
@@ -192,8 +252,6 @@ public class MainActivity extends BaseActivity {
         // search results. Only used pre-HC.
         return !isSearchResultView && super.onSearchRequested();
     }
-
-
 
 
     /**
@@ -205,7 +263,7 @@ public class MainActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             // display view for selected nav drawer item
-            displayViewForMenu(position);
+            displayViewForMenu(position,false);
         }
     }
 

@@ -7,10 +7,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.BaseActivity;
+import com.mileem.mileem.activities.MainActivity;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -45,7 +49,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void showFragment(BaseFragment fragment){
-        ((BaseActivity) getActivity()).showFragment(fragment);
+        ((BaseActivity) getActivity()).showFragment(fragment,false);
     }
 
     @Override
@@ -57,14 +61,19 @@ public abstract class BaseFragment extends Fragment {
         menu.findItem(R.id.action_refresh).setVisible(false);
         menu.findItem(R.id.action_sort).setVisible(false);
         menu.findItem(R.id.action_search).setVisible(false);
+        menu.findItem(R.id.action_share).setVisible(false);
     }
 
     public abstract String getTittle();
 
     protected void showPDialog(Context context) {
+        showPDialog(context,"Buscando...");
+    }
+
+    protected void showPDialog(Context context,String msg) {
         pDialog = new ProgressDialog(context);
         // Showing progress dialog before making http request
-        pDialog.setMessage("Buscando...");
+        pDialog.setMessage(msg);
         pDialog.show();
     }
 
@@ -79,5 +88,10 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         hidePDialog();
+    }
+
+
+    public boolean hasMenuOption(){
+       return false;
     }
 }

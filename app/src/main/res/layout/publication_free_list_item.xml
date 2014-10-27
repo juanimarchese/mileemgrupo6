@@ -23,28 +23,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_alignTop="@+id/prop_imagen"
             android:layout_toRightOf="@+id/prop_imagen"
             android:layout_toLeftOf="@+id/arrow"
-
-        android:textSize="@dimen/direccion"
+            android:textSize="@dimen/direccion"
             android:textStyle="bold"
             android:focusable="false"
             android:ellipsize="end"
+            android:singleLine="true"
             android:layout_weight="0.5"
             android:focusableInTouchMode="false"
             android:lines="1"
-        android:minLines="1"
-        android:layout_marginRight="3dp"
-        android:layout_alignParentLeft="true" />
+            android:minLines="1"
+             />
 
     <TextView
             android:id="@+id/prop_m2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/prop_imagen"
             android:layout_below="@id/prop_direccion"
             android:layout_marginTop="4dp"
-            android:layout_toRightOf="@+id/prop_imagen"
             android:textColor="@color/m2"
             android:textSize="@dimen/m2"
             android:focusable="false"

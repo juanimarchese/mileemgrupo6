@@ -30,29 +30,9 @@ public class DefinitionsDataManager {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JSONObject payload = response.getJSONObject("payload");
-                    Type collectionType = new TypeToken<ArrayList<IdName>>(){}.getType();
                     Gson gson = new Gson();
-                    DefinitionsManager dm = DefinitionsManager.getInstance();
-
-                    Object neighborhoods = payload.get("neighborhoods");
-                    ArrayList<IdName> neightboardsCollection = gson.fromJson(neighborhoods.toString(), collectionType);
-                    dm.setNeightboardsCollection(neightboardsCollection);
-
-                    Object environments = payload.get("environments");
-                    ArrayList<IdName> environmentsCollection = gson.fromJson(environments.toString(), collectionType);
-                    dm.setEnvironmentsTypesCollection(environmentsCollection);
-
-                    Object propertyTypes = payload.get("propertyTypes");
-                    ArrayList<IdName> propertyTypesCollection = gson.fromJson(propertyTypes.toString(), collectionType);
-                    dm.setPropertyTypesCollection(propertyTypesCollection);
-
-                    Object operationTypes = payload.get("operationTypes");
-                    ArrayList<IdName> operationTypesCollection = gson.fromJson(operationTypes.toString(), collectionType);
-                    dm.setOperationTypesCollection(operationTypesCollection);
-
-                    Object dateRanges = payload.get("dateRanges");
-                    ArrayList<IdName> dateRangesCollection = gson.fromJson(dateRanges.toString(), collectionType);
-                    dm.setDateRangesCollections(dateRangesCollection);
+                    DefinitionsManager df = gson.fromJson(payload.toString(), DefinitionsManager.class);
+                    DefinitionsManager.setInstance(df);
                     callbackHandler.onComplete();
                 } catch (JSONException e) {
                     e.printStackTrace();

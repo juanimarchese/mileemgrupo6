@@ -5,15 +5,24 @@
     <string name="action_settings">Settings</string>
     <string name="busqueda">Ingrese los parámetros para realizar la búsqueda</string>
     <string name="barrio">Barrio</string>
-    <string name="tipo_propiedad_txt">Tipo Propiedades</string>
+    <string name="tipo_propiedad_txt">Tipo</string>
     <string name="operacion_txt">Operación</string>
-    <string name="ambientes_txt">Cant. Ambientes</string>
+    <string name="ambientes_txt">Cantidad de ambientes</string>
+    <string name="m2_txt">Tamaño m2</string>
+    <string name="fecha_txt">Fecha de publicación</string>
+    <string name="precio_txt">Precio</string>
+    <string name="precio_min_txt">Mínimo</string>
+    <string name="precio_max_txt">Máximo</string>
+    <string name="moneda_txt">Moneda</string>
     <string name="button_buscar">Buscar</string>
+    <string name="button_avanzada">Búsqueda Avanzada</string>
+    <string name="button_simple">Búsqueda Simple</string>
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
         <item >Búsqueda</item>
-        <item >Resultados</item>
+        <item >Zonas aledañas [precio/m2] </item>
+        <!--<item >Resultados</item>-->
        <!-- <item >Estadisticas</item>-->
     </string-array>
 
@@ -21,7 +30,8 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/ic_menu_search</item>
-        <item>@drawable/ic_menu_list</item>
+        <item>@drawable/ic_menu_report</item>
+        <!--<item>@drawable/ic_menu_list</item>-->
         <!--<item>@drawable/ic_menu_stadistics</item>-->
     </array>
 
@@ -31,7 +41,14 @@
     <string name="action_refresh">Refrescar</string>
     <string name="action_sort">Ordenar</string>
     <string name="action_location">Ubicación</string>
+    <string name="action_share">Compartir</string>
     <string name="action_contact">Contactar</string>
     <string name="action_amenities">Amenities</string>
+    <string name="title_txt">Datos de la publicación:</string>
+    <string name="email_hint">Email de respuesta (*)</string>
+    <string name="telefono_hint">Teléfono</string>
+    <string name="hr_hint">Horario de Respuesta</string>
+    <string name="mensaje_hint">Mensaje (*)</string>
+    <string name="button_enviar">Enviar</string>
 
 </resources>

@@ -9,6 +9,7 @@ import com.mileem.mileem.models.PublicationFilter;
 import com.mileem.mileem.models.PublicationOrder;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,7 @@ public class PublicationsDataManager {
     private PublicationOrder order = null;
 
     private HashMap<PublicationOrder.OrderBy, String > orderByMap = new HashMap<PublicationOrder.OrderBy, String>(){{
-        put(PublicationOrder.OrderBy.PUBLISH_DATE,"create_at");
+        put(PublicationOrder.OrderBy.PUBLISH_DATE,"created_at");
         put(PublicationOrder.OrderBy.PRICE,"price");
         put(PublicationOrder.OrderBy.PRIORITY,"publication_type_id");
     }};
@@ -82,8 +83,8 @@ public class PublicationsDataManager {
         if (this.filter.getMaxPrice() != 0) params.put("maxPrice", this.filter.getMaxPrice());
         if (this.filter.getMinSize() != 0) params.put("minSize", this.filter.getMinSize());
         if (this.filter.getMinCoveredSize() != 0) params.put("minCoveredSize", this.filter.getMinCoveredSize());
-        //TODO implementar del lado del server para recibir un id Number tal como sugirio ale
-        //params.put("minPublishDate", this.filter.getMinPublishDate());
+        this.filter.setMinPublishDate(6);
+        if (this.filter.getMinPublishDate() != 0) params.put("minPublishDate", this.filter.getMinPublishDate());
         if (pagination != null) {
             if (pagination.getAmount() != 0) params.put("amount", pagination.getAmount());
             params.put("offset", pagination.getOffset());
@@ -150,6 +151,21 @@ public class PublicationsDataManager {
                 super.onSuccess(statusCode, headers, response);
                 ArrayList<PublicationDetails> publications = PublicationsDataManager.this.parseResponse(response);
                 callbackHandler.onComplete(publications);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
     }

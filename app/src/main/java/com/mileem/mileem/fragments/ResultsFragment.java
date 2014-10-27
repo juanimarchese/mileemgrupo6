@@ -58,6 +58,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.results_fragment, container, false);
+        getActivity().getActionBar().show();
         context = rootView.getContext();
         buildEndlessListView(rootView);
 
@@ -68,13 +69,25 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         return rootView;
     }
 
+    private int[] getArrayFromParams(String key){
+        if(getArguments() != null && !getArguments().isEmpty()){
+            return getArguments().getIntArray(key);
+        }
+        return new int[]{};
+    }
+
     private void createDefaultRequestInfo() {
-        int[] neighborhoods = {};
-        int[] environments = {};
-        int[] propertyTypes = {};
-        int[] operationTypes = {};
-        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
+        buildFilter();
         order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
+    }
+
+    private void buildFilter() {
+        int[] neighborhoods = getArrayFromParams("neighborhoods");
+        int[] environments = getArrayFromParams("environments");
+        int[] propertyTypes = getArrayFromParams("propertyTypes");
+        int[] operationTypes = getArrayFromParams("operationTypes");
+
+        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
     }
 
 
@@ -90,9 +103,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 try{
                     PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
                     int publicationDetailId = publicationDetail.getId();
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction tx = fm.beginTransaction();
-                    tx.add(R.id.frame_container, PublicationDetailFragment.newInstance(publicationDetailId) ).addToBackStack( "addToBackStack" ).commit();
+                    ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(publicationDetailId),false);
                 } catch (Throwable e){
                     showError();
                 }
@@ -118,7 +129,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                     if(!collection.isEmpty()){
                         listView.addNewData(collection);
                     } else{
-                        ((MainActivity) context).displayView(new NoResultsFragment());
+                        ((MainActivity) context).displayView(new NoResultsFragment(),false);
                     }
                     hidePDialog();
                 }
@@ -141,7 +152,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener los datos", Toast.LENGTH_LONG).show();
         createDefaultRequestInfo();
-        ((MainActivity) context).displayViewForMenu(0);
+        ((MainActivity) context).displayViewForMenu(0,true);
     }
 
 
@@ -150,14 +161,26 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         super.onHiddenChanged(hidden);
         if(!hidden){
             //TODO - Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
+            buildFilter();
             requestFirstPageData();
+            getActivity().getActionBar().show();
         }
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.findItem(R.id.action_search).setVisible(true);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchItem.setVisible(true);
+        searchItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Bundle params = new Bundle();
+                params.putBoolean("viewAdvanceSearch",true);
+                ((MainActivity) context).displayView(new SearchFragment(), params,false);
+                return true;
+            }
+        });
         MenuItem sortItem = menu.findItem(R.id.action_sort);
         sortItem.setVisible(true);
         buildOrderSubMenuItem(sortItem, R.id.precio_asc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.ASC);
@@ -221,5 +244,11 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         }
     }
 
-
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_refresh).setVisible(true);
+        menu.findItem(R.id.action_sort).setVisible(true);
+    }
 }
