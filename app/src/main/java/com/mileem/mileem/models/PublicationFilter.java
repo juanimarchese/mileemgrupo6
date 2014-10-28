@@ -9,7 +9,7 @@ public class PublicationFilter {
     int[] operationTypes;
     int[] environments;
     int minPrice = 0;
-    int maxPrice = 0;
+    int maxPrice = 999999999;
     int minSize = 0;
     int minCoveredSize = 0;
     int minPublishDate = 0;

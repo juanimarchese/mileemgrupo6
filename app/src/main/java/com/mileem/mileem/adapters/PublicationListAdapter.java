@@ -224,7 +224,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
         buildTextViewWidget(holder.precioTextView, String.valueOf(msg.getCurrency() + " " + msg.getPrice()));
         buildTextViewWidget(holder.direccionTextView, msg.getAddress() );
-        buildTextViewWidget(holder.m2TextView, String.valueOf(msg.getCoveredSize() + msg.getSize())+ " m2" );
+        buildTextViewWidget(holder.m2TextView, String.valueOf(msg.getSize())+ " m2" );
         buildTextViewWidget(holder.ambientesTextView, msg.getEnvironment().getName());
 
         buildLocalImageWidget(holder.arrowImageView,R.drawable.arrow);
