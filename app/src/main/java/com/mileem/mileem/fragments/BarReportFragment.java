@@ -3,6 +3,9 @@ package com.mileem.mileem.fragments;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,8 +17,7 @@ import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.models.IdName;
-import com.mileem.mileem.models.PublicationDetails;
-import com.mileem.mileem.networking.PublicationDetailsDataManager;
+import com.mileem.mileem.models.PublicationOrder;
 import com.mileem.mileem.networking.ReportDataManager;
 
 /**
@@ -91,8 +93,7 @@ public class BarReportFragment extends BaseFragment {
         reportLabel = (TextView) rootView.findViewById(R.id.reportLabel);
     }
 
-
-    private void requestBarReportData() {
+    private void requestBarReportData(String monedaName) {
         showPDialog(rootView.getContext());
         try {
             reportLabel.setText("El siguiente reporte muestra el precio del metro cuadrado correspondiente a los barrios aleñados a " + getNeighborhoodName() + ". Los datos utilizados son obtenidos de las publicaciones realizadas en esta aplicación.");
@@ -120,12 +121,33 @@ public class BarReportFragment extends BaseFragment {
         }
     }
 
+    private void requestBarReportData() {
+        requestBarReportData("Pesos");
+    }
+
     private void showError() {
         Toast.makeText(getActivity(), "Error al tratar de obtener el reporte del barrio " + getNeighborhoodName(), Toast.LENGTH_LONG).show();
         ((MainActivity) rootView.getContext()).displayView(new ResultsFragment(),true);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem currencyItem = menu.findItem(R.id.action_currency);
+        currencyItem.setVisible(true);
+        buildSubItem(currencyItem, R.id.dollar, "Dollar");
+        buildSubItem(currencyItem, R.id.pesos, "Pesos");
+    }
 
-
+    private void buildSubItem(MenuItem sortItem, int subItemId, final String moneda) {
+        MenuItem subItem = sortItem.getSubMenu().findItem(subItemId);
+        subItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                requestBarReportData(moneda);
+                return true;
+            }
+        });
+    }
 
 }

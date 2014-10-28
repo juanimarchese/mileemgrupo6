@@ -68,4 +68,20 @@
         android:icon="@drawable/share_icon"
         android:title="@string/action_share"
         android:showAsAction="always" />
+    <item android:id="@+id/action_currency"
+        android:icon="@drawable/ic_action_currency"
+        android:title="@string/action_contact"
+        android:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/pesos"
+                android:icon="@drawable/argentina"
+                android:title="Pesos" />
+            <item
+                android:id="@+id/dollar"
+                android:icon="@drawable/usa"
+                android:title="Dólares" />
+
+        </menu>
+    </item>
 </menu>
