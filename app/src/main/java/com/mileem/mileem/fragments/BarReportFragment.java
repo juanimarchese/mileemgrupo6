@@ -100,7 +100,10 @@ public class BarReportFragment extends BaseFragment {
             DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
             int height = metrics.heightPixels - reportLabel.getHeight() - 30;
-            new ReportDataManager().getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(getNeighborhoodId(), width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
+            //FIXME pasar el parametro que corresponde
+            //currency = U$S o $
+            String currency = "U$S";
+            new ReportDataManager().getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(getNeighborhoodId(), currency, width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
                 @Override
                 public void onComplete(String neighborhoodName, String graphUrl) {
                     networkImageView.setImageUrl(graphUrl,imageLoader);
