@@ -93,16 +93,13 @@ public class BarReportFragment extends BaseFragment {
         reportLabel = (TextView) rootView.findViewById(R.id.reportLabel);
     }
 
-    private void requestBarReportData(String monedaName) {
+    private void requestBarReportData(String currency) {
         showPDialog(rootView.getContext());
         try {
-            reportLabel.setText("El siguiente reporte muestra el precio del metro cuadrado correspondiente a los barrios aleñados a " + getNeighborhoodName() + ". Los datos utilizados son obtenidos de las publicaciones realizadas en esta aplicación.");
+            reportLabel.setText("El siguiente reporte muestra el precio del metro cuadrado correspondiente a los barrios aleñados a " + getNeighborhoodName() + " en "+currency+". Los datos utilizados son obtenidos de las publicaciones realizadas en esta aplicación.");
             DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
             int height = metrics.heightPixels - reportLabel.getHeight() - 30;
-            //FIXME pasar el parametro que corresponde
-            //currency = U$S o $
-            String currency = "U$S";
             new ReportDataManager().getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(getNeighborhoodId(), currency, width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
                 @Override
                 public void onComplete(String neighborhoodName, String graphUrl) {
@@ -125,7 +122,7 @@ public class BarReportFragment extends BaseFragment {
     }
 
     private void requestBarReportData() {
-        requestBarReportData("Pesos");
+        requestBarReportData("$");
     }
 
     private void showError() {
@@ -138,8 +135,8 @@ public class BarReportFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem currencyItem = menu.findItem(R.id.action_currency);
         currencyItem.setVisible(true);
-        buildSubItem(currencyItem, R.id.dollar, "Dollar");
-        buildSubItem(currencyItem, R.id.pesos, "Pesos");
+        buildSubItem(currencyItem, R.id.dollar,"U$S");
+        buildSubItem(currencyItem, R.id.pesos, "$");
     }
 
     private void buildSubItem(MenuItem sortItem, int subItemId, final String moneda) {
