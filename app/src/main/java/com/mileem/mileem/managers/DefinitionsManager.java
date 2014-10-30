@@ -17,6 +17,7 @@ public class DefinitionsManager {
     private ArrayList<IdName> propertyTypes = null;
     private ArrayList<IdName> dateRanges = null;
     private ArrayList<IdName> amenitieTypes = null;
+    private ArrayList<IdName> sizes = null;
 
     private DefinitionsManager() {};
 
@@ -82,5 +83,13 @@ public class DefinitionsManager {
 
     public void setAmenitieTypes(ArrayList<IdName> amenitieTypes) {
         this.amenitieTypes = amenitieTypes;
+    }
+
+    public ArrayList<IdName> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(ArrayList<IdName> sizes) {
+        this.sizes = sizes;
     }
 }
