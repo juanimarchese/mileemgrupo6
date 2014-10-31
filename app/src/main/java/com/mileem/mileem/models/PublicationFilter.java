@@ -4,15 +4,16 @@ package com.mileem.mileem.models;
  * Created by ramirodiaz on 13/09/14.
  */
 public class PublicationFilter {
-    int[] neighborhoods;
-    int[] propertyTypes;
-    int[] operationTypes;
-    int[] environments;
-    int minPrice = 0;
-    int maxPrice = 999999999;
-    int minSize = 0;
-    int minCoveredSize = 0;
-    int minPublishDate = 0;
+    private int[] neighborhoods;
+    private int[] propertyTypes;
+    private int[] operationTypes;
+    private int[] environments;
+    private int minPrice = 0;
+    private int maxPrice = 999999999;
+    private int minSize = 0;
+    private int minCoveredSize = 0;
+    private int minPublishDate = 0;
+    private String currency = "";
 
     public PublicationFilter(int[] neighborhoods, int[] propertyTypes, int[] operationTypes, int[] environments) {
         this.neighborhoods = neighborhoods;
@@ -88,6 +89,14 @@ public class PublicationFilter {
 
     public void setMinPublishDate(int minPublishDate) {
         this.minPublishDate = minPublishDate;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
 
