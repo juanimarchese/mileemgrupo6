@@ -76,6 +76,20 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         return new int[]{};
     }
 
+    private Long getLongFromParams(String key){
+        if(getArguments() != null && !getArguments().isEmpty()){
+            return getArguments().getLong(key);
+        }
+        return null;
+    }
+
+    private String getStringFromParams(String key){
+        if(getArguments() != null && !getArguments().isEmpty()){
+            return getArguments().getString(key);
+        }
+        return "";
+    }
+
     private void createDefaultRequestInfo() {
         buildFilter();
         order = new PublicationOrder(PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
@@ -86,8 +100,19 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         int[] environments = getArrayFromParams("environments");
         int[] propertyTypes = getArrayFromParams("propertyTypes");
         int[] operationTypes = getArrayFromParams("operationTypes");
+        int[] m2Sizes = getArrayFromParams("m2Sizes");
+        int[] dates = getArrayFromParams("dates");
+        String currency = getStringFromParams("currencys");
+        Long precioMin = getLongFromParams("precioMin");
+        Long precioMax = getLongFromParams("precioMax");
 
-        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments);
+        Integer m2Size = null;
+        if(m2Sizes != null && m2Sizes.length > 0) m2Size = m2Sizes[0];
+
+        Integer date = null;
+        if(dates != null && dates.length > 0) date = dates[0];
+
+        filter = new PublicationFilter(neighborhoods, propertyTypes, operationTypes, environments,precioMin,precioMax,m2Size,date,currency);
     }
 
 

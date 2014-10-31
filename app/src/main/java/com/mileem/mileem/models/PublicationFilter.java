@@ -11,7 +11,7 @@ public class PublicationFilter {
     private int minPrice = 0;
     private int maxPrice = 999999999;
     private int minSize = 0;
-    private int minCoveredSize = 0;
+    //private int minCoveredSize = 0;
     private int minPublishDate = 0;
     private String currency = "";
 
@@ -20,6 +20,31 @@ public class PublicationFilter {
         this.propertyTypes = propertyTypes;
         this.operationTypes = operationTypes;
         this.environments = environments;
+    }
+
+    public PublicationFilter(int[] neighborhoods, int[] propertyTypes, int[] operationTypes, int[] environments, Long minPrice, Long maxPrice, Integer minSize, Integer minPublishDate, String currency) {
+        this.neighborhoods = neighborhoods;
+        this.propertyTypes = propertyTypes;
+        this.operationTypes = operationTypes;
+        this.environments = environments;
+        if(minPrice != null)
+            this.minPrice = minPrice.intValue();
+        if(maxPrice != null)
+            this.maxPrice = maxPrice.intValue();
+        if(minSize != null)
+            this.minSize = minSize;
+        if(minPublishDate != null)
+            this.minPublishDate = minPublishDate;
+        if(currency != null && !currency.isEmpty() && !currency.equals("Todas"))
+            this.currency = currency;
+    }
+
+    public void setMinPrice(int minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public void setMaxPrice(int maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
     public int[] getNeighborhoods() {
@@ -73,14 +98,6 @@ public class PublicationFilter {
 
     public void setMinSize(int minSize) {
         this.minSize = minSize;
-    }
-
-    public int getMinCoveredSize() {
-        return minCoveredSize;
-    }
-
-    public void setMinCoveredSize(int minCoveredSize) {
-        this.minCoveredSize = minCoveredSize;
     }
 
     public int getMinPublishDate() {
