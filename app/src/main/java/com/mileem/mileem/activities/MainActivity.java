@@ -219,6 +219,8 @@ public class MainActivity extends BaseActivity {
 
             // update selected item and title, then close the drawer
             setTitle(fragment.getTittle());
+            if(mDrawerLayout.isDrawerOpen(mDrawerList))
+                mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
