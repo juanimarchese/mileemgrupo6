@@ -238,7 +238,7 @@ public class SearchFragment extends BaseFragment {
 
         if(precioMaxInt < precioMinInt){
             isValid = false;
-            pMaxView.setError("Precio máximo debe ser mayor al mínimo");
+            pMaxView.setError("Precio máximo debe ser mayor o igual al mínimo");
         }
 
 
