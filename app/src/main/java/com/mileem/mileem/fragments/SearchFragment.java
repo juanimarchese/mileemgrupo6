@@ -226,7 +226,7 @@ public class SearchFragment extends BaseFragment {
         if(precioMax != null && !precioMax.isEmpty()){
             precioMaxInt = Long.valueOf(precioMax);
         } else {
-            precioMaxInt = (long) 999999999;
+            precioMaxInt = (long) 99999999;
         }
 
         if(precioMin != null && !precioMin.isEmpty()){
