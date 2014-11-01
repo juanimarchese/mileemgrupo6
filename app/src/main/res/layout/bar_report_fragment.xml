@@ -18,7 +18,7 @@
             android:layout_marginTop="15dp"
             android:paddingLeft="10dp"
             android:textColor="@color/m2"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:focusable="false"
             android:layout_centerInParent="true"
             android:focusableInTouchMode="false"
@@ -32,7 +32,7 @@
             android:layout_below="@+id/reportLabel"
             android:layout_marginTop="15dp"
             android:focusable="false"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:focusableInTouchMode="false"/>
 
     </RelativeLayout>
