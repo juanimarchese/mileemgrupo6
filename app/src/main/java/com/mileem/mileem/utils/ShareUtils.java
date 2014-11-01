@@ -40,7 +40,7 @@ public class ShareUtils {
                 targetedShareIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
             } else {
                 shareBody = "Propiedad en " + p.getOperationType().getName().toLowerCase() + ", ubicada en " + p.getAddress() + ", "
-                        + Integer.toString(p.getSize() + p.getCoveredSize()) + "m2 a " + p.getPrice() +  " " + p.getCurrency() + ". Tel "
+                        + Integer.toString(p.getSize()) + "m2 a " + p.getPrice() +  " " + p.getCurrency() + ". Tel "
                         + p.getUser().getTelephone() + ". Descarga MiLEEN App, disponible para Android, o visita "
                         + AsyncRestHttpClient.getAbsoluteUrlRelativeToHost("login") +  " para realizar nuevas publicaciones.";
 

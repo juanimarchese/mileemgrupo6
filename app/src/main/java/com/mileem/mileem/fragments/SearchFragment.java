@@ -6,15 +6,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.managers.DefinitionsManager;
+import com.mileem.mileem.models.Currency;
 import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.utils.DefinitionsUtils;
 import com.mileem.mileem.widgets.CustomAutoCompleteTextView;
@@ -57,15 +56,20 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToM2Spinner(View rootView) {
         m2Spinner = (Spinner) rootView.findViewById(R.id.m2);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getSizes(), "Todos");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         m2Spinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToMonedaSpinner(View rootView) {
         monedaSpinner = (Spinner) rootView.findViewById(R.id.moneda);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todas");
+        ArrayList<Currency> currencies = DefinitionsManager.getInstance().getCurrencies();
+        List<String> list = new ArrayList<String>();
+        list.add("Todas");
+        for(Currency currency : currencies){
+            list.add(currency.getId());
+        }
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         monedaSpinner.setAdapter(dataAdapter);
@@ -73,41 +77,41 @@ public class SearchFragment extends BaseFragment {
 
     private void addItemsToFechaSpinner(View rootView) {
         fechaSpinner = (Spinner) rootView.findViewById(R.id.fecha);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(),"Todas");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getDateRanges(), "Todas");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         fechaSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToTipoPropiedadSpinner(View rootView) {
         tipoPropiedadSpinner = (Spinner) rootView.findViewById(R.id.tipo_propiedad);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypes(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getPropertyTypes(), "Todos");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         tipoPropiedadSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToOperacionSpinner(View rootView) {
         operacionSpinner = (Spinner) rootView.findViewById(R.id.operacion);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypes(),"Todas");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getOperationTypes(), "Todas");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         operacionSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToAmbientesSpinner(View rootView) {
         ambientesSpinner = (Spinner) rootView.findViewById(R.id.ambientes);
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironments(),"Todos");
-        ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getEnvironments(), "Todos");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         ambientesSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsToAutoCompleteTextView(View rootView) {
-        List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
+        List<String> list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
         String defaultElement = "Todos";
         list.add(defaultElement);
-        ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(),R.layout.autocomplete_item,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(rootView.getContext(),R.layout.autocomplete_item,list);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         barrioACTV = (CustomAutoCompleteTextView) rootView.findViewById(R.id.barrio);
         barrioACTV.setThreshold(0);
@@ -199,9 +203,9 @@ public class SearchFragment extends BaseFragment {
                 isValid = putParamsFromAutoComplete(arguments, isValid);
 
                 if (isAdvanceSearch) {
-                    putParamsFromSpinner(arguments, R.id.m2, DefinitionsManager.getInstance().getDateRanges(), "m2Sizes");
+                    putParamsFromSpinner(arguments, R.id.m2, DefinitionsManager.getInstance().getSizes(), "m2Sizes");
                     putParamsFromSpinner(arguments, R.id.fecha, DefinitionsManager.getInstance().getDateRanges(), "dates");
-                    putParamsFromSpinner(arguments, R.id.moneda, DefinitionsManager.getInstance().getDateRanges(), "currencys");
+                    putParamsFromSpinnerCurrency(arguments, R.id.moneda, "currencys");
                     isValid = putParamsFromEditTexts(arguments,isValid);
                 }
 
@@ -216,24 +220,21 @@ public class SearchFragment extends BaseFragment {
         EditText pMinView = (EditText) getView().findViewById(R.id.precio_min);
         String precioMax = pMaxView.getText().toString();
         String precioMin = pMinView.getText().toString();
-        Long precioMinInt = (long) -1;
-        Long precioMaxInt = (long) -1;
+        Long precioMinInt;
+        Long precioMaxInt;
 
-        if(precioMax == null || precioMax.isEmpty()){
-            isValid = false;
-            pMaxView.setError("Debe indicar un precio máximo");
-        } else {
+        if(precioMax != null && !precioMax.isEmpty()){
             precioMaxInt = Long.valueOf(precioMax);
-        }
-
-        if(precioMin == null || precioMin.isEmpty()){
-            isValid = false;
-            pMinView.setError("Debe indicar un precio mínimo");
         } else {
-            precioMinInt = Long.valueOf(precioMin);
+            precioMaxInt = (long) 999999999;
         }
 
-        if(!isValid) return isValid;
+        if(precioMin != null && !precioMin.isEmpty()){
+            precioMinInt = Long.valueOf(precioMin);
+        } else {
+            precioMinInt = (long) 0;
+        }
+
 
         if(precioMaxInt < precioMinInt){
             isValid = false;
@@ -276,6 +277,11 @@ public class SearchFragment extends BaseFragment {
         String selectedItem = (String) ((Spinner)getView().findViewById(spinnerId)).getSelectedItem();
         int[] selectedValues = getIntsFromSpinner(spinnerList, selectedItem);
         arguments.putIntArray(paramId,selectedValues);
+    }
+
+    private void putParamsFromSpinnerCurrency(Bundle arguments,int spinnerId,String paramId){
+        String selectedItem = (String) ((Spinner)getView().findViewById(spinnerId)).getSelectedItem();
+        arguments.putString(paramId,selectedItem);
     }
 
     private int[] getIntsFromAutoComplete(ArrayList<IdName> collection, String key) {

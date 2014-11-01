@@ -16,11 +16,12 @@ public class ReportDataManager {
     public static abstract class ReportDataManagerCallbackHandler extends CallbackHandler {
         public abstract void onComplete(String neighborhoodName, String graphUrl);
     }
-    public void getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(final int neighborhoodId, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
+    public void getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("neighborhood", neighborhoodId);
         params.put("width", width);
         params.put("height", height);
+        params.put("currency", currency);
         AsyncRestHttpClient.get("average-price-by-neighborhood", params, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

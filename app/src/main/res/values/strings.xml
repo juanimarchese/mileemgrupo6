@@ -43,6 +43,7 @@
     <string name="action_location">Ubicación</string>
     <string name="action_share">Compartir</string>
     <string name="action_contact">Contactar</string>
+    <string name="action_currency">Moneda</string>
     <string name="action_amenities">Amenities</string>
     <string name="title_txt">Datos de la publicación:</string>
     <string name="email_hint">Email de respuesta (*)</string>

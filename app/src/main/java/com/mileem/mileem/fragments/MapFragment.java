@@ -70,7 +70,7 @@ public class MapFragment extends BaseFragment {
         PublicationDetails publication = getArguments().getParcelable("publication");
         String age = publication.getAgeString();
         String operation = String.valueOf(publication.getOperationType().getName());
-        String size = String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2";
+        String size = String.valueOf(publication.getSize())+ " m2";
         String env = publication.getEnvironment().getName();
         String price = String.valueOf(publication.getPrice()) + ' ' + publication.getCurrency();
         String separator = " | ";

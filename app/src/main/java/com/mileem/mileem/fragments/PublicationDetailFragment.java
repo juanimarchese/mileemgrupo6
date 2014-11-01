@@ -129,14 +129,14 @@ public class PublicationDetailFragment extends BaseFragment {
         buildTextViewWidget(R.id.prop_direccion,publication.getAddress(), arial);
         buildTextViewWidget(R.id.prop_barrio,publication.getNeighborhood().getName(), arial);
         buildTextViewWidget(R.id.prop_precio,publication.getCurrency() + " " + publication.getPrice(), arialBold);
-        String sizeWithEnv = String.valueOf(publication.getCoveredSize() + publication.getSize())+ " m2" + " | " +  publication.getEnvironment().getName();
+        String sizeWithEnv = String.valueOf(publication.getSize())+ " m2" + " | " +  publication.getEnvironment().getName();
 
         buildTextViewWidget(R.id.prop_m2_amb, sizeWithEnv , arial);
 
         buildTextViewWidget(R.id.prop_tipo,publication.getPropertyType().getName(), arial);
         buildTextViewWidget(R.id.prop_op,publication.getOperationType().getName(), arial);
         buildTextViewWidget(R.id.prop_scubierta,publication.getCoveredSize() + " m2", arial);
-        buildTextViewWidget(R.id.prop_sdescubierta,publication.getSize() + " m2", arial);
+        buildTextViewWidget(R.id.prop_sdescubierta,String.valueOf((publication.getSize()-publication.getCoveredSize()) + " m2"), arial);
         String antiguedad = publication.getAgeString();
         buildTextViewWidget(R.id.prop_antiguedad, antiguedad, arial);
         buildTextViewWidget(R.id.prop_expensas, publication.getCurrency() + " " + publication.getExpenses(), arial);

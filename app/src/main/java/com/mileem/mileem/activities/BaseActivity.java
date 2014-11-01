@@ -33,7 +33,7 @@ public abstract class BaseActivity extends Activity {
             final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             final Fragment fragmentByTag = fm.findFragmentByTag(fragment.getCustomTag());
 
-            if (currentFragment != null && currentFragment.getCustomTag().equals(fragment.getCustomTag()))
+            if (currentFragment != null && currentFragment.getCustomTag().equals(fragment.getCustomTag()) && currentFragment.getArguments().equals(fragment.getArguments()))
                 return;
 
             if (currentFragment != null) {
@@ -53,6 +53,12 @@ public abstract class BaseActivity extends Activity {
                     if(fragment.getArguments() != null && !fragment.getArguments().isEmpty())
                         fragmentByTag.getArguments().putAll(fragment.getArguments());
                     fragmentTransaction.show(fragmentByTag);
+                } else if(currentFragment.getCustomTag().equals(fragment.getCustomTag()) && !currentFragment.getArguments().equals(fragment.getArguments())) {
+                    if(fragment.getArguments() != null && !fragment.getArguments().isEmpty())
+                        fragmentByTag.getArguments().putAll(fragment.getArguments());
+                    fragmentTransaction.hide(fragmentByTag);
+                    fragmentTransaction.show(fragmentByTag);
+
                 }
             }
 

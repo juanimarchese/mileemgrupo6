@@ -2,6 +2,8 @@ package com.mileem.mileem.managers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import com.mileem.mileem.models.Currency;
 import com.mileem.mileem.models.IdName;
 
 /**
@@ -17,6 +19,8 @@ public class DefinitionsManager {
     private ArrayList<IdName> propertyTypes = null;
     private ArrayList<IdName> dateRanges = null;
     private ArrayList<IdName> amenitieTypes = null;
+    private ArrayList<IdName> sizes = null;
+    private ArrayList<Currency> currencies = null;
 
     private DefinitionsManager() {};
 
@@ -82,5 +86,21 @@ public class DefinitionsManager {
 
     public void setAmenitieTypes(ArrayList<IdName> amenitieTypes) {
         this.amenitieTypes = amenitieTypes;
+    }
+
+    public ArrayList<IdName> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(ArrayList<IdName> sizes) {
+        this.sizes = sizes;
+    }
+
+    public ArrayList<Currency> getCurrencies() {
+        return currencies;
+    }
+
+    public void setCurrencies(ArrayList<Currency> currencies) {
+        this.currencies = currencies;
     }
 }

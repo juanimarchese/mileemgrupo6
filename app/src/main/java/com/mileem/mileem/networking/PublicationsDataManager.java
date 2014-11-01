@@ -81,10 +81,10 @@ public class PublicationsDataManager {
         params.put("order", this.orderToString(this.order));
         if (this.filter.getMinPrice() != 0) params.put("minPrice", this.filter.getMinPrice());
         if (this.filter.getMaxPrice() != 0) params.put("maxPrice", this.filter.getMaxPrice());
-        if (this.filter.getMinSize() != 0) params.put("minSize", this.filter.getMinSize());
-        if (this.filter.getMinCoveredSize() != 0) params.put("minCoveredSize", this.filter.getMinCoveredSize());
-        this.filter.setMinPublishDate(6);
+        if (this.filter.getMinSize() != 0) params.put("size", this.filter.getMinSize());
+        //if (this.filter.getMinCoveredSize() != 0) params.put("minCoveredSize", this.filter.getMinCoveredSize());
         if (this.filter.getMinPublishDate() != 0) params.put("minPublishDate", this.filter.getMinPublishDate());
+        if (!this.filter.getCurrency().isEmpty()) params.put("currency", this.filter.getCurrency());
         if (pagination != null) {
             if (pagination.getAmount() != 0) params.put("amount", pagination.getAmount());
             params.put("offset", pagination.getOffset());
