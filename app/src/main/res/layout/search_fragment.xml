@@ -241,7 +241,7 @@
                 android:lines="1"
                 android:visibility="gone"
                 android:inputType="number"
-                android:maxLength="9"
+                android:maxLength="8"
                 android:hint="@string/precio_max_txt"
                 android:textColor="@color/white"
                 android:textSize="18sp"
