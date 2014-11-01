@@ -242,14 +242,14 @@ public class SearchFragment extends BaseFragment {
         }
 
 
-        if(precioMaxInt > 999999999){
+        if(precioMaxInt > 99999999){
             isValid = false;
-            pMaxView.setError("Valor máximo 999999999");
+            pMaxView.setError("Valor máximo 99999999");
         }
 
-        if(precioMinInt > 999999999){
+        if(precioMinInt > 99999999){
             isValid = false;
-            pMinView.setError("Valor máximo 999999999");
+            pMinView.setError("Valor máximo 99999999");
         }
 
         arguments.putLong("precioMin", precioMinInt);
