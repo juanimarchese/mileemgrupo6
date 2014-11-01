@@ -1,16 +1,15 @@
 package com.mileem.mileem.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
@@ -54,14 +53,14 @@ public class MultimediaPageFragment extends Fragment {
         networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
         networkImageView.setErrorImageResId(R.drawable.image_placeholder);
         networkImageView.setImageUrl(multimedia.getPreviewUrl(), imageLoader);
-
         networkImageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String type = multimedia.getType().toString();
-                Toast.makeText(v.getContext(), "Multimedia. Tipo: " + type, Toast.LENGTH_LONG).show();
+                if (multimedia.getType() == Multimedia.Type.VIDEO) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(multimedia.getUrl()));
+                    startActivity(intent);
+                }
             }
         });
-
 
         return rootView;
     }
