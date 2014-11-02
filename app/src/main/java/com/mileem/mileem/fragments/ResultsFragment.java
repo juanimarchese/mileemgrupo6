@@ -210,8 +210,8 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         sortItem.setVisible(true);
         buildOrderSubMenuItem(sortItem, R.id.precio_asc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.ASC);
         buildOrderSubMenuItem(sortItem, R.id.precio_dsc, PublicationOrder.OrderBy.PRICE, PublicationOrder.Order.DESC);
-        buildOrderSubMenuItem(sortItem, R.id.relevancia_asc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
-        buildOrderSubMenuItem(sortItem, R.id.relevancia_dsc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.DESC);
+        buildOrderSubMenuItem(sortItem, R.id.relevancia_asc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.DESC);
+        buildOrderSubMenuItem(sortItem, R.id.relevancia_dsc, PublicationOrder.OrderBy.PRIORITY, PublicationOrder.Order.ASC);
         buildOrderSubMenuItem(sortItem, R.id.fecha_asc, PublicationOrder.OrderBy.PUBLISH_DATE, PublicationOrder.Order.ASC);
         buildOrderSubMenuItem(sortItem, R.id.fecha_dsc,PublicationOrder.OrderBy.PUBLISH_DATE,PublicationOrder.Order.DESC);
         menu.findItem(R.id.action_refresh).setVisible(true);
