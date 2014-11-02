@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +74,28 @@ public class SearchFragment extends BaseFragment {
         ArrayAdapter dataAdapter = new ArrayAdapter(rootView.getContext(),R.layout.spinner_item, list);
         dataAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         monedaSpinner.setAdapter(dataAdapter);
+        monedaSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    setViewVisibility(R.id.precio_txt, View.GONE);
+                    setViewVisibility(R.id.precio_max, View.GONE);
+                    setViewVisibility(R.id.precio_min, View.GONE);
+                } else {
+                    setViewVisibility(R.id.precio_txt, View.VISIBLE);
+                    setViewVisibility(R.id.precio_max, View.VISIBLE);
+                    setViewVisibility(R.id.precio_min, View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                setViewVisibility(R.id.precio_txt, View.GONE);
+                setViewVisibility(R.id.precio_max, View.GONE);
+                setViewVisibility(R.id.precio_min, View.GONE);
+            }
+        });
+
     }
 
     private void addItemsToFechaSpinner(View rootView) {
@@ -182,9 +205,19 @@ public class SearchFragment extends BaseFragment {
         setViewVisibility(R.id.precio_txt, View.VISIBLE);
         setViewVisibility(R.id.moneda, View.VISIBLE);
         setViewVisibility(R.id.moneda_txt, View.VISIBLE);
-        setViewVisibility(R.id.precio_txt, View.VISIBLE);
-        setViewVisibility(R.id.precio_max,View.VISIBLE);
-        setViewVisibility(R.id.precio_min,View.VISIBLE);
+
+
+        String moneda = (String) ((Spinner)getView().findViewById(R.id.moneda)).getSelectedItem();
+        if(moneda != null && !moneda.equals("Todas")){
+            setViewVisibility(R.id.precio_txt, View.VISIBLE);
+            setViewVisibility(R.id.precio_max,View.VISIBLE);
+            setViewVisibility(R.id.precio_min,View.VISIBLE);
+        } else {
+            setViewVisibility(R.id.precio_txt, View.GONE);
+            setViewVisibility(R.id.precio_max, View.GONE);
+            setViewVisibility(R.id.precio_min, View.GONE);
+        }
+
         isAdvanceSearch = true;
     }
 
