@@ -58,6 +58,8 @@ public class MultimediaPageFragment extends Fragment {
                 if (multimedia.getType() == Multimedia.Type.VIDEO) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(multimedia.getUrl()));
                     startActivity(intent);
+                } else if (multimedia.getType() == Multimedia.Type.IMAGE){
+                    //TODO - Maximizar imagen
                 }
             }
         });

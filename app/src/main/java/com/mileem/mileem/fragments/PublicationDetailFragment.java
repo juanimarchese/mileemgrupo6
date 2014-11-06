@@ -76,7 +76,6 @@ public class PublicationDetailFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.publication_detail_fragment, container, false);
         this.rootView = rootView;
         buildFixedTextViews();
-        buildPublicationView();
         requestPublicationData();
         return rootView;
     }
@@ -108,10 +107,6 @@ public class PublicationDetailFragment extends BaseFragment {
         }
     }
 
-    private void buildPublicationView() {
-        //TODO - Inicializar el Layout de Vista
-
-    }
 
     private void buildFixedTextViews () {
         String arial = "arial.ttf";
@@ -163,7 +158,6 @@ public class PublicationDetailFragment extends BaseFragment {
             new PublicationDetailsDataManager().getDetails(getPublicationId(), new PublicationDetailsDataManager.PublicationsDetailsCallbackHandler() {
                 @Override
                 public void onComplete(PublicationDetails publication) {
-                    //TODO - Bindear datos con la vista
                     buildGallery(publication);
                     fillPublicationView(publication);
                     currentPublication = publication;

@@ -1,6 +1,8 @@
 package com.mileem.mileem.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -233,8 +235,10 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
     private void buildImageArea(Holder.ListViewHolder holder, PublicationDetails msg) {
         ArrayList<String> pictures = new ArrayList<String>();
         boolean videoAdded = false;
+        String videoUrl = null;
         if (msg.isPremium() && msg.getVideo() != null && msg.getVideo().hasVideo()){
             pictures.add(msg.getVideo().getThumbnail());
+            videoUrl = msg.getVideo().getUrl();
             videoAdded = true;
         }
         pictures.addAll(msg.getPictures());
@@ -242,7 +246,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             buildFullScreenImageWidget(holder.networkImageView1, R.drawable.image_placeholder);
         } else {
             if(videoAdded){
-                buildVideoImageWidget(holder.networkImageView1, pictures.get(0));
+                buildVideoImageWidget(holder.networkImageView1, pictures.get(0),videoUrl);
             } else {
                 buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)));
             }
@@ -301,7 +305,7 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         if(networkImageView != null){
             networkImageView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Imagen Maximixada", Toast.LENGTH_LONG).show();
+                    //Todo - Maximizar imagen
                 }
             });
         }
@@ -313,12 +317,15 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
 
 
 
-    private void buildVideoImageWidget(View convertView, String url) {
+    private void buildVideoImageWidget(final View convertView, String url, final String videoUrl) {
         NetworkImageView networkImageView = buildImageWidget(convertView,url);
         if(networkImageView != null){
             networkImageView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "Reproducion de Video", Toast.LENGTH_LONG).show();
+                    if(videoUrl != null ){
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl));
+                        getContext().startActivity(intent);
+                    }
                 }
             });
         }

@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class AsyncRestHttpClient {
 
-    //TODO hacer andar para simulador contra localhost
     private static final String HOST_URL = "http://107.20.253.197";
     private static final String BASE_URL_PROD = HOST_URL + "/api/";
     private static final String BASE_URL_DEV = HOST_URL + "/api/";

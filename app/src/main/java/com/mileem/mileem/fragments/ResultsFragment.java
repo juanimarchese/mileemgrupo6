@@ -62,7 +62,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
         context = rootView.getContext();
         buildEndlessListView(rootView);
 
-        //TODO Absorver estos valores de la vista, de alguna madera(Puede ser un objetod e modelo en comun en la activity?)
         createDefaultRequestInfo();
         requestFirstPageData();
 
@@ -185,7 +184,6 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden){
-            //TODO - Checkear si cambiaron los criterios de busqueda, filtro u ordenamiento tambien, para no hacer busquedas sin sentido!
             buildFilter();
             requestFirstPageData();
             getActivity().getActionBar().show();
