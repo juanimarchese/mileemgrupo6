@@ -4,9 +4,7 @@ package com.mileem.mileem.networking;
  * Created by ramirodiaz on 26/10/14.
  */
 
-import com.google.gson.Gson;
 import com.loopj.android.http.RequestParams;
-import com.mileem.mileem.models.PublicationDetails;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -16,6 +14,32 @@ public class ReportDataManager {
     public static abstract class ReportDataManagerCallbackHandler extends CallbackHandler {
         public abstract void onComplete(String neighborhoodName, String graphUrl);
     }
+    public static abstract class PriceReportDataManagerCallbackHandler extends CallbackHandler {
+        public abstract void onComplete(String neighborhoodName, String price);
+    }
+
+    public void getReportAveragePricePerSquareMeterNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final PriceReportDataManagerCallbackHandler callbackHandler) throws JSONException {
+        RequestParams params = new RequestParams();
+        params.put("neighborhood", neighborhoodId);
+        params.put("width", width);
+        params.put("height", height);
+        params.put("currency", currency);
+        AsyncRestHttpClient.get("average-price-by-neighborhood", params, new MileenJsonResponseHandler(callbackHandler) {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    JSONObject payload = response.getJSONObject("payload");
+                    String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
+                    String price = payload.getJSONObject("neighborhood").getString("priceByM2");
+                    callbackHandler.onComplete(neighborhoodName, price);
+                } catch (Throwable e) {
+                    callbackHandler.onFailure(new Error(e));
+                }
+            }
+        });
+    }
+
     public void getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("neighborhood", neighborhoodId);
