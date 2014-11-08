@@ -13,12 +13,11 @@ import org.json.JSONObject;
 public class ReportDataManager {
     public static abstract class ReportDataManagerCallbackHandler extends CallbackHandler {
         public abstract void onComplete(String neighborhoodName, String graphUrl);
-    }
-    public static abstract class PriceReportDataManagerCallbackHandler extends CallbackHandler {
-        public abstract void onComplete(String neighborhoodName, String price);
+        public abstract void onComplete(String neighborhoodName, String currency,String price);
     }
 
-    public void getReportAveragePricePerSquareMeterNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final PriceReportDataManagerCallbackHandler callbackHandler) throws JSONException {
+
+    public void getReportAveragePricePerSquareMeterNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("neighborhood", neighborhoodId);
         params.put("width", width);
@@ -32,7 +31,7 @@ public class ReportDataManager {
                     JSONObject payload = response.getJSONObject("payload");
                     String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
                     String price = payload.getJSONObject("neighborhood").getString("priceByM2");
-                    callbackHandler.onComplete(neighborhoodName, price);
+                    callbackHandler.onComplete(neighborhoodName, currency,price);
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
                 }

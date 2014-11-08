@@ -108,6 +108,12 @@ public class BarReportFragment extends BaseFragment {
                 }
 
                 @Override
+                public void onComplete(String neighborhoodName, String currency, String price) {
+                    showError();
+                    hidePDialog();
+                }
+
+                @Override
                 public void onFailure(Error error) {
                     showError();
                     hidePDialog();
