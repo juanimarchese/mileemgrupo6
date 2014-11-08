@@ -21,6 +21,7 @@ import com.mileem.mileem.adapters.NavDrawerListAdapter;
 import com.mileem.mileem.fragments.BarReportFragment;
 import com.mileem.mileem.fragments.BaseFragment;
 import com.mileem.mileem.fragments.NoResultsFragment;
+import com.mileem.mileem.fragments.PieReportFragment;
 import com.mileem.mileem.fragments.SearchFragment;
 import com.mileem.mileem.managers.DefinitionsManager;
 import com.mileem.mileem.models.IdName;
@@ -181,7 +182,7 @@ public class MainActivity extends BaseActivity {
                     fragment = BarReportFragment.newInstance(neighboor);
                     position = 1;
                 } else if (ReportType.PROPERTIES_PERCENT.equals(type)){
-                    fragment = BarReportFragment.newInstance(neighboor);
+                    fragment = PieReportFragment.newInstance(neighboor);
                     position = 2;
                 } else if (ReportType.AVERAGE_PRICE.equals(type)){
                     fragment = BarReportFragment.newInstance(neighboor);
