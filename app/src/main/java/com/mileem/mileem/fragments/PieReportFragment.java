@@ -102,7 +102,13 @@ public class PieReportFragment extends BaseFragment {
             new ReportDataManager().getReportAveragePropertyByEnviromentNeighborhood(getNeighborhoodId(), width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
                 @Override
                 public void onComplete(String neighborhoodName, String graphUrl) {
-                    networkImageView.setImageUrl(graphUrl,imageLoader);
+                    networkImageView.setImageUrl(graphUrl, imageLoader);
+                    hidePDialog();
+                }
+
+                @Override
+                public void onComplete(String neighborhoodName, String currency, String price) {
+                    showError();
                     hidePDialog();
                 }
 
