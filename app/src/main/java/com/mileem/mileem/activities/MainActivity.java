@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
     private NavDrawerListAdapter adapter;
 
     public enum ReportType {
-        AROUND_PRICE_M2;
+        AROUND_PRICE_M2,AVERAGE_PRICE,PROPERTIES_PERCENT;
     }
 
     private static MainActivity instance;
@@ -96,12 +96,10 @@ public class MainActivity extends BaseActivity {
         // adding nav drawer items to array
         // Buscar
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        //Report
+        //Reports
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Ultimos Resultados
-        /*navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));*/
-        // Estadisticas
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 
 
         // Recycle the typed array
@@ -167,7 +165,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void showNeighborhoodsAndDisplayReport(ReportType type) {
+    public void showNeighborhoodsAndDisplayReport(final ReportType type) {
         List list = DefinitionsUtils.convertToStringList(DefinitionsManager.getInstance().getNeighborhoods());
         final ArrayAdapter dataAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item_dark, list);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -175,11 +173,23 @@ public class MainActivity extends BaseActivity {
         builder.setAdapter(dataAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Cambiar por el fragment para mostrar el grafico pasando como argumento el barrio elegido
                 String neighboorName = (String) dataAdapter.getItem(which);
                 IdName neighboor = DefinitionsUtils.findIdNameByName(DefinitionsManager.getInstance().getNeighborhoods(), neighboorName);
-                BarReportFragment fragment = BarReportFragment.newInstance(neighboor);
-                MainActivity.this.displayFragment(fragment, 1, fragment.getArguments(), false);
+                BaseFragment fragment = null;
+                int position = 0;
+                if(ReportType.AROUND_PRICE_M2.equals(type)){
+                    fragment = BarReportFragment.newInstance(neighboor);
+                    position = 1;
+                } else if (ReportType.PROPERTIES_PERCENT.equals(type)){
+                    fragment = BarReportFragment.newInstance(neighboor);
+                    position = 2;
+                } else if (ReportType.AVERAGE_PRICE.equals(type)){
+                    fragment = BarReportFragment.newInstance(neighboor);
+                    position = 3;
+                }
+                if(fragment != null){
+                    MainActivity.this.displayFragment(fragment, position, fragment.getArguments(), false);
+                }
             }
         });
         builder.show();
@@ -193,6 +203,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case 1:
                 this.showNeighborhoodsAndDisplayReport(ReportType.AROUND_PRICE_M2);
+                break;
+            case 2:
+                this.showNeighborhoodsAndDisplayReport(ReportType.PROPERTIES_PERCENT);
+                break;
+            case 3:
+                this.showNeighborhoodsAndDisplayReport(ReportType.AVERAGE_PRICE);
                 break;
             default:
                 break;
