@@ -14,18 +14,26 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
+import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.models.Multimedia;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by ramirodiaz on 25/09/14.
  */
 public class MultimediaPageFragment extends Fragment {
     private final Multimedia multimedia;
+    private final ArrayList <Multimedia> multimediaData;
     private NetworkImageView networkImageView;
     private ImageLoader imageLoader;
     private ImageView icon;
+    private ImageView.ScaleType scaleType;
+    private View.OnClickListener onClickListener;
 
-    public MultimediaPageFragment(Multimedia multimedia) {
+    public MultimediaPageFragment(ArrayList <Multimedia> multimediaData, Multimedia multimedia) {
+        this.multimediaData = multimediaData;
         this.multimedia = multimedia;
     }
 
@@ -50,21 +58,23 @@ public class MultimediaPageFragment extends Fragment {
         icon.setImageResource(drawable);
 
         networkImageView = (NetworkImageView) rootView.findViewById(R.id.multimedia);
+        networkImageView.setScaleType(scaleType);
         networkImageView.setDefaultImageResId(R.drawable.image_placeholder);
         networkImageView.setErrorImageResId(R.drawable.image_placeholder);
         networkImageView.setImageUrl(multimedia.getPreviewUrl(), imageLoader);
-        networkImageView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (multimedia.getType() == Multimedia.Type.VIDEO) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(multimedia.getUrl()));
-                    startActivity(intent);
-                } else if (multimedia.getType() == Multimedia.Type.IMAGE){
-                    //TODO - Maximizar imagen
-                }
-            }
-        });
-
+        networkImageView.setOnClickListener(onClickListener);
         return rootView;
     }
 
+    public void setScaleType(ImageView.ScaleType type) {
+        scaleType = type;
+    }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        onClickListener = listener;
+    }
+
+    public Multimedia getMultimedia() {
+        return multimedia;
+    }
 }

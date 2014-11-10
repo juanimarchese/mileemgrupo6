@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class PublicationDetailFragment extends BaseFragment {
     private View rootView;
 
     private SmartViewPager mPager;
-    private PagerAdapter mPagerAdapter;
+    private MultimediaSlidePagerAdapter mPagerAdapter;
     private PublicationDetails currentPublication;
 
     public PublicationDetailFragment() {
@@ -80,7 +81,7 @@ public class PublicationDetailFragment extends BaseFragment {
         return rootView;
     }
 
-    private void buildGallery(PublicationDetails publication) {
+    private void buildGallery(final PublicationDetails publication) {
         mPager = (SmartViewPager) rootView.findViewById(R.id.pager);
         RelativeLayout pagerContainer = (RelativeLayout) rootView.findViewById(R.id.pager_container);
         Boolean hasPictures = publication.getPictures().size() > 0;
@@ -90,18 +91,22 @@ public class PublicationDetailFragment extends BaseFragment {
         pagerContainer.setVisibility(visibility);
 
         if (showGallery) {
-         ArrayList<Multimedia> data = new ArrayList<Multimedia>();
-
-            for (String picture : publication.getPictures()) {
-                data.add(new Multimedia(Multimedia.Type.IMAGE, AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(picture), null));
-            }
-
-            if (hasVideo) {
-                data.add(new Multimedia(Multimedia.Type.VIDEO, publication.getVideo().getThumbnail(), publication.getVideo().getUrl()));
-            }
-            mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), data);
+            mPagerAdapter = new MultimediaSlidePagerAdapter(this.getActivity().getFragmentManager(), publication.getMultimediaData(), ImageView.ScaleType.CENTER_CROP);
+            mPagerAdapter.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    int pageNumber = mPager.getCurrentItem();
+                    MultimediaPageFragment fragment = mPagerAdapter.getItem(pageNumber);
+                    Multimedia multimedia = fragment.getMultimedia();
+                    if (multimedia.getType() == Multimedia.Type.VIDEO) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(multimedia.getUrl()));
+                        startActivity(intent);
+                    } else if (multimedia.getType() == Multimedia.Type.IMAGE) {
+                        MultimediaGalleryFragment gallery = MultimediaGalleryFragment.newInstance(publication, pageNumber);
+                        ((MainActivity) getActivity()).displayView(gallery, false);
+                    }
+                }
+            });
             mPager.setAdapter(mPagerAdapter);
-
             CirclePageIndicator titleIndicator = (CirclePageIndicator)rootView.findViewById(R.id.pager_indicator);
             titleIndicator.setViewPager(mPager);
         }

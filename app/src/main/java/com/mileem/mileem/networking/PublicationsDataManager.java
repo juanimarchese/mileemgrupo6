@@ -150,6 +150,9 @@ public class PublicationsDataManager {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 ArrayList<PublicationDetails> publications = PublicationsDataManager.this.parseResponse(response);
+                for (PublicationDetails publication : publications) {
+                    publication.buildMultimediaData();
+                }
                 callbackHandler.onComplete(publications);
             }
 

@@ -31,6 +31,7 @@ public class PublicationDetailsDataManager {
                     JSONObject payload = response.getJSONObject("payload");
                     Gson gson = new Gson();
                     PublicationDetails publication = gson.fromJson(payload.toString(), PublicationDetails.class);
+                    publication.buildMultimediaData();
                     callbackHandler.onComplete(publication);
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));

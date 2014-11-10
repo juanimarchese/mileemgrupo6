@@ -1,5 +1,7 @@
 package com.mileem.mileem.adapters;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
+import com.mileem.mileem.fragments.MultimediaGalleryFragment;
 import com.mileem.mileem.fragments.ResultsFragment;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
@@ -248,14 +251,14 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
             if(videoAdded){
                 buildVideoImageWidget(holder.networkImageView1, pictures.get(0),videoUrl);
             } else {
-                buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)));
+                buildFullScreenImageWidget(holder.networkImageView1, createUrlForPicture(pictures.get(0)), msg, 0);
             }
             if((msg.isPremium() || msg.isBasic()) && pictures.size() > 1){
-                buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)));
+                buildFullScreenImageWidget(holder.networkImageView2, createUrlForPicture(pictures.get(1)), msg, 1);
                 if(msg.isPremium() && pictures.size() > 2){
-                   buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)));
+                   buildFullScreenImageWidget(holder.networkImageView3, createUrlForPicture(pictures.get(2)), msg, 2);
                     if(pictures.size() > 3){
-                        buildFullScreenImageWidget(holder.networkImageView4, createUrlForPicture(pictures.get(3)));
+                        buildFullScreenImageWidget(holder.networkImageView4, createUrlForPicture(pictures.get(3)), msg, 3);
                     }
                 }
             }
@@ -300,18 +303,19 @@ public class PublicationListAdapter extends ArrayAdapter<PublicationDetails> {
         if(imageView != null) imageView.setImageResource(imageId);
     }
 
-    private void buildFullScreenImageWidget(View convertView, String url) {
+    private void buildFullScreenImageWidget(View convertView, String url, final PublicationDetails publication, final int position) {
         NetworkImageView networkImageView = buildImageWidget(convertView,url);
         if(networkImageView != null){
             networkImageView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //Todo - Maximizar imagen
+                    MultimediaGalleryFragment gallery = MultimediaGalleryFragment.newInstance(publication, position);
+                    ((MainActivity) _c).displayView(gallery, false);
                 }
             });
         }
     }
 
-    private void buildFullScreenImageWidget(View convertView, int image_placeholder) {
+    private void buildFullScreenImageWidget(View convertView, int image_placeholder ) {
         NetworkImageView networkImageView = buildImageWidget(convertView,image_placeholder);
     }
 

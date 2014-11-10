@@ -3,6 +3,8 @@ package com.mileem.mileem.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.mileem.mileem.networking.AsyncRestHttpClient;
+
 import java.util.ArrayList;
 
 /**
@@ -31,7 +33,8 @@ public class PublicationDetails implements Parcelable {
     private IdName neighborhood;
     private ArrayList<IdName> amenitieType;
     private User user;
-
+    private ArrayList<Multimedia> multimediaData;
+    
     public PublicationDetails() {
     }
 
@@ -231,5 +234,25 @@ public class PublicationDetails implements Parcelable {
 
     public String getAgeString() {
         return this.getAge() == 0 ? "A estrenar" : this.getAge() > 1 ? this.getAge() + " años" : "1 año";
+    }
+
+    public void setMultimediaData(ArrayList<Multimedia> multimediaData) {
+        this.multimediaData = multimediaData;
+    }
+
+    public ArrayList<Multimedia> getMultimediaData() {
+        return multimediaData;
+    }
+
+    public void buildMultimediaData (){
+        Boolean hasVideo = this.getVideo().hasVideo();
+        final ArrayList<Multimedia> data = new ArrayList<Multimedia>();
+        if (hasVideo) {
+            data.add(new Multimedia(Multimedia.Type.VIDEO, this.getVideo().getThumbnail(), this.getVideo().getUrl()));
+        }
+        for (String picture : this.getPictures()) {
+            data.add(new Multimedia(Multimedia.Type.IMAGE, AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(picture), null));
+        }
+        this.setMultimediaData(data);
     }
 }
