@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.mileem.mileem.R;
 import com.mileem.mileem.fragments.BaseFragment;
+import com.mileem.mileem.fragments.MultimediaGalleryFragment;
 
 import java.util.Stack;
 
@@ -37,12 +38,15 @@ public abstract class BaseActivity extends Activity {
                 return;
 
             if (currentFragment != null) {
-
-                Fragment f = fm.findFragmentByTag(currentFragment.getCustomTag());
+                BaseFragment f = (BaseFragment)fm.findFragmentByTag(currentFragment.getCustomTag());
                 final InputMethodManager imm = (InputMethodManager) f.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(f.getView().getWindowToken(), 0);
+                if (f.getCustomTag().equalsIgnoreCase(MultimediaGalleryFragment.TAG)) {
+                    fragmentTransaction.remove(f);
+                } else {
+                    fragmentTransaction.hide(f);
+                }
 
-                fragmentTransaction.hide(fm.findFragmentByTag(currentFragment.getCustomTag()));
             }
             if (fragmentByTag == null) {
                fragmentTransaction.add(R.id.frame_container, fragment, fragment.getCustomTag());
