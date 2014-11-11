@@ -1,6 +1,7 @@
 package com.mileem.mileem.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
@@ -14,10 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mileem.mileem.R;
 import com.mileem.mileem.adapters.NavDrawerListAdapter;
+import com.mileem.mileem.fragments.AvPriceReportFragment;
 import com.mileem.mileem.fragments.BarReportFragment;
 import com.mileem.mileem.fragments.BaseFragment;
 import com.mileem.mileem.fragments.NoResultsFragment;
@@ -185,7 +189,7 @@ public class MainActivity extends BaseActivity {
                     fragment = PieReportFragment.newInstance(neighboor);
                     position = 2;
                 } else if (ReportType.AVERAGE_PRICE.equals(type)){
-                    fragment = BarReportFragment.newInstance(neighboor);
+                    fragment = AvPriceReportFragment.newInstance(neighboor);
                     position = 3;
                 }
                 if(fragment != null){
@@ -195,6 +199,7 @@ public class MainActivity extends BaseActivity {
         });
         builder.show();
     }
+
 
     public void displayViewForMenu(int position,Bundle arguments,boolean isBack) {
         // update the main content by replacing fragments

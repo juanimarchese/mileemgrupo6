@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:background="@color/transparent_white"
+    >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
+        <TextView
+            android:id="@+id/reportLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/m2"
+            android:textSize="18sp"
+            android:focusable="false"
+            android:layout_centerInParent="true"
+            android:focusableInTouchMode="false"
+            android:layout_alignParentTop="true" />
+
+
+        <TextView
+            android:id="@+id/priceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="@color/white"
+            android:background="@color/holo_blue"
+            android:textSize="50sp"
+            android:focusable="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:focusableInTouchMode="false"
+            android:layout_below="@+id/reportLabel" />
+
+    </RelativeLayout>
+</LinearLayout>
