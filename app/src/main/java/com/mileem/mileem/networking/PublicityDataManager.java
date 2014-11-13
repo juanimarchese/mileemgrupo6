@@ -10,14 +10,15 @@ public class PublicityDataManager {
         public abstract void onComplete(String bannerUrl, String link);
     }
     public void getPublicity(final PublicityCallbackHandler callbackHandler) {
-        AsyncRestHttpClient.get("getPublicity", null, new MileenJsonResponseHandler(callbackHandler) {
+        AsyncRestHttpClient.get("retrieve-ad", null, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
                     JSONObject payload = response.getJSONObject("payload");
-                    String bannerUrl = payload.getString("banner");
-                    String webUrl = payload.getString("webUrl");
+                    JSONObject ad = payload.getJSONObject("ad");
+                    String bannerUrl = ad.getString("banner");
+                    String webUrl = ad.getString("target_url");
                     callbackHandler.onComplete(bannerUrl, webUrl);
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
