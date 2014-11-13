@@ -272,5 +272,15 @@
             android:focusable="false"
             android:focusableInTouchMode="false"/>
 
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/publicity"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/prop_descripcion"
+            android:layout_marginTop="15dp"
+            android:focusable="false"
+            android:scaleType="fitCenter"
+            android:focusableInTouchMode="false"/>
+
     </RelativeLayout>
 </ScrollView>

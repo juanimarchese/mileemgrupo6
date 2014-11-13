@@ -127,7 +127,7 @@ public class ResultsFragment extends BaseFragment implements EndlessListView.End
                 try{
                     PublicationDetails publicationDetail = (PublicationDetails) parent.getItemAtPosition(position);
                     int publicationDetailId = publicationDetail.getId();
-                    ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(publicationDetailId),true);
+                    ((MainActivity)getActivity()).displayView(PublicationDetailFragment.newInstance(publicationDetailId),false);
                 } catch (Throwable e){
                     showError();
                 }

@@ -16,6 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
 import com.mileem.mileem.adapters.MultimediaSlidePagerAdapter;
@@ -23,6 +26,7 @@ import com.mileem.mileem.models.Multimedia;
 import com.mileem.mileem.models.PublicationDetails;
 import com.mileem.mileem.networking.AsyncRestHttpClient;
 import com.mileem.mileem.networking.PublicationDetailsDataManager;
+import com.mileem.mileem.networking.PublicityDataManager;
 import com.mileem.mileem.utils.ShareUtils;
 import com.mileem.mileem.widgets.SmartViewPager;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -40,6 +44,8 @@ public class PublicationDetailFragment extends BaseFragment {
     private SmartViewPager mPager;
     private MultimediaSlidePagerAdapter mPagerAdapter;
     private PublicationDetails currentPublication;
+    private NetworkImageView publicityView;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public PublicationDetailFragment() {
         super(TAG);
@@ -76,9 +82,17 @@ public class PublicationDetailFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.publication_detail_fragment, container, false);
         this.rootView = rootView;
+        buildPublicityView(rootView);
         buildFixedTextViews();
         requestPublicationData();
         return rootView;
+    }
+
+    private void buildPublicityView(View rootView) {
+        publicityView = (NetworkImageView) rootView.findViewById(R.id.publicity);
+        publicityView.setDefaultImageResId(R.drawable.image_placeholder);
+        publicityView.setErrorImageResId(R.drawable.image_placeholder);
+        publicityView.setVisibility(View.GONE);
     }
 
     private void buildGallery(final PublicationDetails publication) {
@@ -166,7 +180,35 @@ public class PublicationDetailFragment extends BaseFragment {
                     buildGallery(publication);
                     fillPublicationView(publication);
                     currentPublication = publication;
-                    hidePDialog();
+                    if(publication.isFree()){
+                        new PublicityDataManager().getPublicity(new PublicityDataManager.PublicityCallbackHandler() {
+                            @Override
+                            public void onComplete(String bannerUrl, final String link) {
+                                if(publicityView != null){
+                                    publicityView.setImageUrl(bannerUrl,imageLoader);
+                                    publicityView.setVisibility(View.VISIBLE);
+                                    publicityView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                                            startActivity(browserIntent);
+                                        }
+                                    });
+                                }
+                                hidePDialog();
+                            }
+
+                            @Override
+                            public void onFailure(Error error) {
+                                publicityView.setVisibility(View.VISIBLE);
+                                publicityView.setOnClickListener(null);
+                                hidePDialog();
+                            }
+                        });
+                    } else {
+                        if(publicityView != null) publicityView.setVisibility(View.GONE);
+                        hidePDialog();
+                    }
                 }
 
                 @Override
