@@ -18,7 +18,7 @@ public class PublicityDataManager {
                     JSONObject payload = response.getJSONObject("payload");
                     JSONObject ad = payload.getJSONObject("ad");
                     String bannerUrl = ad.getString("banner");
-                    String webUrl = ad.getString("target_url");
+                    String webUrl = ad.getString("targetUrl");
                     callbackHandler.onComplete(bannerUrl, webUrl);
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
