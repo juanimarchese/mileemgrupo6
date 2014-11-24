@@ -63,6 +63,7 @@ public abstract class BaseFragment extends Fragment {
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_share).setVisible(false);
         menu.findItem(R.id.action_currency).setVisible(false);
+        menu.findItem(R.id.action_operation).setVisible(false);
     }
 
     public abstract String getTittle();
