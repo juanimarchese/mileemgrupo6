@@ -40,4 +40,13 @@ public  class DefinitionsUtils {
         }
         return null;
     }
+
+    public static IdName findIdNameById(List<IdName> list,String id){
+        if(id != null) {
+            for (IdName idName : list){
+                if(idName.getId() == Integer.parseInt(id)) return idName;
+            }
+        }
+        return null;
+    }
 }

@@ -84,4 +84,11 @@
 
         </menu>
     </item>
+    <item android:id="@+id/action_operation"
+        android:icon="@drawable/ic_action_operation_"
+        android:title="@string/action_contact"
+        android:showAsAction="always" >
+        <menu>
+        </menu>
+    </item>
 </menu>

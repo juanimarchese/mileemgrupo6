@@ -13,25 +13,35 @@ import org.json.JSONObject;
 public class ReportDataManager {
     public static abstract class ReportDataManagerCallbackHandler extends CallbackHandler {
         public abstract void onComplete(String neighborhoodName, String graphUrl);
-        public abstract void onComplete(String neighborhoodName, String currency,String price);
+
+        public abstract void onComplete(String neighborhoodName, String currency, String price);
     }
 
 
-    public void getReportAveragePricePerSquareMeterNeighborhood(final int neighborhoodId, final String currency, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
+    public void getReportAveragePricePerSquareMeterNeighborhood(final int neighborhoodId, final String currency,final String operation, final int width, final int height, final ReportDataManagerCallbackHandler callbackHandler) throws JSONException {
         RequestParams params = new RequestParams();
         params.put("neighborhood", neighborhoodId);
         params.put("width", width);
         params.put("height", height);
         params.put("currency", currency);
+        if(!operation.isEmpty()) params.put("operation", operation);
         AsyncRestHttpClient.get("average-price-by-neighborhood", params, new MileenJsonResponseHandler(callbackHandler) {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    JSONObject payload = response.getJSONObject("payload");
-                    String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
-                    String price = payload.getJSONObject("neighborhood").getString("priceByM2");
-                    callbackHandler.onComplete(neighborhoodName, currency,price);
+                    int error = response.getInt("error");
+                    if (error == 0) {
+                        JSONObject payload = response.getJSONObject("payload");
+                        String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
+                        String price = payload.getJSONObject("neighborhood").getString("priceByM2");
+                        callbackHandler.onComplete(neighborhoodName, currency, price);
+                    } else {
+                        String errorMsg = response.getString("message");
+                        Throwable e = new Exception(errorMsg);
+                        callbackHandler.onFailure(new Error(e));
+                    }
+
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
                 }
@@ -50,11 +60,18 @@ public class ReportDataManager {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    JSONObject payload = response.getJSONObject("payload");
-                    String relativeUrl = payload.getString("url");
-                    String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
-                    String graphUrl = AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(relativeUrl);
-                    callbackHandler.onComplete(neighborhoodName, graphUrl);
+                    int error = response.getInt("error");
+                    if (error == 0) {
+                        JSONObject payload = response.getJSONObject("payload");
+                        String relativeUrl = payload.getString("url");
+                        String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
+                        String graphUrl = AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(relativeUrl);
+                        callbackHandler.onComplete(neighborhoodName, graphUrl);
+                    } else {
+                        String errorMsg = response.getString("message");
+                        Throwable e = new Exception(errorMsg);
+                        callbackHandler.onFailure(new Error(e));
+                    }
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
                 }
@@ -72,11 +89,18 @@ public class ReportDataManager {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    JSONObject payload = response.getJSONObject("payload");
-                    String relativeUrl = payload.getString("url");
-                    String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
-                    String graphUrl = AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(relativeUrl);
-                    callbackHandler.onComplete(neighborhoodName, graphUrl);
+                    int error = response.getInt("error");
+                    if (error == 0) {
+                        JSONObject payload = response.getJSONObject("payload");
+                        String relativeUrl = payload.getString("url");
+                        String neighborhoodName = payload.getJSONObject("neighborhood").getString("name");
+                        String graphUrl = AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(relativeUrl);
+                        callbackHandler.onComplete(neighborhoodName, graphUrl);
+                    } else {
+                        String errorMsg = response.getString("message");
+                        Throwable e = new Exception(errorMsg);
+                        callbackHandler.onFailure(new Error(e));
+                    }
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
                 }
