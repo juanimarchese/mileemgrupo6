@@ -19,7 +19,8 @@ public class PublicityDataManager {
                     JSONObject ad = payload.getJSONObject("ad");
                     String bannerUrl = ad.getString("banner");
                     String webUrl = ad.getString("targetUrl");
-                    callbackHandler.onComplete(bannerUrl, webUrl);
+                    String absoluteBanner = AsyncRestHttpClient.getAbsoluteUrlRelativeToHost(bannerUrl);
+                    callbackHandler.onComplete(absoluteBanner, webUrl);
                 } catch (Throwable e) {
                     callbackHandler.onFailure(new Error(e));
                 }
