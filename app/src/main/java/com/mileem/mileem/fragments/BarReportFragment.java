@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,9 +17,13 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.mileem.mileem.AppController;
 import com.mileem.mileem.R;
 import com.mileem.mileem.activities.MainActivity;
+import com.mileem.mileem.managers.DefinitionsManager;
 import com.mileem.mileem.models.IdName;
 import com.mileem.mileem.models.PublicationOrder;
 import com.mileem.mileem.networking.ReportDataManager;
+import com.mileem.mileem.utils.DefinitionsUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by JuanMarchese on 18/09/2014.
@@ -30,6 +35,8 @@ public class BarReportFragment extends BaseFragment {
     NetworkImageView networkImageView;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     TextView reportLabel;
+    String moneda;
+    String operation;
 
 
     public BarReportFragment() {
@@ -80,6 +87,17 @@ public class BarReportFragment extends BaseFragment {
         return rootView;
     }
 
+    private void setDefaultOptions() {
+        moneda = "$";
+        int ventaId = DefinitionsUtils.findIdByName(DefinitionsManager.getInstance().getOperationTypes(), "Venta");
+        if (ventaId > 0) {
+            operation = "" + ventaId;
+        } else {
+            operation = "";
+        }
+
+    }
+
     private void buildImage(View rootView) {
         networkImageView = (NetworkImageView) rootView.findViewById(R.id.report_imagen);
         if(networkImageView != null){
@@ -93,14 +111,15 @@ public class BarReportFragment extends BaseFragment {
         reportLabel = (TextView) rootView.findViewById(R.id.reportLabel);
     }
 
-    private void requestBarReportData(String currency) {
+    private void requestBarReportData(String currency,String operation) {
         showPDialog(rootView.getContext());
         try {
-            reportLabel.setText("El siguiente reporte muestra el precio del metro cuadrado correspondiente a los barrios aleñados a " + getNeighborhoodName() + " en "+currency+". Los datos utilizados son obtenidos de las publicaciones realizadas en esta aplicación.");
+            IdName operationIdName = DefinitionsUtils.findIdNameById(DefinitionsManager.getInstance().getOperationTypes(), operation);
+            reportLabel.setText("El siguiente reporte muestra el precio del metro cuadrado correspondiente a los barrios aleñados a " + getNeighborhoodName() + " en "+currency+" para la operación: "+operationIdName.getName()+". Los datos utilizados son obtenidos de las publicaciones realizadas en esta aplicación.");
             DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
             int height = metrics.heightPixels - reportLabel.getHeight() - 30;
-            new ReportDataManager().getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(getNeighborhoodId(), currency, width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
+            new ReportDataManager().getReportAveragePricePerSquareMeterOfSurroundingNeighborhood(getNeighborhoodId(), currency,operation, width, height, new ReportDataManager.ReportDataManagerCallbackHandler() {
                 @Override
                 public void onComplete(String neighborhoodName, String graphUrl) {
                     networkImageView.setImageUrl(graphUrl,imageLoader);
@@ -128,7 +147,8 @@ public class BarReportFragment extends BaseFragment {
     }
 
     private void requestBarReportData() {
-        requestBarReportData("$");
+        setDefaultOptions();
+        requestBarReportData(moneda,operation);
     }
 
     private void showError() {
@@ -146,16 +166,49 @@ public class BarReportFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem currencyItem = menu.findItem(R.id.action_currency);
         currencyItem.setVisible(true);
-        buildSubItem(currencyItem, R.id.dollar,"U$S");
-        buildSubItem(currencyItem, R.id.pesos, "$");
+        buildMonedaSubItem(currencyItem, R.id.dollar,"U$S");
+        buildMonedaSubItem(currencyItem, R.id.pesos, "$");
     }
 
-    private void buildSubItem(MenuItem sortItem, int subItemId, final String moneda) {
+    private void buildMonedaSubItem(MenuItem sortItem, int subItemId, final String valor) {
         MenuItem subItem = sortItem.getSubMenu().findItem(subItemId);
         subItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                requestBarReportData(moneda);
+                moneda = valor;
+                requestBarReportData(moneda,operation);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        buildOperationItemMenu(menu);
+    }
+
+    private void buildOperationItemMenu(Menu menu) {
+
+        MenuItem operationItem = menu.findItem(R.id.action_operation);
+        operationItem.setVisible(true);
+        operationItem.getSubMenu().clear();
+        ArrayList<IdName> operationTypes = DefinitionsManager.getInstance().getOperationTypes();
+        int i = 1;
+        for (IdName op : operationTypes){
+            buildOperationSubItem(operationItem,i, op);
+            i++;
+        }
+    }
+
+    private void buildOperationSubItem(MenuItem sortItem, int subItemId, final IdName valor) {
+        SubMenu subMenu = sortItem.getSubMenu();
+        MenuItem menuItem = subMenu.add(0, subItemId, Menu.NONE, valor.getName());
+        menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                operation = "" + valor.getId();
+                requestBarReportData(moneda,operation);
                 return true;
             }
         });
