@@ -114,7 +114,7 @@ public class PieReportFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(Error error) {
-                    showError();
+                    showError(error.getCause().getMessage());
                     hidePDialog();
                 }
 
@@ -128,7 +128,11 @@ public class PieReportFragment extends BaseFragment {
 
 
     private void showError() {
-        Toast.makeText(getActivity(), "Error al tratar de obtener el reporte del barrio " + getNeighborhoodName(), Toast.LENGTH_LONG).show();
+        showError("");
+    }
+
+    private void showError(String errorMsg) {
+        Toast.makeText(getActivity(), "Error al tratar de obtener el reporte del barrio " + getNeighborhoodName() + ". " + errorMsg, Toast.LENGTH_LONG).show();
         ((MainActivity) rootView.getContext()).displayView(new ResultsFragment(),true);
     }
 
